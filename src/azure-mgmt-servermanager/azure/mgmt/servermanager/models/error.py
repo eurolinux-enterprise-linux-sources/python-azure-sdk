@@ -22,7 +22,7 @@ class Error(Model):
     :type message: str
     :param fields:
     :type fields: str
-    """ 
+    """
 
     _attribute_map = {
         'code': {'key': 'code', 'type': 'int'},
@@ -30,10 +30,11 @@ class Error(Model):
         'fields': {'key': 'fields', 'type': 'str'},
     }
 
-    def __init__(self, code=None, message=None, fields=None):
-        self.code = code
-        self.message = message
-        self.fields = fields
+    def __init__(self, **kwargs):
+        super(Error, self).__init__(**kwargs)
+        self.code = kwargs.get('code', None)
+        self.message = kwargs.get('message', None)
+        self.fields = kwargs.get('fields', None)
 
 
 class ErrorException(HttpOperationError):

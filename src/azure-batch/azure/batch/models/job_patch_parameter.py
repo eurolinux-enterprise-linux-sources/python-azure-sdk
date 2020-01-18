@@ -22,17 +22,15 @@ class JobPatchParameter(Model):
     :param on_all_tasks_complete: The action the Batch service should take
      when all tasks in the job are in the completed state. If omitted, the
      completion behavior is left unchanged. You may not change the value from
-     terminateJob to noAction - that is, once you have engaged automatic job
+     terminatejob to noaction - that is, once you have engaged automatic job
      termination, you cannot turn it off again. If you try to do this, the
      request fails with an 'invalid property value' error response; if you are
      calling the REST API directly, the HTTP status code is 400 (Bad Request).
      Possible values include: 'noAction', 'terminateJob'
-    :type on_all_tasks_complete: str or :class:`OnAllTasksComplete
-     <azure.batch.models.OnAllTasksComplete>`
+    :type on_all_tasks_complete: str or ~azure.batch.models.OnAllTasksComplete
     :param constraints: The execution constraints for the job. If omitted, the
      existing execution constraints are left unchanged.
-    :type constraints: :class:`JobConstraints
-     <azure.batch.models.JobConstraints>`
+    :type constraints: ~azure.batch.models.JobConstraints
     :param pool_info: The pool on which the Batch service runs the job's
      tasks. You may change the pool for a job only when the job is disabled.
      The Patch Job call will fail if you include the poolInfo element and the
@@ -40,12 +38,10 @@ class JobPatchParameter(Model):
      in the poolInfo, only the keepAlive property can be updated, and then only
      if the auto pool has a poolLifetimeOption of job. If omitted, the job
      continues to run on its current pool.
-    :type pool_info: :class:`PoolInformation
-     <azure.batch.models.PoolInformation>`
+    :type pool_info: ~azure.batch.models.PoolInformation
     :param metadata: A list of name-value pairs associated with the job as
      metadata. If omitted, the existing job metadata is left unchanged.
-    :type metadata: list of :class:`MetadataItem
-     <azure.batch.models.MetadataItem>`
+    :type metadata: list[~azure.batch.models.MetadataItem]
     """
 
     _attribute_map = {
@@ -57,6 +53,7 @@ class JobPatchParameter(Model):
     }
 
     def __init__(self, priority=None, on_all_tasks_complete=None, constraints=None, pool_info=None, metadata=None):
+        super(JobPatchParameter, self).__init__()
         self.priority = priority
         self.on_all_tasks_complete = on_all_tasks_complete
         self.constraints = constraints

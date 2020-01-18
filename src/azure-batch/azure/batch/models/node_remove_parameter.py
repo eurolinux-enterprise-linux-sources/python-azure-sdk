@@ -15,9 +15,9 @@ from msrest.serialization import Model
 class NodeRemoveParameter(Model):
     """Options for removing compute nodes from a pool.
 
-    :param node_list: A list containing the ids of the compute nodes to be
+    :param node_list: A list containing the IDs of the compute nodes to be
      removed from the specified pool.
-    :type node_list: list of str
+    :type node_list: list[str]
     :param resize_timeout: The timeout for removal of compute nodes to the
      pool. The default value is 15 minutes. The minimum value is 5 minutes. If
      you specify a value less than 5 minutes, the Batch service returns an
@@ -29,8 +29,7 @@ class NodeRemoveParameter(Model):
      value is requeue. Possible values include: 'requeue', 'terminate',
      'taskCompletion', 'retainedData'
     :type node_deallocation_option: str or
-     :class:`ComputeNodeDeallocationOption
-     <azure.batch.models.ComputeNodeDeallocationOption>`
+     ~azure.batch.models.ComputeNodeDeallocationOption
     """
 
     _validation = {
@@ -44,6 +43,7 @@ class NodeRemoveParameter(Model):
     }
 
     def __init__(self, node_list, resize_timeout=None, node_deallocation_option=None):
+        super(NodeRemoveParameter, self).__init__()
         self.node_list = node_list
         self.resize_timeout = resize_timeout
         self.node_deallocation_option = node_deallocation_option

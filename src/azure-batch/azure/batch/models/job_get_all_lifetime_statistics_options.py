@@ -13,7 +13,7 @@ from msrest.serialization import Model
 
 
 class JobGetAllLifetimeStatisticsOptions(Model):
-    """Additional parameters for the Job_get_all_lifetime_statistics operation.
+    """Additional parameters for get_all_lifetime_statistics operation.
 
     :param timeout: The maximum time that the server can spend processing the
      request, in seconds. The default is 30 seconds. Default value: 30 .
@@ -32,6 +32,7 @@ class JobGetAllLifetimeStatisticsOptions(Model):
     """
 
     def __init__(self, timeout=30, client_request_id=None, return_client_request_id=False, ocp_date=None):
+        super(JobGetAllLifetimeStatisticsOptions, self).__init__()
         self.timeout = timeout
         self.client_request_id = client_request_id
         self.return_client_request_id = return_client_request_id

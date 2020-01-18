@@ -15,17 +15,17 @@ from msrest.serialization import Model
 class Address(Model):
     """Address information for domain registration.
 
-    :param address1: Address 1.
+    :param address1: First line of an Address.
     :type address1: str
-    :param address2: Address 2.
+    :param address2: The second line of the Address. Optional.
     :type address2: str
-    :param city: City.
+    :param city: The city for the address.
     :type city: str
-    :param country: Country.
+    :param country: The country for the address.
     :type country: str
-    :param postal_code: Postal code.
+    :param postal_code: The postal code for the address.
     :type postal_code: str
-    :param state: State.
+    :param state: The state or province for the address.
     :type state: str
     """
 
@@ -47,6 +47,7 @@ class Address(Model):
     }
 
     def __init__(self, address1, city, country, postal_code, state, address2=None):
+        super(Address, self).__init__()
         self.address1 = address1
         self.address2 = address2
         self.city = city

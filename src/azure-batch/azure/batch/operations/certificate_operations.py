@@ -9,8 +9,8 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.pipeline import ClientRawResponse
 import uuid
+from msrest.pipeline import ClientRawResponse
 
 from .. import models
 
@@ -21,16 +21,18 @@ class CertificateOperations(object):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
-    :ivar api_version: Client API Version. Constant value: "2017-05-01.5.0".
+    :param deserializer: An object model deserializer.
+    :ivar api_version: Client API Version. Constant value: "2018-03-01.6.1".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2017-05-01.5.0"
+        self.api_version = "2018-03-01.6.1"
 
         self.config = config
 
@@ -39,20 +41,18 @@ class CertificateOperations(object):
         """Adds a certificate to the specified account.
 
         :param certificate: The certificate to be added.
-        :type certificate: :class:`CertificateAddParameter
-         <azure.batch.models.CertificateAddParameter>`
+        :type certificate: ~azure.batch.models.CertificateAddParameter
         :param certificate_add_options: Additional parameters for the
          operation
-        :type certificate_add_options: :class:`CertificateAddOptions
-         <azure.batch.models.CertificateAddOptions>`
+        :type certificate_add_options:
+         ~azure.batch.models.CertificateAddOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -70,7 +70,7 @@ class CertificateOperations(object):
             ocp_date = certificate_add_options.ocp_date
 
         # Construct URL
-        url = '/certificates'
+        url = self.add.metadata['url']
 
         # Construct parameters
         query_parameters = {}
@@ -100,7 +100,7 @@ class CertificateOperations(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [201]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -115,6 +115,7 @@ class CertificateOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    add.metadata = {'url': '/certificates'}
 
     def list(
             self, certificate_list_options=None, custom_headers=None, raw=False, **operation_config):
@@ -123,15 +124,16 @@ class CertificateOperations(object):
 
         :param certificate_list_options: Additional parameters for the
          operation
-        :type certificate_list_options: :class:`CertificateListOptions
-         <azure.batch.models.CertificateListOptions>`
+        :type certificate_list_options:
+         ~azure.batch.models.CertificateListOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`CertificatePaged
-         <azure.batch.models.CertificatePaged>`
+        :return: An iterator like instance of Certificate
+        :rtype:
+         ~azure.batch.models.CertificatePaged[~azure.batch.models.Certificate]
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -161,7 +163,7 @@ class CertificateOperations(object):
 
             if not next_link:
                 # Construct URL
-                url = '/certificates'
+                url = self.list.metadata['url']
 
                 # Construct parameters
                 query_parameters = {}
@@ -181,7 +183,7 @@ class CertificateOperations(object):
 
             # Construct headers
             header_parameters = {}
-            header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+            header_parameters['Content-Type'] = 'application/json; charset=utf-8'
             if self.config.generate_client_request_id:
                 header_parameters['client-request-id'] = str(uuid.uuid1())
             if custom_headers:
@@ -198,7 +200,7 @@ class CertificateOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 raise models.BatchErrorException(self._deserialize, response)
@@ -214,6 +216,7 @@ class CertificateOperations(object):
             return client_raw_response
 
         return deserialized
+    list.metadata = {'url': '/certificates'}
 
     def cancel_deletion(
             self, thumbprint_algorithm, thumbprint, certificate_cancel_deletion_options=None, custom_headers=None, raw=False, **operation_config):
@@ -236,16 +239,14 @@ class CertificateOperations(object):
         :param certificate_cancel_deletion_options: Additional parameters for
          the operation
         :type certificate_cancel_deletion_options:
-         :class:`CertificateCancelDeletionOptions
-         <azure.batch.models.CertificateCancelDeletionOptions>`
+         ~azure.batch.models.CertificateCancelDeletionOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -263,7 +264,7 @@ class CertificateOperations(object):
             ocp_date = certificate_cancel_deletion_options.ocp_date
 
         # Construct URL
-        url = '/certificates(thumbprintAlgorithm={thumbprintAlgorithm},thumbprint={thumbprint})/canceldelete'
+        url = self.cancel_deletion.metadata['url']
         path_format_arguments = {
             'thumbprintAlgorithm': self._serialize.url("thumbprint_algorithm", thumbprint_algorithm, 'str'),
             'thumbprint': self._serialize.url("thumbprint", thumbprint, 'str')
@@ -278,7 +279,7 @@ class CertificateOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -294,7 +295,7 @@ class CertificateOperations(object):
 
         # Construct and send request
         request = self._client.post(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [204]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -309,6 +310,7 @@ class CertificateOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    cancel_deletion.metadata = {'url': '/certificates(thumbprintAlgorithm={thumbprintAlgorithm},thumbprint={thumbprint})/canceldelete'}
 
     def delete(
             self, thumbprint_algorithm, thumbprint, certificate_delete_options=None, custom_headers=None, raw=False, **operation_config):
@@ -333,16 +335,15 @@ class CertificateOperations(object):
         :type thumbprint: str
         :param certificate_delete_options: Additional parameters for the
          operation
-        :type certificate_delete_options: :class:`CertificateDeleteOptions
-         <azure.batch.models.CertificateDeleteOptions>`
+        :type certificate_delete_options:
+         ~azure.batch.models.CertificateDeleteOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -360,7 +361,7 @@ class CertificateOperations(object):
             ocp_date = certificate_delete_options.ocp_date
 
         # Construct URL
-        url = '/certificates(thumbprintAlgorithm={thumbprintAlgorithm},thumbprint={thumbprint})'
+        url = self.delete.metadata['url']
         path_format_arguments = {
             'thumbprintAlgorithm': self._serialize.url("thumbprint_algorithm", thumbprint_algorithm, 'str'),
             'thumbprint': self._serialize.url("thumbprint", thumbprint, 'str')
@@ -375,7 +376,7 @@ class CertificateOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -391,7 +392,7 @@ class CertificateOperations(object):
 
         # Construct and send request
         request = self._client.delete(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [202]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -405,6 +406,7 @@ class CertificateOperations(object):
                 'Last-Modified': 'rfc-1123',
             })
             return client_raw_response
+    delete.metadata = {'url': '/certificates(thumbprintAlgorithm={thumbprintAlgorithm},thumbprint={thumbprint})'}
 
     def get(
             self, thumbprint_algorithm, thumbprint, certificate_get_options=None, custom_headers=None, raw=False, **operation_config):
@@ -417,16 +419,16 @@ class CertificateOperations(object):
         :type thumbprint: str
         :param certificate_get_options: Additional parameters for the
          operation
-        :type certificate_get_options: :class:`CertificateGetOptions
-         <azure.batch.models.CertificateGetOptions>`
+        :type certificate_get_options:
+         ~azure.batch.models.CertificateGetOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`Certificate <azure.batch.models.Certificate>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: Certificate or ClientRawResponse if raw=true
+        :rtype: ~azure.batch.models.Certificate or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -447,7 +449,7 @@ class CertificateOperations(object):
             ocp_date = certificate_get_options.ocp_date
 
         # Construct URL
-        url = '/certificates(thumbprintAlgorithm={thumbprintAlgorithm},thumbprint={thumbprint})'
+        url = self.get.metadata['url']
         path_format_arguments = {
             'thumbprintAlgorithm': self._serialize.url("thumbprint_algorithm", thumbprint_algorithm, 'str'),
             'thumbprint': self._serialize.url("thumbprint", thumbprint, 'str')
@@ -464,7 +466,7 @@ class CertificateOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -480,7 +482,7 @@ class CertificateOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -503,3 +505,4 @@ class CertificateOperations(object):
             return client_raw_response
 
         return deserialized
+    get.metadata = {'url': '/certificates(thumbprintAlgorithm={thumbprintAlgorithm},thumbprint={thumbprint})'}

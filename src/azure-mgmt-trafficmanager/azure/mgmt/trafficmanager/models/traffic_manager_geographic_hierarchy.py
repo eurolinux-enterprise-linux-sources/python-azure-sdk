@@ -9,47 +9,33 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from .resource import Resource
+from .proxy_resource import ProxyResource
 
 
-class TrafficManagerGeographicHierarchy(Resource):
+class TrafficManagerGeographicHierarchy(ProxyResource):
     """Class representing the Geographic hierarchy used with the Geographic
     traffic routing method.
 
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :param location: Resource location
-    :type location: str
-    :param tags: Resource tags
-    :type tags: dict
+    :param id: Fully qualified resource Id for the resource. Ex -
+     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}
+    :type id: str
+    :param name: The name of the resource
+    :type name: str
+    :param type: The type of the resource. Ex-
+     Microsoft.Network/trafficmanagerProfiles.
+    :type type: str
     :param geographic_hierarchy: The region at the root of the hierarchy from
      all the regions in the hierarchy can be retrieved.
-    :type geographic_hierarchy: :class:`Region
-     <azure.mgmt.trafficmanager.models.Region>`
+    :type geographic_hierarchy: ~azure.mgmt.trafficmanager.models.Region
     """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
         'geographic_hierarchy': {'key': 'properties.geographicHierarchy', 'type': 'Region'},
     }
 
-    def __init__(self, location=None, tags=None, geographic_hierarchy=None):
-        super(TrafficManagerGeographicHierarchy, self).__init__(location=location, tags=tags)
-        self.geographic_hierarchy = geographic_hierarchy
+    def __init__(self, **kwargs):
+        super(TrafficManagerGeographicHierarchy, self).__init__(**kwargs)
+        self.geographic_hierarchy = kwargs.get('geographic_hierarchy', None)

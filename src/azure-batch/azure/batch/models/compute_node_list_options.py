@@ -13,9 +13,11 @@ from msrest.serialization import Model
 
 
 class ComputeNodeListOptions(Model):
-    """Additional parameters for the ComputeNode_list operation.
+    """Additional parameters for list operation.
 
-    :param filter: An OData $filter clause..
+    :param filter: An OData $filter clause. For more information on
+     constructing this filter, see
+     https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
     :type filter: str
     :param select: An OData $select clause.
     :type select: str
@@ -39,6 +41,7 @@ class ComputeNodeListOptions(Model):
     """
 
     def __init__(self, filter=None, select=None, max_results=1000, timeout=30, client_request_id=None, return_client_request_id=False, ocp_date=None):
+        super(ComputeNodeListOptions, self).__init__()
         self.filter = filter
         self.select = select
         self.max_results = max_results

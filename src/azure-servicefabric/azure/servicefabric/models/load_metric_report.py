@@ -22,7 +22,7 @@ class LoadMetricReport(Model):
     :type name: str
     :param value: The value of the load metric.
     :type value: str
-    """ 
+    """
 
     _attribute_map = {
         'last_reported_utc': {'key': 'LastReportedUtc', 'type': 'iso-8601'},
@@ -30,7 +30,8 @@ class LoadMetricReport(Model):
         'value': {'key': 'Value', 'type': 'str'},
     }
 
-    def __init__(self, last_reported_utc=None, name=None, value=None):
-        self.last_reported_utc = last_reported_utc
-        self.name = name
-        self.value = value
+    def __init__(self, **kwargs):
+        super(LoadMetricReport, self).__init__(**kwargs)
+        self.last_reported_utc = kwargs.get('last_reported_utc', None)
+        self.name = kwargs.get('name', None)
+        self.value = kwargs.get('value', None)

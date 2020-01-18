@@ -21,29 +21,31 @@ class JobUpdateParameter(Model):
     :type priority: int
     :param constraints: The execution constraints for the job. If omitted, the
      constraints are cleared.
-    :type constraints: :class:`JobConstraints
-     <azure.batch.models.JobConstraints>`
+    :type constraints: ~azure.batch.models.JobConstraints
     :param pool_info: The pool on which the Batch service runs the job's
      tasks. You may change the pool for a job only when the job is disabled.
      The Update Job call will fail if you include the poolInfo element and the
      job is not disabled. If you specify an autoPoolSpecification specification
      in the poolInfo, only the keepAlive property can be updated, and then only
      if the auto pool has a poolLifetimeOption of job.
-    :type pool_info: :class:`PoolInformation
-     <azure.batch.models.PoolInformation>`
+    :type pool_info: ~azure.batch.models.PoolInformation
     :param metadata: A list of name-value pairs associated with the job as
      metadata. If omitted, it takes the default value of an empty list; in
      effect, any existing metadata is deleted.
-    :type metadata: list of :class:`MetadataItem
-     <azure.batch.models.MetadataItem>`
+    :type metadata: list[~azure.batch.models.MetadataItem]
     :param on_all_tasks_complete: The action the Batch service should take
      when all tasks in the job are in the completed state. If omitted, the
-     completion behavior is set to noAction. If the current value is
-     terminateJob, this is an error because a job's completion behavior may not
-     be changed from terminateJob to noAction. Possible values include:
+     completion behavior is set to noaction. If the current value is
+     terminatejob, this is an error because a job's completion behavior may not
+     be changed from terminatejob to noaction. You may not change the value
+     from terminatejob to noaction - that is, once you have engaged automatic
+     job termination, you cannot turn it off again. If you try to do this, the
+     request fails and Batch returns status code 400 (Bad Request) and an
+     'invalid property value' error response. If you do not specify this
+     element in a PUT request, it is equivalent to passing noaction. This is an
+     error if the current value is terminatejob. Possible values include:
      'noAction', 'terminateJob'
-    :type on_all_tasks_complete: str or :class:`OnAllTasksComplete
-     <azure.batch.models.OnAllTasksComplete>`
+    :type on_all_tasks_complete: str or ~azure.batch.models.OnAllTasksComplete
     """
 
     _validation = {
@@ -59,6 +61,7 @@ class JobUpdateParameter(Model):
     }
 
     def __init__(self, pool_info, priority=None, constraints=None, metadata=None, on_all_tasks_complete=None):
+        super(JobUpdateParameter, self).__init__()
         self.priority = priority
         self.constraints = constraints
         self.pool_info = pool_info

@@ -15,13 +15,9 @@ from msrest.serialization import Model
 class StartTaskInformation(Model):
     """Information about a start task running on a compute node.
 
-    :param state: The state of the start task on the compute node. running -
-     The start task is currently running. completed - The start task has exited
-     with exit code 0, or the start task has failed and the retry limit has
-     reached, or the start task process did not run due to scheduling errors.
-     Possible values include: 'running', 'completed'
-    :type state: str or :class:`StartTaskState
-     <azure.batch.models.StartTaskState>`
+    :param state: The state of the start task on the compute node. Possible
+     values include: 'running', 'completed'
+    :type state: str or ~azure.batch.models.StartTaskState
     :param start_time: The time at which the start task started running. This
      value is reset every time the task is restarted or retried (that is, this
      is the most recent time at which the start task started running).
@@ -41,14 +37,17 @@ class StartTaskInformation(Model):
      timeout, or user termination via the API) you may see an operating
      system-defined exit code.
     :type exit_code: int
+    :param container_info: Information about the container under which the
+     task is executing. This property is set only if the task runs in a
+     container context.
+    :type container_info:
+     ~azure.batch.models.TaskContainerExecutionInformation
     :param failure_info: Information describing the task failure, if any. This
      property is set only if the task is in the completed state and encountered
      a failure.
-    :type failure_info: :class:`TaskFailureInformation
-     <azure.batch.models.TaskFailureInformation>`
+    :type failure_info: ~azure.batch.models.TaskFailureInformation
     :param retry_count: The number of times the task has been retried by the
-     Batch service. The number of times the task has been retried by the Batch
-     service. Task application failures (non-zero exit code) are retried,
+     Batch service. Task application failures (non-zero exit code) are retried,
      pre-processing errors (the task could not be run) and file upload errors
      are not retried. The Batch service will retry the task up to the limit
      specified by the constraints.
@@ -63,8 +62,7 @@ class StartTaskInformation(Model):
     :param result: The result of the task execution. If the value is 'failed',
      then the details of the failure can be found in the failureInfo property.
      Possible values include: 'success', 'failure'
-    :type result: str or :class:`TaskExecutionResult
-     <azure.batch.models.TaskExecutionResult>`
+    :type result: str or ~azure.batch.models.TaskExecutionResult
     """
 
     _validation = {
@@ -78,17 +76,20 @@ class StartTaskInformation(Model):
         'start_time': {'key': 'startTime', 'type': 'iso-8601'},
         'end_time': {'key': 'endTime', 'type': 'iso-8601'},
         'exit_code': {'key': 'exitCode', 'type': 'int'},
+        'container_info': {'key': 'containerInfo', 'type': 'TaskContainerExecutionInformation'},
         'failure_info': {'key': 'failureInfo', 'type': 'TaskFailureInformation'},
         'retry_count': {'key': 'retryCount', 'type': 'int'},
         'last_retry_time': {'key': 'lastRetryTime', 'type': 'iso-8601'},
         'result': {'key': 'result', 'type': 'TaskExecutionResult'},
     }
 
-    def __init__(self, state, start_time, retry_count, end_time=None, exit_code=None, failure_info=None, last_retry_time=None, result=None):
+    def __init__(self, state, start_time, retry_count, end_time=None, exit_code=None, container_info=None, failure_info=None, last_retry_time=None, result=None):
+        super(StartTaskInformation, self).__init__()
         self.state = state
         self.start_time = start_time
         self.end_time = end_time
         self.exit_code = exit_code
+        self.container_info = container_info
         self.failure_info = failure_info
         self.retry_count = retry_count
         self.last_retry_time = last_retry_time

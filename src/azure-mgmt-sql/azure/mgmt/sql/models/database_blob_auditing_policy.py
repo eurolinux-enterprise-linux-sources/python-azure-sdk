@@ -13,10 +13,12 @@ from .proxy_resource import ProxyResource
 
 
 class DatabaseBlobAuditingPolicy(ProxyResource):
-    """Contains information about a database Blob Auditing policy.
+    """A database blob auditing policy.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
+
+    All required parameters must be populated in order to send to Azure.
 
     :ivar id: Resource ID.
     :vartype id: str
@@ -24,15 +26,12 @@ class DatabaseBlobAuditingPolicy(ProxyResource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
-    :param location: The geo-location where the resource lives
-    :type location: str
     :ivar kind: Resource kind.
     :vartype kind: str
-    :param state: Specifies the state of the policy. If state is Enabled,
-     storageEndpoint and storageAccountAccessKey are required. Possible values
-     include: 'Enabled', 'Disabled'
-    :type state: str or :class:`BlobAuditingPolicyState
-     <azure.mgmt.sql.models.BlobAuditingPolicyState>`
+    :param state: Required. Specifies the state of the policy. If state is
+     Enabled, storageEndpoint and storageAccountAccessKey are required.
+     Possible values include: 'Enabled', 'Disabled'
+    :type state: str or ~azure.mgmt.sql.models.BlobAuditingPolicyState
     :param storage_endpoint: Specifies the blob storage endpoint (e.g.
      https://MyAccount.blob.core.windows.net). If state is Enabled,
      storageEndpoint is required.
@@ -46,7 +45,7 @@ class DatabaseBlobAuditingPolicy(ProxyResource):
     :type retention_days: int
     :param audit_actions_and_groups: Specifies the Actions and Actions-Groups
      to audit.
-    :type audit_actions_and_groups: list of str
+    :type audit_actions_and_groups: list[str]
     :param storage_account_subscription_id: Specifies the blob storage
      subscription Id.
     :type storage_account_subscription_id: str
@@ -67,7 +66,6 @@ class DatabaseBlobAuditingPolicy(ProxyResource):
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
         'kind': {'key': 'kind', 'type': 'str'},
         'state': {'key': 'properties.state', 'type': 'BlobAuditingPolicyState'},
         'storage_endpoint': {'key': 'properties.storageEndpoint', 'type': 'str'},
@@ -78,14 +76,13 @@ class DatabaseBlobAuditingPolicy(ProxyResource):
         'is_storage_secondary_key_in_use': {'key': 'properties.isStorageSecondaryKeyInUse', 'type': 'bool'},
     }
 
-    def __init__(self, state, location=None, storage_endpoint=None, storage_account_access_key=None, retention_days=None, audit_actions_and_groups=None, storage_account_subscription_id=None, is_storage_secondary_key_in_use=None):
-        super(DatabaseBlobAuditingPolicy, self).__init__()
-        self.location = location
+    def __init__(self, **kwargs):
+        super(DatabaseBlobAuditingPolicy, self).__init__(**kwargs)
         self.kind = None
-        self.state = state
-        self.storage_endpoint = storage_endpoint
-        self.storage_account_access_key = storage_account_access_key
-        self.retention_days = retention_days
-        self.audit_actions_and_groups = audit_actions_and_groups
-        self.storage_account_subscription_id = storage_account_subscription_id
-        self.is_storage_secondary_key_in_use = is_storage_secondary_key_in_use
+        self.state = kwargs.get('state', None)
+        self.storage_endpoint = kwargs.get('storage_endpoint', None)
+        self.storage_account_access_key = kwargs.get('storage_account_access_key', None)
+        self.retention_days = kwargs.get('retention_days', None)
+        self.audit_actions_and_groups = kwargs.get('audit_actions_and_groups', None)
+        self.storage_account_subscription_id = kwargs.get('storage_account_subscription_id', None)
+        self.is_storage_secondary_key_in_use = kwargs.get('is_storage_secondary_key_in_use', None)

@@ -13,8 +13,7 @@ from msrest.serialization import Model
 
 
 class ComputeNodeGetRemoteLoginSettingsOptions(Model):
-    """Additional parameters for the ComputeNode_get_remote_login_settings
-    operation.
+    """Additional parameters for get_remote_login_settings operation.
 
     :param timeout: The maximum time that the server can spend processing the
      request, in seconds. The default is 30 seconds. Default value: 30 .
@@ -33,6 +32,7 @@ class ComputeNodeGetRemoteLoginSettingsOptions(Model):
     """
 
     def __init__(self, timeout=30, client_request_id=None, return_client_request_id=False, ocp_date=None):
+        super(ComputeNodeGetRemoteLoginSettingsOptions, self).__init__()
         self.timeout = timeout
         self.client_request_id = client_request_id
         self.return_client_request_id = return_client_request_id

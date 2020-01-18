@@ -17,8 +17,9 @@ class CloudPool(Model):
 
     :param id: A string that uniquely identifies the pool within the account.
      The ID can contain any combination of alphanumeric characters including
-     hyphens and underscores, and cannot contain more than 64 characters. It is
-     common to use a GUID for the id.
+     hyphens and underscores, and cannot contain more than 64 characters. The
+     ID is case-preserving and case-insensitive (that is, you may not have two
+     IDs within an account that differ only by case).
     :type id: str
     :param display_name: The display name for the pool. The display name need
      not be unique and can contain any Unicode characters up to a maximum
@@ -39,30 +40,15 @@ class CloudPool(Model):
     :type last_modified: datetime
     :param creation_time: The creation time of the pool.
     :type creation_time: datetime
-    :param state: The current state of the pool. active - The pool is
-     available to run tasks subject to the availability of compute nodes.
-     deleting - The user has requested that the pool be deleted, but the delete
-     operation has not yet completed. upgrading - The user has requested that
-     the operating system of the pool's nodes be upgraded, but the upgrade
-     operation has not yet completed (that is, some nodes in the pool have not
-     yet been upgraded). While upgrading, the pool may be able to run tasks
-     (with reduced capacity) but this is not guaranteed. Possible values
-     include: 'active', 'deleting', 'upgrading'
-    :type state: str or :class:`PoolState <azure.batch.models.PoolState>`
+    :param state: The current state of the pool. Possible values include:
+     'active', 'deleting', 'upgrading'
+    :type state: str or ~azure.batch.models.PoolState
     :param state_transition_time: The time at which the pool entered its
      current state.
     :type state_transition_time: datetime
-    :param allocation_state: Whether the pool is resizing. steady - The pool
-     is not resizing. There are no changes to the number of nodes in the pool
-     in progress. A pool enters this state when it is created and when no
-     operations are being performed on the pool to change the number of
-     dedicated nodes. resizing - The pool is resizing; that is, compute nodes
-     are being added to or removed from the pool. stopping - The pool was
-     resizing, but the user has requested that the resize be stopped, but the
-     stop request has not yet been completed. Possible values include:
-     'steady', 'resizing', 'stopping'
-    :type allocation_state: str or :class:`AllocationState
-     <azure.batch.models.AllocationState>`
+    :param allocation_state: Whether the pool is resizing. Possible values
+     include: 'steady', 'resizing', 'stopping'
+    :type allocation_state: str or ~azure.batch.models.AllocationState
     :param allocation_state_transition_time: The time at which the pool
      entered its current allocation state.
     :type allocation_state_transition_time: datetime
@@ -70,7 +56,7 @@ class CloudPool(Model):
      machines in a pool are the same size. For information about available
      sizes of virtual machines for Cloud Services pools (pools created with
      cloudServiceConfiguration), see Sizes for Cloud Services
-     (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
+     (https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
      Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2 and
      A2V2. For information about available VM sizes for pools using images from
      the Virtual Machines Marketplace (pools created with
@@ -86,13 +72,13 @@ class CloudPool(Model):
      exclusive and one of the properties must be specified. This property
      cannot be specified if the Batch account was created with its
      poolAllocationMode property set to 'UserSubscription'.
-    :type cloud_service_configuration: :class:`CloudServiceConfiguration
-     <azure.batch.models.CloudServiceConfiguration>`
+    :type cloud_service_configuration:
+     ~azure.batch.models.CloudServiceConfiguration
     :param virtual_machine_configuration: The virtual machine configuration
      for the pool. This property and cloudServiceConfiguration are mutually
      exclusive and one of the properties must be specified.
-    :type virtual_machine_configuration: :class:`VirtualMachineConfiguration
-     <azure.batch.models.VirtualMachineConfiguration>`
+    :type virtual_machine_configuration:
+     ~azure.batch.models.VirtualMachineConfiguration
     :param resize_timeout: The timeout for allocation of compute nodes to the
      pool. This is the timeout for the most recent resize operation. (The
      initial sizing when the pool is created counts as a resize.) The default
@@ -102,8 +88,7 @@ class CloudPool(Model):
      last resize on the pool. This property is set only if one or more errors
      occurred during the last pool resize, and only when the pool
      allocationState is Steady.
-    :type resize_errors: list of :class:`ResizeError
-     <azure.batch.models.ResizeError>`
+    :type resize_errors: list[~azure.batch.models.ResizeError]
     :param current_dedicated_nodes: The number of dedicated compute nodes
      currently in the pool.
     :type current_dedicated_nodes: int
@@ -135,19 +120,17 @@ class CloudPool(Model):
     :param auto_scale_run: The results and errors from the last execution of
      the autoscale formula. This property is set only if the pool automatically
      scales, i.e. enableAutoScale is true.
-    :type auto_scale_run: :class:`AutoScaleRun
-     <azure.batch.models.AutoScaleRun>`
+    :type auto_scale_run: ~azure.batch.models.AutoScaleRun
     :param enable_inter_node_communication: Whether the pool permits direct
      communication between nodes. This imposes restrictions on which nodes can
      be assigned to the pool. Specifying this value can reduce the chance of
      the requested number of nodes to be allocated in the pool.
     :type enable_inter_node_communication: bool
     :param network_configuration: The network configuration for the pool.
-    :type network_configuration: :class:`NetworkConfiguration
-     <azure.batch.models.NetworkConfiguration>`
+    :type network_configuration: ~azure.batch.models.NetworkConfiguration
     :param start_task: A task specified to run on each compute node as it
      joins the pool.
-    :type start_task: :class:`StartTask <azure.batch.models.StartTask>`
+    :type start_task: ~azure.batch.models.StartTask
     :param certificate_references: The list of certificates to be installed on
      each compute node in the pool. For Windows compute nodes, the Batch
      service installs the certificates to the specified certificate store and
@@ -157,37 +140,35 @@ class CloudPool(Model):
      location. For certificates with visibility of 'remoteUser', a 'certs'
      directory is created in the user's home directory (e.g.,
      /home/{user-name}/certs) and certificates are placed in that directory.
-    :type certificate_references: list of :class:`CertificateReference
-     <azure.batch.models.CertificateReference>`
+    :type certificate_references:
+     list[~azure.batch.models.CertificateReference]
     :param application_package_references: The list of application packages to
      be installed on each compute node in the pool.
-    :type application_package_references: list of
-     :class:`ApplicationPackageReference
-     <azure.batch.models.ApplicationPackageReference>`
+    :type application_package_references:
+     list[~azure.batch.models.ApplicationPackageReference]
     :param application_licenses: The list of application licenses the Batch
      service will make available on each compute node in the pool. The list of
      application licenses must be a subset of available Batch service
      application licenses. If a license is requested which is not supported,
      pool creation will fail.
-    :type application_licenses: list of str
+    :type application_licenses: list[str]
     :param max_tasks_per_node: The maximum number of tasks that can run
      concurrently on a single compute node in the pool.
     :type max_tasks_per_node: int
-    :param task_scheduling_policy: How the Batch service distributes tasks
-     between compute nodes in the pool.
-    :type task_scheduling_policy: :class:`TaskSchedulingPolicy
-     <azure.batch.models.TaskSchedulingPolicy>`
+    :param task_scheduling_policy: How tasks are distributed across compute
+     nodes in a pool.
+    :type task_scheduling_policy: ~azure.batch.models.TaskSchedulingPolicy
     :param user_accounts: The list of user accounts to be created on each node
      in the pool.
-    :type user_accounts: list of :class:`UserAccount
-     <azure.batch.models.UserAccount>`
+    :type user_accounts: list[~azure.batch.models.UserAccount]
     :param metadata: A list of name-value pairs associated with the pool as
      metadata.
-    :type metadata: list of :class:`MetadataItem
-     <azure.batch.models.MetadataItem>`
+    :type metadata: list[~azure.batch.models.MetadataItem]
     :param stats: Utilization and resource usage statistics for the entire
-     lifetime of the pool.
-    :type stats: :class:`PoolStatistics <azure.batch.models.PoolStatistics>`
+     lifetime of the pool. The statistics may not be immediately available. The
+     Batch service performs periodic roll-up of statistics. The typical delay
+     is about 30 minutes.
+    :type stats: ~azure.batch.models.PoolStatistics
     """
 
     _attribute_map = {
@@ -228,6 +209,7 @@ class CloudPool(Model):
     }
 
     def __init__(self, id=None, display_name=None, url=None, e_tag=None, last_modified=None, creation_time=None, state=None, state_transition_time=None, allocation_state=None, allocation_state_transition_time=None, vm_size=None, cloud_service_configuration=None, virtual_machine_configuration=None, resize_timeout=None, resize_errors=None, current_dedicated_nodes=None, current_low_priority_nodes=None, target_dedicated_nodes=None, target_low_priority_nodes=None, enable_auto_scale=None, auto_scale_formula=None, auto_scale_evaluation_interval=None, auto_scale_run=None, enable_inter_node_communication=None, network_configuration=None, start_task=None, certificate_references=None, application_package_references=None, application_licenses=None, max_tasks_per_node=None, task_scheduling_policy=None, user_accounts=None, metadata=None, stats=None):
+        super(CloudPool, self).__init__()
         self.id = id
         self.display_name = display_name
         self.url = url

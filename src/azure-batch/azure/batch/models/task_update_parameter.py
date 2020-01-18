@@ -16,9 +16,9 @@ class TaskUpdateParameter(Model):
     """The set of changes to be made to a task.
 
     :param constraints: Constraints that apply to this task. If omitted, the
-     task is given the default constraints.
-    :type constraints: :class:`TaskConstraints
-     <azure.batch.models.TaskConstraints>`
+     task is given the default constraints. For multi-instance tasks, updating
+     the retention time applies only to the primary task and not subtasks.
+    :type constraints: ~azure.batch.models.TaskConstraints
     """
 
     _attribute_map = {
@@ -26,4 +26,5 @@ class TaskUpdateParameter(Model):
     }
 
     def __init__(self, constraints=None):
+        super(TaskUpdateParameter, self).__init__()
         self.constraints = constraints

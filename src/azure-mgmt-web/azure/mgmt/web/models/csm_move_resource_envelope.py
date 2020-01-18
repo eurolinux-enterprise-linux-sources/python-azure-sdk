@@ -19,11 +19,11 @@ class CsmMoveResourceEnvelope(Model):
     :param target_resource_group:
     :type target_resource_group: str
     :param resources:
-    :type resources: list of str
+    :type resources: list[str]
     """
 
     _validation = {
-        'target_resource_group': {'max_length': 90, 'min_length': 1, 'pattern': ' ^[-\w\._\(\)]+[^\.]$'},
+        'target_resource_group': {'max_length': 90, 'min_length': 1, 'pattern': r' ^[-\w\._\(\)]+[^\.]$'},
     }
 
     _attribute_map = {
@@ -32,5 +32,6 @@ class CsmMoveResourceEnvelope(Model):
     }
 
     def __init__(self, target_resource_group=None, resources=None):
+        super(CsmMoveResourceEnvelope, self).__init__()
         self.target_resource_group = target_resource_group
         self.resources = resources

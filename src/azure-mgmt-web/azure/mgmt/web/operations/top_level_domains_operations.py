@@ -9,9 +9,9 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
+import uuid
 from msrest.pipeline import ClientRawResponse
 from msrestazure.azure_exceptions import CloudError
-import uuid
 
 from .. import models
 
@@ -22,9 +22,11 @@ class TopLevelDomainsOperations(object):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
+    :param deserializer: An object model deserializer.
     :ivar api_version: API Version. Constant value: "2015-04-01".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
@@ -46,15 +48,16 @@ class TopLevelDomainsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`TopLevelDomainPaged
-         <azure.mgmt.web.models.TopLevelDomainPaged>`
+        :return: An iterator like instance of TopLevelDomain
+        :rtype:
+         ~azure.mgmt.web.models.TopLevelDomainPaged[~azure.mgmt.web.models.TopLevelDomain]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         def internal_paging(next_link=None, raw=False):
 
             if not next_link:
                 # Construct URL
-                url = '/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains'
+                url = self.list.metadata['url']
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
@@ -81,7 +84,7 @@ class TopLevelDomainsOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 exp = CloudError(response)
@@ -99,6 +102,7 @@ class TopLevelDomainsOperations(object):
             return client_raw_response
 
         return deserialized
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains'}
 
     def get(
             self, name, custom_headers=None, raw=False, **operation_config):
@@ -113,13 +117,13 @@ class TopLevelDomainsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`TopLevelDomain <azure.mgmt.web.models.TopLevelDomain>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: TopLevelDomain or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.web.models.TopLevelDomain or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}'
+        url = self.get.metadata['url']
         path_format_arguments = {
             'name': self._serialize.url("name", name, 'str'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
@@ -142,7 +146,7 @@ class TopLevelDomainsOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)
@@ -159,6 +163,7 @@ class TopLevelDomainsOperations(object):
             return client_raw_response
 
         return deserialized
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}'}
 
     def list_agreements(
             self, name, include_privacy=None, for_transfer=None, custom_headers=None, raw=False, **operation_config):
@@ -183,8 +188,9 @@ class TopLevelDomainsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`TldLegalAgreementPaged
-         <azure.mgmt.web.models.TldLegalAgreementPaged>`
+        :return: An iterator like instance of TldLegalAgreement
+        :rtype:
+         ~azure.mgmt.web.models.TldLegalAgreementPaged[~azure.mgmt.web.models.TldLegalAgreement]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         agreement_option = models.TopLevelDomainAgreementOption(include_privacy=include_privacy, for_transfer=for_transfer)
@@ -193,7 +199,7 @@ class TopLevelDomainsOperations(object):
 
             if not next_link:
                 # Construct URL
-                url = '/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements'
+                url = self.list_agreements.metadata['url']
                 path_format_arguments = {
                     'name': self._serialize.url("name", name, 'str'),
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
@@ -224,7 +230,7 @@ class TopLevelDomainsOperations(object):
             # Construct and send request
             request = self._client.post(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, body_content, **operation_config)
+                request, header_parameters, body_content, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 exp = CloudError(response)
@@ -242,3 +248,4 @@ class TopLevelDomainsOperations(object):
             return client_raw_response
 
         return deserialized
+    list_agreements.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements'}

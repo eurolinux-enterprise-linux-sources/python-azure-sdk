@@ -23,8 +23,8 @@ class ResourceLink(Model):
     :ivar name: The name of the resource link.
     :vartype name: str
     :param properties: Properties for resource link.
-    :type properties: :class:`ResourceLinkProperties
-     <azure.mgmt.resource.links.v2016_09_01.models.ResourceLinkProperties>`
+    :type properties:
+     ~azure.mgmt.resource.links.v2016_09_01.models.ResourceLinkProperties
     """
 
     _validation = {
@@ -38,7 +38,8 @@ class ResourceLink(Model):
         'properties': {'key': 'properties', 'type': 'ResourceLinkProperties'},
     }
 
-    def __init__(self, properties=None):
+    def __init__(self, **kwargs):
+        super(ResourceLink, self).__init__(**kwargs)
         self.id = None
         self.name = None
-        self.properties = properties
+        self.properties = kwargs.get('properties', None)

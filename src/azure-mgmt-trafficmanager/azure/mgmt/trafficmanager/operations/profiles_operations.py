@@ -9,9 +9,9 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
+import uuid
 from msrest.pipeline import ClientRawResponse
 from msrestazure.azure_exceptions import CloudError
-import uuid
 
 from .. import models
 
@@ -22,16 +22,18 @@ class ProfilesOperations(object):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
-    :ivar api_version: Client Api Version. Constant value: "2017-03-01".
+    :param deserializer: An object model deserializer.
+    :ivar api_version: Client Api Version. Constant value: "2018-03-01".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2017-03-01"
+        self.api_version = "2018-03-01"
 
         self.config = config
 
@@ -39,29 +41,26 @@ class ProfilesOperations(object):
             self, name=None, type=None, custom_headers=None, raw=False, **operation_config):
         """Checks the availability of a Traffic Manager Relative DNS name.
 
-        :param name: Gets or sets the name of the resource.
+        :param name: The name of the resource.
         :type name: str
-        :param type: Gets or sets the type of the resource.
+        :param type: The type of the resource.
         :type type: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`TrafficManagerNameAvailability
-         <azure.mgmt.trafficmanager.models.TrafficManagerNameAvailability>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: TrafficManagerNameAvailability or ClientRawResponse if
+         raw=true
+        :rtype:
+         ~azure.mgmt.trafficmanager.models.TrafficManagerNameAvailability or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         parameters = models.CheckTrafficManagerRelativeDnsNameAvailabilityParameters(name=name, type=type)
 
         # Construct URL
-        url = '/providers/Microsoft.Network/checkTrafficManagerNameAvailability'
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
+        url = self.check_traffic_manager_relative_dns_name_availability.metadata['url']
 
         # Construct parameters
         query_parameters = {}
@@ -83,7 +82,7 @@ class ProfilesOperations(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)
@@ -100,8 +99,9 @@ class ProfilesOperations(object):
             return client_raw_response
 
         return deserialized
+    check_traffic_manager_relative_dns_name_availability.metadata = {'url': '/providers/Microsoft.Network/checkTrafficManagerNameAvailability'}
 
-    def list_by_in_resource_group(
+    def list_by_resource_group(
             self, resource_group_name, custom_headers=None, raw=False, **operation_config):
         """Lists all Traffic Manager profiles within a resource group.
 
@@ -113,15 +113,16 @@ class ProfilesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`ProfilePaged
-         <azure.mgmt.trafficmanager.models.ProfilePaged>`
+        :return: An iterator like instance of Profile
+        :rtype:
+         ~azure.mgmt.trafficmanager.models.ProfilePaged[~azure.mgmt.trafficmanager.models.Profile]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         def internal_paging(next_link=None, raw=False):
 
             if not next_link:
                 # Construct URL
-                url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles'
+                url = self.list_by_resource_group.metadata['url']
                 path_format_arguments = {
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
@@ -149,7 +150,7 @@ class ProfilesOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 exp = CloudError(response)
@@ -167,8 +168,9 @@ class ProfilesOperations(object):
             return client_raw_response
 
         return deserialized
+    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles'}
 
-    def list_all(
+    def list_by_subscription(
             self, custom_headers=None, raw=False, **operation_config):
         """Lists all Traffic Manager profiles within a subscription.
 
@@ -177,15 +179,16 @@ class ProfilesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`ProfilePaged
-         <azure.mgmt.trafficmanager.models.ProfilePaged>`
+        :return: An iterator like instance of Profile
+        :rtype:
+         ~azure.mgmt.trafficmanager.models.ProfilePaged[~azure.mgmt.trafficmanager.models.Profile]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         def internal_paging(next_link=None, raw=False):
 
             if not next_link:
                 # Construct URL
-                url = '/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles'
+                url = self.list_by_subscription.metadata['url']
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
@@ -212,7 +215,7 @@ class ProfilesOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 exp = CloudError(response)
@@ -230,6 +233,7 @@ class ProfilesOperations(object):
             return client_raw_response
 
         return deserialized
+    list_by_subscription.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles'}
 
     def get(
             self, resource_group_name, profile_name, custom_headers=None, raw=False, **operation_config):
@@ -245,13 +249,13 @@ class ProfilesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`Profile <azure.mgmt.trafficmanager.models.Profile>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: Profile or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.trafficmanager.models.Profile or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}'
+        url = self.get.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'profileName': self._serialize.url("profile_name", profile_name, 'str'),
@@ -275,7 +279,7 @@ class ProfilesOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)
@@ -292,6 +296,7 @@ class ProfilesOperations(object):
             return client_raw_response
 
         return deserialized
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}'}
 
     def create_or_update(
             self, resource_group_name, profile_name, parameters, custom_headers=None, raw=False, **operation_config):
@@ -304,20 +309,19 @@ class ProfilesOperations(object):
         :type profile_name: str
         :param parameters: The Traffic Manager profile parameters supplied to
          the CreateOrUpdate operation.
-        :type parameters: :class:`Profile
-         <azure.mgmt.trafficmanager.models.Profile>`
+        :type parameters: ~azure.mgmt.trafficmanager.models.Profile
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`Profile <azure.mgmt.trafficmanager.models.Profile>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: Profile or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.trafficmanager.models.Profile or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}'
+        url = self.create_or_update.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'profileName': self._serialize.url("profile_name", profile_name, 'str'),
@@ -345,7 +349,7 @@ class ProfilesOperations(object):
         # Construct and send request
         request = self._client.put(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [200, 201]:
             exp = CloudError(response)
@@ -364,6 +368,7 @@ class ProfilesOperations(object):
             return client_raw_response
 
         return deserialized
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}'}
 
     def delete(
             self, resource_group_name, profile_name, custom_headers=None, raw=False, **operation_config):
@@ -380,14 +385,13 @@ class ProfilesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`DeleteOperationResult
-         <azure.mgmt.trafficmanager.models.DeleteOperationResult>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: DeleteOperationResult or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.trafficmanager.models.DeleteOperationResult or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}'
+        url = self.delete.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'profileName': self._serialize.url("profile_name", profile_name, 'str'),
@@ -411,7 +415,7 @@ class ProfilesOperations(object):
 
         # Construct and send request
         request = self._client.delete(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200, 204]:
             exp = CloudError(response)
@@ -422,14 +426,13 @@ class ProfilesOperations(object):
 
         if response.status_code == 200:
             deserialized = self._deserialize('DeleteOperationResult', response)
-        if response.status_code == 204:
-            deserialized = self._deserialize('DeleteOperationResult', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}'}
 
     def update(
             self, resource_group_name, profile_name, parameters, custom_headers=None, raw=False, **operation_config):
@@ -442,20 +445,19 @@ class ProfilesOperations(object):
         :type profile_name: str
         :param parameters: The Traffic Manager profile parameters supplied to
          the Update operation.
-        :type parameters: :class:`Profile
-         <azure.mgmt.trafficmanager.models.Profile>`
+        :type parameters: ~azure.mgmt.trafficmanager.models.Profile
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`Profile <azure.mgmt.trafficmanager.models.Profile>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: Profile or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.trafficmanager.models.Profile or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}'
+        url = self.update.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'profileName': self._serialize.url("profile_name", profile_name, 'str'),
@@ -483,7 +485,7 @@ class ProfilesOperations(object):
         # Construct and send request
         request = self._client.patch(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)
@@ -500,3 +502,4 @@ class ProfilesOperations(object):
             return client_raw_response
 
         return deserialized
+    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}'}

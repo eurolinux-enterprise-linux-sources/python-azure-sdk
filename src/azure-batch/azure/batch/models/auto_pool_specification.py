@@ -20,17 +20,12 @@ class AutoPoolSpecification(Model):
      when a pool is automatically created. The Batch service assigns each auto
      pool a unique identifier on creation. To distinguish between pools created
      for different purposes, you can specify this element to add a prefix to
-     the id that is assigned. The prefix can be up to 20 characters long.
+     the ID that is assigned. The prefix can be up to 20 characters long.
     :type auto_pool_id_prefix: str
     :param pool_lifetime_option: The minimum lifetime of created auto pools,
-     and how multiple jobs on a schedule are assigned to pools. When the pool
-     lifetime scope is jobSchedule level, the Batch service keeps track of the
-     last autopool created for the job schedule, and deletes that pool when the
-     job schedule completes. Batch will also delete this pool if the user
-     updates the auto pool specification in a way that changes this lifetime.
-     Possible values include: 'jobSchedule', 'job'
-    :type pool_lifetime_option: str or :class:`PoolLifetimeOption
-     <azure.batch.models.PoolLifetimeOption>`
+     and how multiple jobs on a schedule are assigned to pools. Possible values
+     include: 'jobSchedule', 'job'
+    :type pool_lifetime_option: str or ~azure.batch.models.PoolLifetimeOption
     :param keep_alive: Whether to keep an auto pool alive after its lifetime
      expires. If false, the Batch service deletes the pool once its lifetime
      (as determined by the poolLifetimeOption setting) expires; that is, when
@@ -39,8 +34,7 @@ class AutoPoolSpecification(Model):
      created with this option.
     :type keep_alive: bool
     :param pool: The pool specification for the auto pool.
-    :type pool: :class:`PoolSpecification
-     <azure.batch.models.PoolSpecification>`
+    :type pool: ~azure.batch.models.PoolSpecification
     """
 
     _validation = {
@@ -55,6 +49,7 @@ class AutoPoolSpecification(Model):
     }
 
     def __init__(self, pool_lifetime_option, auto_pool_id_prefix=None, keep_alive=None, pool=None):
+        super(AutoPoolSpecification, self).__init__()
         self.auto_pool_id_prefix = auto_pool_id_prefix
         self.pool_lifetime_option = pool_lifetime_option
         self.keep_alive = keep_alive

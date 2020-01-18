@@ -17,8 +17,7 @@ class OutputFileDestination(Model):
 
     :param container: A location in Azure blob storage to which files are
      uploaded.
-    :type container: :class:`OutputFileBlobContainerDestination
-     <azure.batch.models.OutputFileBlobContainerDestination>`
+    :type container: ~azure.batch.models.OutputFileBlobContainerDestination
     """
 
     _attribute_map = {
@@ -26,4 +25,5 @@ class OutputFileDestination(Model):
     }
 
     def __init__(self, container=None):
+        super(OutputFileDestination, self).__init__()
         self.container = container

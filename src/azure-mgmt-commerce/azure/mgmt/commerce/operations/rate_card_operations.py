@@ -9,8 +9,8 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.pipeline import ClientRawResponse
 import uuid
+from msrest.pipeline import ClientRawResponse
 
 from .. import models
 
@@ -21,28 +21,32 @@ class RateCardOperations(object):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
+    :param deserializer: An object model deserializer.
+    :ivar api_version: Client Api Version. Constant value: "2015-06-01-preview".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
+        self.api_version = "2015-06-01-preview"
 
         self.config = config
 
     def get(
-            self, filter=None, custom_headers=None, raw=False, **operation_config):
-        """Enables you to query for the resource/meter metadata and related
-        prices used in a given subscription by Offer ID, Currency, Locale and
-        Region. The metadata associated with the billing meters, including
-        but not limited to service names, types, resources, units of measure,
-        and regions, is subject to change at any time and without notice. If
-        you intend to use this billing data in an automated fashion, please
-        use the billing meter GUID to uniquely identify each billable item.
-        If the billing meter GUID is scheduled to change due to a new billing
-        model, you will be notified in advance of the change. .
+            self, filter, custom_headers=None, raw=False, **operation_config):
+        """Enables you to query for the resource/meter metadata and related prices
+        used in a given subscription by Offer ID, Currency, Locale and Region.
+        The metadata associated with the billing meters, including but not
+        limited to service names, types, resources, units of measure, and
+        regions, is subject to change at any time and without notice. If you
+        intend to use this billing data in an automated fashion, please use the
+        billing meter GUID to uniquely identify each billable item. If the
+        billing meter GUID is scheduled to change due to a new billing model,
+        you will be notified in advance of the change. .
 
         :param filter: The filter to apply on the operation. It ONLY supports
          the 'eq' and 'and' logical operators at this time. All the 4 query
@@ -54,13 +58,14 @@ class RateCardOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`ResourceRateCardInfo
-         <azure.mgmt.commerce.models.ResourceRateCardInfo>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: ResourceRateCardInfo or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.commerce.models.ResourceRateCardInfo or
+         ~msrest.pipeline.ClientRawResponse
+        :raises:
+         :class:`ErrorResponseException<azure.mgmt.commerce.models.ErrorResponseException>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/providers/Microsoft.Commerce/RateCard'
+        url = self.get.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
@@ -68,9 +73,8 @@ class RateCardOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        if filter is not None:
-            query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
-        query_parameters['api-version'] = self._serialize.query("self.config.api_version", self.config.api_version, 'str')
+        query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -84,7 +88,7 @@ class RateCardOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.ErrorResponseException(self._deserialize, response)
@@ -99,3 +103,4 @@ class RateCardOperations(object):
             return client_raw_response
 
         return deserialized
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Commerce/RateCard'}

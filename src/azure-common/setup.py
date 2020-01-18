@@ -6,6 +6,7 @@
 # license information.
 #--------------------------------------------------------------------------
 
+from io import open
 from setuptools import setup
 import sys
 try:
@@ -31,14 +32,19 @@ try:
 except ImportError:
     pass
 
+with open('README.rst', encoding='utf-8') as f:
+    readme = f.read()
+with open('HISTORY.rst', encoding='utf-8') as f:
+    history = f.read()
+
 setup(
     name='azure-common',
-    version='1.1.6',
+    version='1.1.14',
     description='Microsoft Azure Client Library for Python (Common)',
-    long_description=open('README.rst', 'r').read(),
+    long_description=readme + '\n\n' + history,
     license='MIT License',
     author='Microsoft Corporation',
-    author_email='ptvshelp@microsoft.com',
+    author_email='azpysdkhelp@microsoft.com',
     url='https://github.com/Azure/azure-sdk-for-python',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -46,20 +52,21 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'License :: OSI Approved :: MIT License',
     ],
     zip_safe=False,
     packages=[
         'azure',
         'azure.common',
+        'azure.profiles',
     ],
     extras_require={
         'autorest':[
-            'msrestazure>=0.4.0,<0.5.0',
+            'msrestazure>=0.4.0,<2.0.0',
         ]
     },
     cmdclass=cmdclass

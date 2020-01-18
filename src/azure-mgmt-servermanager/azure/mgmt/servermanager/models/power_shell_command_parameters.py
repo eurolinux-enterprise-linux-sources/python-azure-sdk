@@ -17,11 +17,12 @@ class PowerShellCommandParameters(Model):
 
     :param command: Script to execute.
     :type command: str
-    """ 
+    """
 
     _attribute_map = {
         'command': {'key': 'properties.command', 'type': 'str'},
     }
 
-    def __init__(self, command=None):
-        self.command = command
+    def __init__(self, **kwargs):
+        super(PowerShellCommandParameters, self).__init__(**kwargs)
+        self.command = kwargs.get('command', None)

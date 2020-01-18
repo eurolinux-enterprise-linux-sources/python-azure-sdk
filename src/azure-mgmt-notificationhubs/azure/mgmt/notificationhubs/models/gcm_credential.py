@@ -19,13 +19,14 @@ class GcmCredential(Model):
     :type gcm_endpoint: str
     :param google_api_key: The Google API key.
     :type google_api_key: str
-    """ 
+    """
 
     _attribute_map = {
         'gcm_endpoint': {'key': 'properties.gcmEndpoint', 'type': 'str'},
         'google_api_key': {'key': 'properties.googleApiKey', 'type': 'str'},
     }
 
-    def __init__(self, gcm_endpoint=None, google_api_key=None):
-        self.gcm_endpoint = gcm_endpoint
-        self.google_api_key = google_api_key
+    def __init__(self, **kwargs):
+        super(GcmCredential, self).__init__(**kwargs)
+        self.gcm_endpoint = kwargs.get('gcm_endpoint', None)
+        self.google_api_key = kwargs.get('google_api_key', None)

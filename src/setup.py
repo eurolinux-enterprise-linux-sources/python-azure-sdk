@@ -23,19 +23,21 @@ packages = [os.path.dirname(p) for p in glob.glob('azure*/setup.py')]
 nspkg_packages = [p for p in packages if "nspkg" in p]
 nspkg_packages.sort(key = lambda x: len([c for c in x if c == '-']))
 
-# Consider "azure-common" as a power nspkg : has to be installed first
-nspkg_packages.append("azure-common")
-
 # Manually push meta-packages at the end, in reverse dependency order
 meta_package = ['azure-mgmt', 'azure']
 
 # So content packages are:
 content_package = [p for p in packages if p not in meta_package+nspkg_packages]
+# Move azure-common at the beginning
+content_package.remove("azure-common")
 content_package.insert(0, "azure-common")
 
 # Package final:
 if "install" in sys.argv:
     packages = content_package
+elif "travis_deploy" in sys.argv:
+    from build_package import travis_build_package
+    sys.exit(travis_build_package())
 else:
     packages = nspkg_packages + content_package + meta_package
 

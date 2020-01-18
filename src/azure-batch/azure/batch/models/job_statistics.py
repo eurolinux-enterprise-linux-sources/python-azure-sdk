@@ -31,6 +31,10 @@ class JobStatistics(Model):
      cores and all compute nodes) consumed by all tasks in the job.
     :type kernel_cpu_time: timedelta
     :param wall_clock_time: The total wall clock time of all tasks in the job.
+     The wall clock time is the elapsed time from when the task started running
+     on a compute node to when it finished (or to the last time the statistics
+     were updated, if the task had not finished by then). If a task was
+     retried, this includes the wall clock time of all the task retries.
     :type wall_clock_time: timedelta
     :param read_iops: The total number of disk read operations made by all
      tasks in the job.
@@ -99,6 +103,7 @@ class JobStatistics(Model):
     }
 
     def __init__(self, url, start_time, last_update_time, user_cpu_time, kernel_cpu_time, wall_clock_time, read_iops, write_iops, read_io_gi_b, write_io_gi_b, num_succeeded_tasks, num_failed_tasks, num_task_retries, wait_time):
+        super(JobStatistics, self).__init__()
         self.url = url
         self.start_time = start_time
         self.last_update_time = last_update_time

@@ -28,8 +28,7 @@ class CertificateAddParameter(Model):
     :type data: str
     :param certificate_format: The format of the certificate data. Possible
      values include: 'pfx', 'cer'
-    :type certificate_format: str or :class:`CertificateFormat
-     <azure.batch.models.CertificateFormat>`
+    :type certificate_format: str or ~azure.batch.models.CertificateFormat
     :param password: The password to access the certificate's private key.
      This is required if the certificate format is pfx. It should be omitted if
      the certificate format is cer.
@@ -51,6 +50,7 @@ class CertificateAddParameter(Model):
     }
 
     def __init__(self, thumbprint, thumbprint_algorithm, data, certificate_format=None, password=None):
+        super(CertificateAddParameter, self).__init__()
         self.thumbprint = thumbprint
         self.thumbprint_algorithm = thumbprint_algorithm
         self.data = data

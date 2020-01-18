@@ -24,7 +24,8 @@ class FileSystemHttpLogsConfig(Model):
      Remove files older than X days.
      0 or lower means no retention.
     :type retention_in_days: int
-    :param enabled: Enabled.
+    :param enabled: True if configuration is enabled, false if it is disabled
+     and null if configuration is not set.
     :type enabled: bool
     """
 
@@ -39,6 +40,7 @@ class FileSystemHttpLogsConfig(Model):
     }
 
     def __init__(self, retention_in_mb=None, retention_in_days=None, enabled=None):
+        super(FileSystemHttpLogsConfig, self).__init__()
         self.retention_in_mb = retention_in_mb
         self.retention_in_days = retention_in_days
         self.enabled = enabled

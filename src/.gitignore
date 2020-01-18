@@ -1,12 +1,16 @@
 # Python cache
 __pycache__/
 *.pyc
+.pytest_cache
 
 # Virtual environment
 env*/
 
 # PTVS analysis
 .ptvs/
+
+# Coverage report
+**/.coverage
 
 # Build results
 bin/
@@ -25,6 +29,7 @@ TestResults/
 # Credentials 
 credentials_real.json
 testsettings_local.json
+testsettings_local.cfg
 servicebus_settings_real.py
 storage_settings_real.py
 legacy_mgmt_settings_real.py
@@ -36,6 +41,7 @@ app_creds_real.py
 *.user
 *.sln.docstates
 .vs/
+.vscode
 
 # Windows image file caches
 Thumbs.db

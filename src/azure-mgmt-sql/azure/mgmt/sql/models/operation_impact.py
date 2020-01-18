@@ -13,7 +13,7 @@ from msrest.serialization import Model
 
 
 class OperationImpact(Model):
-    """Represents impact of an operation, both in absolute and relative terms.
+    """The impact of an operation, both in absolute and relative terms.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
@@ -43,7 +43,8 @@ class OperationImpact(Model):
         'change_value_relative': {'key': 'changeValueRelative', 'type': 'float'},
     }
 
-    def __init__(self):
+    def __init__(self, **kwargs):
+        super(OperationImpact, self).__init__(**kwargs)
         self.name = None
         self.unit = None
         self.change_value_absolute = None

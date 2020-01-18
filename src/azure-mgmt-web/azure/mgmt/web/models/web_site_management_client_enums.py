@@ -74,46 +74,11 @@ class CertificateOrderActionType(Enum):
     unknown = "Unknown"
 
 
-class HostingEnvironmentStatus(Enum):
+class RouteType(Enum):
 
-    preparing = "Preparing"
-    ready = "Ready"
-    scaling = "Scaling"
-    deleting = "Deleting"
-
-
-class InternalLoadBalancingMode(Enum):
-
-    none = "None"
-    web = "Web"
-    publishing = "Publishing"
-
-
-class ComputeModeOptions(Enum):
-
-    shared = "Shared"
-    dedicated = "Dedicated"
-    dynamic = "Dynamic"
-
-
-class WorkerSizeOptions(Enum):
-
-    default = "Default"
-    small = "Small"
-    medium = "Medium"
-    large = "Large"
-
-
-class AccessControlEntryAction(Enum):
-
-    permit = "Permit"
-    deny = "Deny"
-
-
-class StatusOptions(Enum):
-
-    ready = "Ready"
-    pending = "Pending"
+    default = "DEFAULT"
+    inherited = "INHERITED"
+    static = "STATIC"
 
 
 class AutoHealActionType(Enum):
@@ -136,41 +101,6 @@ class ConnectionStringType(Enum):
     doc_db = "DocDb"
     redis_cache = "RedisCache"
     postgre_sql = "PostgreSQL"
-
-
-class SslState(Enum):
-
-    disabled = "Disabled"
-    sni_enabled = "SniEnabled"
-    ip_based_enabled = "IpBasedEnabled"
-
-
-class HostType(Enum):
-
-    standard = "Standard"
-    repository = "Repository"
-
-
-class OperationStatus(Enum):
-
-    in_progress = "InProgress"
-    failed = "Failed"
-    succeeded = "Succeeded"
-    timed_out = "TimedOut"
-    created = "Created"
-
-
-class UsageState(Enum):
-
-    normal = "Normal"
-    exceeded = "Exceeded"
-
-
-class SiteAvailabilityState(Enum):
-
-    normal = "Normal"
-    limited = "Limited"
-    disaster_recovery_mode = "DisasterRecoveryMode"
 
 
 class ScmType(Enum):
@@ -205,11 +135,44 @@ class SiteLoadBalancing(Enum):
     request_hash = "RequestHash"
 
 
-class RouteType(Enum):
+class SupportedTlsVersions(Enum):
 
-    default = "DEFAULT"
-    inherited = "INHERITED"
-    static = "STATIC"
+    one_full_stop_zero = "1.0"
+    one_full_stop_one = "1.1"
+    one_full_stop_two = "1.2"
+
+
+class SslState(Enum):
+
+    disabled = "Disabled"
+    sni_enabled = "SniEnabled"
+    ip_based_enabled = "IpBasedEnabled"
+
+
+class HostType(Enum):
+
+    standard = "Standard"
+    repository = "Repository"
+
+
+class UsageState(Enum):
+
+    normal = "Normal"
+    exceeded = "Exceeded"
+
+
+class SiteAvailabilityState(Enum):
+
+    normal = "Normal"
+    limited = "Limited"
+    disaster_recovery_mode = "DisasterRecoveryMode"
+
+
+class StatusOptions(Enum):
+
+    ready = "Ready"
+    pending = "Pending"
+    creating = "Creating"
 
 
 class DomainStatus(Enum):
@@ -267,6 +230,73 @@ class DomainType(Enum):
     soft_deleted = "SoftDeleted"
 
 
+class HostingEnvironmentStatus(Enum):
+
+    preparing = "Preparing"
+    ready = "Ready"
+    scaling = "Scaling"
+    deleting = "Deleting"
+
+
+class InternalLoadBalancingMode(Enum):
+
+    none = "None"
+    web = "Web"
+    publishing = "Publishing"
+
+
+class ComputeModeOptions(Enum):
+
+    shared = "Shared"
+    dedicated = "Dedicated"
+    dynamic = "Dynamic"
+
+
+class WorkerSizeOptions(Enum):
+
+    default = "Default"
+    small = "Small"
+    medium = "Medium"
+    large = "Large"
+    d1 = "D1"
+    d2 = "D2"
+    d3 = "D3"
+
+
+class AccessControlEntryAction(Enum):
+
+    permit = "Permit"
+    deny = "Deny"
+
+
+class OperationStatus(Enum):
+
+    in_progress = "InProgress"
+    failed = "Failed"
+    succeeded = "Succeeded"
+    timed_out = "TimedOut"
+    created = "Created"
+
+
+class IssueType(Enum):
+
+    service_incident = "ServiceIncident"
+    app_deployment = "AppDeployment"
+    app_crash = "AppCrash"
+    runtime_issue_detected = "RuntimeIssueDetected"
+    ase_deployment = "AseDeployment"
+    user_issue = "UserIssue"
+    platform_issue = "PlatformIssue"
+    other = "Other"
+
+
+class SolutionType(Enum):
+
+    quick_solution = "QuickSolution"
+    deep_investigation = "DeepInvestigation"
+    best_practices = "BestPractices"
+
+
 class ResourceScopeType(Enum):
 
     server_farm = "ServerFarm"
@@ -312,6 +342,11 @@ class CheckNameResourceTypes(Enum):
     site = "Site"
     slot = "Slot"
     hosting_environment = "HostingEnvironment"
+    publishing_user = "PublishingUser"
+    microsoft_websites = "Microsoft.Web/sites"
+    microsoft_websitesslots = "Microsoft.Web/sites/slots"
+    microsoft_webhosting_environments = "Microsoft.Web/hostingEnvironments"
+    microsoft_webpublishing_users = "Microsoft.Web/publishingUsers"
 
 
 class ValidateResourceTypes(Enum):
@@ -362,6 +397,22 @@ class BackupRestoreOperationType(Enum):
     default = "Default"
     clone = "Clone"
     relocation = "Relocation"
+    snapshot = "Snapshot"
+
+
+class ContinuousWebJobStatus(Enum):
+
+    initializing = "Initializing"
+    starting = "Starting"
+    running = "Running"
+    pending_restart = "PendingRestart"
+    stopped = "Stopped"
+
+
+class WebJobType(Enum):
+
+    continuous = "Continuous"
+    triggered = "Triggered"
 
 
 class PublishingProfileFormat(Enum):
@@ -376,6 +427,35 @@ class DnsVerificationTestResult(Enum):
     passed = "Passed"
     failed = "Failed"
     skipped = "Skipped"
+
+
+class MSDeployLogEntryType(Enum):
+
+    message = "Message"
+    warning = "Warning"
+    error = "Error"
+
+
+class MSDeployProvisioningState(Enum):
+
+    accepted = "accepted"
+    running = "running"
+    succeeded = "succeeded"
+    failed = "failed"
+    canceled = "canceled"
+
+
+class MySqlMigrationType(Enum):
+
+    local_to_remote = "LocalToRemote"
+    remote_to_local = "RemoteToLocal"
+
+
+class PublicCertificateLocation(Enum):
+
+    current_user_my = "CurrentUserMy"
+    local_machine_my = "LocalMachineMy"
+    unknown = "Unknown"
 
 
 class UnauthenticatedClientAction(Enum):
@@ -400,6 +480,19 @@ class CloneAbilityResult(Enum):
     not_cloneable = "NotCloneable"
 
 
+class SiteExtensionType(Enum):
+
+    gallery = "Gallery"
+    web_root = "WebRoot"
+
+
+class TriggeredWebJobStatus(Enum):
+
+    success = "Success"
+    failed = "Failed"
+    error = "Error"
+
+
 class SkuName(Enum):
 
     free = "Free"
@@ -407,5 +500,6 @@ class SkuName(Enum):
     basic = "Basic"
     standard = "Standard"
     premium = "Premium"
+    premium_v2 = "PremiumV2"
     dynamic = "Dynamic"
     isolated = "Isolated"

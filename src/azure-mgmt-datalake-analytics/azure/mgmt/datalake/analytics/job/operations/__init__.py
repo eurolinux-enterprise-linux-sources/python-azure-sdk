@@ -10,7 +10,11 @@
 # --------------------------------------------------------------------------
 
 from .job_operations import JobOperations
+from .pipeline_operations import PipelineOperations
+from .recurrence_operations import RecurrenceOperations
 
 __all__ = [
     'JobOperations',
+    'PipelineOperations',
+    'RecurrenceOperations',
 ]

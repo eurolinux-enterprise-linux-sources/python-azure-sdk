@@ -21,7 +21,7 @@ class LoadMetricReportInfo(Model):
     :type value: int
     :param last_reported_utc: The UTC time when the load is reported.
     :type last_reported_utc: datetime
-    """ 
+    """
 
     _attribute_map = {
         'name': {'key': 'Name', 'type': 'str'},
@@ -29,7 +29,8 @@ class LoadMetricReportInfo(Model):
         'last_reported_utc': {'key': 'LastReportedUtc', 'type': 'iso-8601'},
     }
 
-    def __init__(self, name=None, value=None, last_reported_utc=None):
-        self.name = name
-        self.value = value
-        self.last_reported_utc = last_reported_utc
+    def __init__(self, **kwargs):
+        super(LoadMetricReportInfo, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.value = kwargs.get('value', None)
+        self.last_reported_utc = kwargs.get('last_reported_utc', None)

@@ -15,7 +15,10 @@ from msrest.serialization import Model
 class UserIdentity(Model):
     """The definition of the user identity under which the task is run.
 
-    Specify either the userName or autoUser property, but not both.
+    Specify either the userName or autoUser property, but not both. On
+    CloudServiceConfiguration pools, this user is logged in with the
+    INTERACTIVE flag. On Windows VirtualMachineConfiguration pools, this user
+    is logged in with the BATCH flag.
 
     :param user_name: The name of the user identity under which the task is
      run. The userName and autoUser properties are mutually exclusive; you must
@@ -24,8 +27,7 @@ class UserIdentity(Model):
     :param auto_user: The auto user under which the task is run. The userName
      and autoUser properties are mutually exclusive; you must specify one but
      not both.
-    :type auto_user: :class:`AutoUserSpecification
-     <azure.batch.models.AutoUserSpecification>`
+    :type auto_user: ~azure.batch.models.AutoUserSpecification
     """
 
     _attribute_map = {
@@ -34,5 +36,6 @@ class UserIdentity(Model):
     }
 
     def __init__(self, user_name=None, auto_user=None):
+        super(UserIdentity, self).__init__()
         self.user_name = user_name
         self.auto_user = auto_user

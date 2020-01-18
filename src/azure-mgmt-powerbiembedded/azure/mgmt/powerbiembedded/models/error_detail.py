@@ -21,7 +21,7 @@ class ErrorDetail(Model):
     :type message: str
     :param target:
     :type target: str
-    """ 
+    """
 
     _attribute_map = {
         'code': {'key': 'code', 'type': 'str'},
@@ -29,7 +29,8 @@ class ErrorDetail(Model):
         'target': {'key': 'target', 'type': 'str'},
     }
 
-    def __init__(self, code=None, message=None, target=None):
-        self.code = code
-        self.message = message
-        self.target = target
+    def __init__(self, **kwargs):
+        super(ErrorDetail, self).__init__(**kwargs)
+        self.code = kwargs.get('code', None)
+        self.message = kwargs.get('message', None)
+        self.target = kwargs.get('target', None)

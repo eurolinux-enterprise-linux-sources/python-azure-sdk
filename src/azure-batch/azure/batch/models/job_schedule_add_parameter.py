@@ -19,24 +19,22 @@ class JobScheduleAddParameter(Model):
     :param id: A string that uniquely identifies the schedule within the
      account. The ID can contain any combination of alphanumeric characters
      including hyphens and underscores, and cannot contain more than 64
-     characters. The id is case-preserving and case-insensitive (that is, you
-     may not have two ids within an account that differ only by case).
+     characters. The ID is case-preserving and case-insensitive (that is, you
+     may not have two IDs within an account that differ only by case).
     :type id: str
     :param display_name: The display name for the schedule. The display name
      need not be unique and can contain any Unicode characters up to a maximum
      length of 1024.
     :type display_name: str
     :param schedule: The schedule according to which jobs will be created.
-    :type schedule: :class:`Schedule <azure.batch.models.Schedule>`
+    :type schedule: ~azure.batch.models.Schedule
     :param job_specification: The details of the jobs to be created on this
      schedule.
-    :type job_specification: :class:`JobSpecification
-     <azure.batch.models.JobSpecification>`
+    :type job_specification: ~azure.batch.models.JobSpecification
     :param metadata: A list of name-value pairs associated with the schedule
      as metadata. The Batch service does not assign any meaning to metadata; it
      is solely for the use of user code.
-    :type metadata: list of :class:`MetadataItem
-     <azure.batch.models.MetadataItem>`
+    :type metadata: list[~azure.batch.models.MetadataItem]
     """
 
     _validation = {
@@ -54,6 +52,7 @@ class JobScheduleAddParameter(Model):
     }
 
     def __init__(self, id, schedule, job_specification, display_name=None, metadata=None):
+        super(JobScheduleAddParameter, self).__init__()
         self.id = id
         self.display_name = display_name
         self.schedule = schedule

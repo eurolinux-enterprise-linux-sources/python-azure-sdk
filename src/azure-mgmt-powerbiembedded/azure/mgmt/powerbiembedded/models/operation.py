@@ -16,19 +16,19 @@ class Operation(Model):
     """Operation.
 
     :param name: The name of the operation being performed on this particular
-     object. This name should match the action name that appears in RBAC /
-     the event service.
+     object. This name should match the action name that appears in RBAC / the
+     event service.
     :type name: str
     :param display:
-    :type display: :class:`Display
-     <azure.mgmt.powerbiembedded.models.Display>`
-    """ 
+    :type display: ~azure.mgmt.powerbiembedded.models.Display
+    """
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
         'display': {'key': 'display', 'type': 'Display'},
     }
 
-    def __init__(self, name=None, display=None):
-        self.name = name
-        self.display = display
+    def __init__(self, **kwargs):
+        super(Operation, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.display = kwargs.get('display', None)

@@ -16,25 +16,44 @@ class StartTask(Model):
     """A task which is run when a compute node joins a pool in the Azure Batch
     service, or when the compute node is rebooted or reimaged.
 
+    Batch will retry tasks when a recovery operation is triggered on a compute
+    node. Examples of recovery operations include (but are not limited to) when
+    an unhealthy compute node is rebooted or a compute node disappeared due to
+    host failure. Retries due to recovery operations are independent of and are
+    not counted against the maxTaskRetryCount. Even if the maxTaskRetryCount is
+    0, an internal retry due to a recovery operation may occur. Because of
+    this, all tasks should be idempotent. This means tasks need to tolerate
+    being interrupted and restarted without causing any corruption or duplicate
+    data. The best practice for long running tasks is to use some form of
+    checkpointing.
+
     :param command_line: The command line of the start task. The command line
      does not run under a shell, and therefore cannot take advantage of shell
      features such as environment variable expansion. If you want to take
      advantage of such features, you should invoke the shell in the command
      line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c
-     MyCommand" in Linux.
+     MyCommand" in Linux. If the command line refers to file paths, it should
+     use a relative path (relative to the task working directory), or use the
+     Batch provided environment variable
+     (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
     :type command_line: str
+    :param container_settings: The settings for the container under which the
+     start task runs. When this is specified, all directories recursively below
+     the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the
+     node) are mapped into the container, all task environment variables are
+     mapped into the container, and the task command line is executed in the
+     container.
+    :type container_settings: ~azure.batch.models.TaskContainerSettings
     :param resource_files: A list of files that the Batch service will
-     download to the compute node before running the command line.
-    :type resource_files: list of :class:`ResourceFile
-     <azure.batch.models.ResourceFile>`
+     download to the compute node before running the command line. Files listed
+     under this element are located in the task's working directory.
+    :type resource_files: list[~azure.batch.models.ResourceFile]
     :param environment_settings: A list of environment variable settings for
      the start task.
-    :type environment_settings: list of :class:`EnvironmentSetting
-     <azure.batch.models.EnvironmentSetting>`
+    :type environment_settings: list[~azure.batch.models.EnvironmentSetting]
     :param user_identity: The user identity under which the start task runs.
      If omitted, the task runs as a non-administrative user unique to the task.
-    :type user_identity: :class:`UserIdentity
-     <azure.batch.models.UserIdentity>`
+    :type user_identity: ~azure.batch.models.UserIdentity
     :param max_task_retry_count: The maximum number of times the task may be
      retried. The Batch service retries a task if its exit code is nonzero.
      Note that this value specifically controls the number of retries. The
@@ -51,10 +70,10 @@ class StartTask(Model):
      to its maximum retry count (maxTaskRetryCount). If the task has still not
      completed successfully after all retries, then the Batch service marks the
      compute node unusable, and will not schedule tasks to it. This condition
-     can be detected via the node state and scheduling error detail. If false,
-     the Batch service will not wait for the start task to complete. In this
-     case, other tasks can start executing on the compute node while the start
-     task is still running; and even if the start task fails, new tasks will
+     can be detected via the node state and failure info details. If false, the
+     Batch service will not wait for the start task to complete. In this case,
+     other tasks can start executing on the compute node while the start task
+     is still running; and even if the start task fails, new tasks will
      continue to be scheduled on the node. The default is false.
     :type wait_for_success: bool
     """
@@ -65,6 +84,7 @@ class StartTask(Model):
 
     _attribute_map = {
         'command_line': {'key': 'commandLine', 'type': 'str'},
+        'container_settings': {'key': 'containerSettings', 'type': 'TaskContainerSettings'},
         'resource_files': {'key': 'resourceFiles', 'type': '[ResourceFile]'},
         'environment_settings': {'key': 'environmentSettings', 'type': '[EnvironmentSetting]'},
         'user_identity': {'key': 'userIdentity', 'type': 'UserIdentity'},
@@ -72,8 +92,10 @@ class StartTask(Model):
         'wait_for_success': {'key': 'waitForSuccess', 'type': 'bool'},
     }
 
-    def __init__(self, command_line, resource_files=None, environment_settings=None, user_identity=None, max_task_retry_count=None, wait_for_success=None):
+    def __init__(self, command_line, container_settings=None, resource_files=None, environment_settings=None, user_identity=None, max_task_retry_count=None, wait_for_success=None):
+        super(StartTask, self).__init__()
         self.command_line = command_line
+        self.container_settings = container_settings
         self.resource_files = resource_files
         self.environment_settings = environment_settings
         self.user_identity = user_identity

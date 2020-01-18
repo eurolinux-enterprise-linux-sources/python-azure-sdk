@@ -18,11 +18,12 @@ class InfoField(Model):
     :param project: Identifies the name of the instance provisioned by the
      user.
     :type project: str
-    """ 
+    """
 
     _attribute_map = {
         'project': {'key': 'project', 'type': 'str'},
     }
 
     def __init__(self, project=None):
+        super(InfoField, self).__init__()
         self.project = project

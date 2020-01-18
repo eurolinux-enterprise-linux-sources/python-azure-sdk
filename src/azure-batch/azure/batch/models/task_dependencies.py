@@ -19,13 +19,16 @@ class TaskDependencies(Model):
 
     :param task_ids: The list of task IDs that this task depends on. All tasks
      in this list must complete successfully before the dependent task can be
-     scheduled.
-    :type task_ids: list of str
+     scheduled. The taskIds collection is limited to 64000 characters total
+     (i.e. the combined length of all task IDs). If the taskIds collection
+     exceeds the maximum length, the Add Task request fails with error code
+     TaskDependencyListTooLong. In this case consider using task ID ranges
+     instead.
+    :type task_ids: list[str]
     :param task_id_ranges: The list of task ID ranges that this task depends
      on. All tasks in all ranges must complete successfully before the
      dependent task can be scheduled.
-    :type task_id_ranges: list of :class:`TaskIdRange
-     <azure.batch.models.TaskIdRange>`
+    :type task_id_ranges: list[~azure.batch.models.TaskIdRange]
     """
 
     _attribute_map = {
@@ -34,5 +37,6 @@ class TaskDependencies(Model):
     }
 
     def __init__(self, task_ids=None, task_id_ranges=None):
+        super(TaskDependencies, self).__init__()
         self.task_ids = task_ids
         self.task_id_ranges = task_id_ranges

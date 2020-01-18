@@ -26,13 +26,13 @@ class PoolUsageMetrics(Model):
     :type end_time: datetime
     :param vm_size: The size of virtual machines in the pool. All VMs in a
      pool are the same size. For information about available sizes of virtual
-     machines for Cloud Services pools (pools created with
-     cloudServiceConfiguration), see Sizes for Cloud Services
-     (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
-     Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2 and
-     A2V2. For information about available VM sizes for pools using images from
-     the Virtual Machines Marketplace (pools created with
-     virtualMachineConfiguration) see Sizes for Virtual Machines (Linux)
+     machines in pools, see Choose a VM size for compute nodes in an Azure
+     Batch pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).
+     Batch supports all Cloud Services VM sizes except ExtraSmall,
+     STANDARD_A1_V2 and STANDARD_A2_V2. For information about available VM
+     sizes for pools using images from the Virtual Machines Marketplace (pools
+     created with virtualMachineConfiguration) see Sizes for Virtual Machines
+     (Linux)
      (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/)
      or Sizes for Virtual Machines (Windows)
      (https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/).
@@ -71,6 +71,7 @@ class PoolUsageMetrics(Model):
     }
 
     def __init__(self, pool_id, start_time, end_time, vm_size, total_core_hours, data_ingress_gi_b, data_egress_gi_b):
+        super(PoolUsageMetrics, self).__init__()
         self.pool_id = pool_id
         self.start_time = start_time
         self.end_time = end_time

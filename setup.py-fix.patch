@@ -1,0 +1,1206 @@
+diff -uNr a/azure/setup.py b/azure/setup.py
+--- a/azure/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure/setup.py	2019-05-06 10:55:49.782716908 +0200
+@@ -32,20 +32,20 @@
+     ],
+     zip_safe=False,
+     install_requires=[
+-        'azure-mgmt~=4.0',
+-        'azure-applicationinsights~=0.1.0',
+-        'azure-batch~=4.1',
+-        'azure-cosmosdb-table~=1.0',
+-        'azure-datalake-store~=0.0.18',
+-        'azure-eventgrid~=1.1',
+-        'azure-graphrbac~=0.40.0',
+-        'azure-keyvault~=1.0',
+-        'azure-loganalytics~=0.1.0',
+-        'azure-servicebus~=0.21.1',
+-        'azure-servicefabric~=6.3.0.0',
+-        'azure-servicemanagement-legacy~=0.20.6',
+-        'azure-storage-blob~=1.3',
+-        'azure-storage-queue~=1.3',
+-        'azure-storage-file~=1.3',
++        'azure-mgmt>=4.0',
++        'azure-applicationinsights>=0.1.0',
++        'azure-batch>=4.1',
++        'azure-cosmosdb-table>=1.0',
++        'azure-datalake-store>=0.0.18',
++        'azure-eventgrid>=1.1',
++        'azure-graphrbac>=0.40.0',
++        'azure-keyvault>=1.0',
++        'azure-loganalytics>=0.1.0',
++        'azure-servicebus>=0.21.1',
++        'azure-servicefabric>=6.3.0.0',
++        'azure-servicemanagement-legacy>=0.20.6',
++        'azure-storage-blob>=1.3',
++        'azure-storage-queue>=1.3',
++        'azure-storage-file>=1.3',
+     ],
+ )
+diff -uNr a/azure-applicationinsights/setup.py b/azure-applicationinsights/setup.py
+--- a/azure-applicationinsights/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-applicationinsights/setup.py	2019-05-06 10:55:49.783716890 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.5.4,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-batch/setup.py b/azure-batch/setup.py
+--- a/azure-batch/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-batch/setup.py	2019-05-06 10:55:49.783716890 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-language-spellcheck/setup.py b/azure-cognitiveservices-language-spellcheck/setup.py
+--- a/azure-cognitiveservices-language-spellcheck/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-language-spellcheck/setup.py	2019-05-06 10:55:49.783716890 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.28,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-language-textanalytics/setup.py b/azure-cognitiveservices-language-textanalytics/setup.py
+--- a/azure-cognitiveservices-language-textanalytics/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-language-textanalytics/setup.py	2019-05-06 10:55:49.784716871 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.24,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-search-autosuggest/setup.py b/azure-cognitiveservices-search-autosuggest/setup.py
+--- a/azure-cognitiveservices-search-autosuggest/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-search-autosuggest/setup.py	2019-05-06 10:55:49.784716871 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.28,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-search-customsearch/setup.py b/azure-cognitiveservices-search-customsearch/setup.py
+--- a/azure-cognitiveservices-search-customsearch/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-search-customsearch/setup.py	2019-05-06 10:55:49.784716871 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.24,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-search-entitysearch/setup.py b/azure-cognitiveservices-search-entitysearch/setup.py
+--- a/azure-cognitiveservices-search-entitysearch/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-search-entitysearch/setup.py	2019-05-06 10:55:49.785716853 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.28,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-search-imagesearch/setup.py b/azure-cognitiveservices-search-imagesearch/setup.py
+--- a/azure-cognitiveservices-search-imagesearch/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-search-imagesearch/setup.py	2019-05-06 10:55:49.785716853 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.28,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-search-newssearch/setup.py b/azure-cognitiveservices-search-newssearch/setup.py
+--- a/azure-cognitiveservices-search-newssearch/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-search-newssearch/setup.py	2019-05-06 10:55:49.785716853 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.28,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-search-videosearch/setup.py b/azure-cognitiveservices-search-videosearch/setup.py
+--- a/azure-cognitiveservices-search-videosearch/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-search-videosearch/setup.py	2019-05-06 10:55:49.786716835 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.28,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-search-visualsearch/setup.py b/azure-cognitiveservices-search-visualsearch/setup.py
+--- a/azure-cognitiveservices-search-visualsearch/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-search-visualsearch/setup.py	2019-05-06 10:55:49.786716835 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.28,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-search-websearch/setup.py b/azure-cognitiveservices-search-websearch/setup.py
+--- a/azure-cognitiveservices-search-websearch/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-search-websearch/setup.py	2019-05-06 10:55:49.786716835 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.28,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-vision-computervision/setup.py b/azure-cognitiveservices-vision-computervision/setup.py
+--- a/azure-cognitiveservices-vision-computervision/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-vision-computervision/setup.py	2019-05-06 10:55:49.786716835 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.29,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-vision-contentmoderator/setup.py b/azure-cognitiveservices-vision-contentmoderator/setup.py
+--- a/azure-cognitiveservices-vision-contentmoderator/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-vision-contentmoderator/setup.py	2019-05-06 10:55:49.787716817 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.24,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-vision-customvision/setup.py b/azure-cognitiveservices-vision-customvision/setup.py
+--- a/azure-cognitiveservices-vision-customvision/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-vision-customvision/setup.py	2019-05-06 10:55:49.787716817 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.28,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-cognitiveservices-vision-face/setup.py b/azure-cognitiveservices-vision-face/setup.py
+--- a/azure-cognitiveservices-vision-face/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-cognitiveservices-vision-face/setup.py	2019-05-06 10:55:49.787716817 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.24,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-eventgrid/setup.py b/azure-eventgrid/setup.py
+--- a/azure-eventgrid/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-eventgrid/setup.py	2019-05-06 10:55:49.788716798 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-graphrbac/setup.py b/azure-graphrbac/setup.py
+--- a/azure-graphrbac/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-graphrbac/setup.py	2019-05-06 10:55:49.788716798 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-keyvault/setup.py b/azure-keyvault/setup.py
+--- a/azure-keyvault/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-keyvault/setup.py	2019-05-06 10:55:49.788716798 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+         'cryptography>=2.1.4',
+         'requests>=2.18.4'
+     ],
+diff -uNr a/azure-loganalytics/setup.py b/azure-loganalytics/setup.py
+--- a/azure-loganalytics/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-loganalytics/setup.py	2019-05-06 10:55:49.789716780 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.29,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt/setup.py b/azure-mgmt/setup.py
+--- a/azure-mgmt/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt/setup.py	2019-05-06 10:55:49.789716780 +0200
+@@ -31,65 +31,65 @@
+     ],
+     zip_safe=False,
+     install_requires=[
+-        'azure-mgmt-advisor~=1.0',
+-        'azure-mgmt-applicationinsights~=0.1.1',
+-        'azure-mgmt-authorization~=0.50.0',
+-        'azure-mgmt-batch~=5.0',
+-        'azure-mgmt-batchai~=2.0',
+-        'azure-mgmt-billing~=0.2.0',
+-        'azure-mgmt-cdn~=3.0',
+-        'azure-mgmt-cognitiveservices~=3.0',
+-        'azure-mgmt-commerce~=1.0',
+-        'azure-mgmt-compute~=4.0',
+-        'azure-mgmt-consumption~=2.0',
+-        'azure-mgmt-containerinstance~=1.0',
+-        'azure-mgmt-containerregistry~=2.1',
+-        'azure-mgmt-containerservice~=4.2',
+-        'azure-mgmt-cosmosdb~=0.4.1',
+-        'azure-mgmt-datafactory~=0.6.0',
+-        'azure-mgmt-datalake-analytics~=0.6.0',
+-        'azure-mgmt-datalake-store~=0.5.0',
+-        'azure-mgmt-datamigration~=1.0',
+-        'azure-mgmt-devspaces~=0.1.0',
+-        'azure-mgmt-devtestlabs~=2.2',
+-        'azure-mgmt-dns~=2.0',
+-        'azure-mgmt-eventgrid~=1.0',
+-        'azure-mgmt-eventhub~=2.1',
+-        'azure-mgmt-hanaonazure~=0.1.1',
+-        'azure-mgmt-iotcentral~=0.1.0',
+-        'azure-mgmt-iothub~=0.5.0',
+-        'azure-mgmt-iothubprovisioningservices~=0.2.0',
+-        'azure-mgmt-keyvault~=1.0',
+-        'azure-mgmt-loganalytics~=0.2.0',
+-        'azure-mgmt-logic~=3.0',
+-        'azure-mgmt-machinelearningcompute~=0.4.1',
+-        'azure-mgmt-managementgroups~=0.1.0',
+-        'azure-mgmt-managementpartner~=0.1.0',
+-        'azure-mgmt-maps~=0.1.0',
+-        'azure-mgmt-marketplaceordering~=0.1.0',
+-        'azure-mgmt-media~=1.0.0rc2',
+-        'azure-mgmt-monitor~=0.5.2',
+-        'azure-mgmt-msi~=0.2.0',
+-        'azure-mgmt-network~=2.0',
+-        'azure-mgmt-notificationhubs~=2.0',
+-        'azure-mgmt-policyinsights~=0.1.0',
+-        'azure-mgmt-powerbiembedded~=2.0',
+-        'azure-mgmt-rdbms~=1.2',
+-        'azure-mgmt-recoveryservices~=0.3.0',
+-        'azure-mgmt-recoveryservicesbackup~=0.3.0',
+-        'azure-mgmt-redis~=5.0',
+-        'azure-mgmt-relay~=0.1.0',
+-        'azure-mgmt-reservations~=0.2.1',
+-        'azure-mgmt-resource~=2.0',
+-        'azure-mgmt-scheduler~=2.0',
+-        'azure-mgmt-search~=2.0',
+-        'azure-mgmt-servicebus~=0.5.1',
+-        'azure-mgmt-servicefabric~=0.2.0',
+-        'azure-mgmt-signalr~=0.1.0',
+-        'azure-mgmt-sql~=0.9.1',
+-        'azure-mgmt-storage~=2.0',
+-        'azure-mgmt-subscription~=0.2.0',
+-        'azure-mgmt-trafficmanager~=0.50.0',
+-        'azure-mgmt-web~=0.35.0',
++        'azure-mgmt-advisor>=1.0',
++        'azure-mgmt-applicationinsights>=0.1.1',
++        'azure-mgmt-authorization>=0.50.0',
++        'azure-mgmt-batch>=5.0',
++        'azure-mgmt-batchai>=2.0',
++        'azure-mgmt-billing>=0.2.0',
++        'azure-mgmt-cdn>=3.0',
++        'azure-mgmt-cognitiveservices>=3.0',
++        'azure-mgmt-commerce>=1.0',
++        'azure-mgmt-compute>=4.0',
++        'azure-mgmt-consumption>=2.0',
++        'azure-mgmt-containerinstance>=1.0',
++        'azure-mgmt-containerregistry>=2.1',
++        'azure-mgmt-containerservice>=4.2',
++        'azure-mgmt-cosmosdb>=0.4.1',
++        'azure-mgmt-datafactory>=0.6.0',
++        'azure-mgmt-datalake-analytics>=0.6.0',
++        'azure-mgmt-datalake-store>=0.5.0',
++        'azure-mgmt-datamigration>=1.0',
++        'azure-mgmt-devspaces>=0.1.0',
++        'azure-mgmt-devtestlabs>=2.2',
++        'azure-mgmt-dns>=2.0',
++        'azure-mgmt-eventgrid>=1.0',
++        'azure-mgmt-eventhub>=2.1',
++        'azure-mgmt-hanaonazure>=0.1.1',
++        'azure-mgmt-iotcentral>=0.1.0',
++        'azure-mgmt-iothub>=0.5.0',
++        'azure-mgmt-iothubprovisioningservices>=0.2.0',
++        'azure-mgmt-keyvault>=1.0',
++        'azure-mgmt-loganalytics>=0.2.0',
++        'azure-mgmt-logic>=3.0',
++        'azure-mgmt-machinelearningcompute>=0.4.1',
++        'azure-mgmt-managementgroups>=0.1.0',
++        'azure-mgmt-managementpartner>=0.1.0',
++        'azure-mgmt-maps>=0.1.0',
++        'azure-mgmt-marketplaceordering>=0.1.0',
++        'azure-mgmt-media>=1.0.0rc2',
++        'azure-mgmt-monitor>=0.5.2',
++        'azure-mgmt-msi>=0.2.0',
++        'azure-mgmt-network>=2.0',
++        'azure-mgmt-notificationhubs>=2.0',
++        'azure-mgmt-policyinsights>=0.1.0',
++        'azure-mgmt-powerbiembedded>=2.0',
++        'azure-mgmt-rdbms>=1.2',
++        'azure-mgmt-recoveryservices>=0.3.0',
++        'azure-mgmt-recoveryservicesbackup>=0.3.0',
++        'azure-mgmt-redis>=5.0',
++        'azure-mgmt-relay>=0.1.0',
++        'azure-mgmt-reservations>=0.2.1',
++        'azure-mgmt-resource>=2.0',
++        'azure-mgmt-scheduler>=2.0',
++        'azure-mgmt-search>=2.0',
++        'azure-mgmt-servicebus>=0.5.1',
++        'azure-mgmt-servicefabric>=0.2.0',
++        'azure-mgmt-signalr>=0.1.0',
++        'azure-mgmt-sql>=0.9.1',
++        'azure-mgmt-storage>=2.0',
++        'azure-mgmt-subscription>=0.2.0',
++        'azure-mgmt-trafficmanager>=0.50.0',
++        'azure-mgmt-web>=0.35.0',
+     ],
+ )
+diff -uNr a/azure-mgmt-advisor/setup.py b/azure-mgmt-advisor/setup.py
+--- a/azure-mgmt-advisor/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-advisor/setup.py	2019-05-06 10:55:49.789716780 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-applicationinsights/setup.py b/azure-mgmt-applicationinsights/setup.py
+--- a/azure-mgmt-applicationinsights/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-applicationinsights/setup.py	2019-05-06 10:55:49.790716762 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-authorization/setup.py b/azure-mgmt-authorization/setup.py
+--- a/azure-mgmt-authorization/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-authorization/setup.py	2019-05-06 10:55:49.790716762 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1,>=1.1.12',
++        'azure-common>=1.1,>=1.1.12',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-batch/setup.py b/azure-mgmt-batch/setup.py
+--- a/azure-mgmt-batch/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-batch/setup.py	2019-05-06 10:55:49.790716762 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-batchai/setup.py b/azure-mgmt-batchai/setup.py
+--- a/azure-mgmt-batchai/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-batchai/setup.py	2019-05-06 10:55:49.790716762 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-billing/setup.py b/azure-mgmt-billing/setup.py
+--- a/azure-mgmt-billing/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-billing/setup.py	2019-05-06 10:55:49.791716744 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-botservice/setup.py b/azure-mgmt-botservice/setup.py
+--- a/azure-mgmt-botservice/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-botservice/setup.py	2019-05-06 10:55:49.791716744 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-cdn/setup.py b/azure-mgmt-cdn/setup.py
+--- a/azure-mgmt-cdn/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-cdn/setup.py	2019-05-06 10:55:49.791716744 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-cognitiveservices/setup.py b/azure-mgmt-cognitiveservices/setup.py
+--- a/azure-mgmt-cognitiveservices/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-cognitiveservices/setup.py	2019-05-06 10:55:49.791716744 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-commerce/setup.py b/azure-mgmt-commerce/setup.py
+--- a/azure-mgmt-commerce/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-commerce/setup.py	2019-05-06 10:55:49.791716744 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-compute/setup.py b/azure-mgmt-compute/setup.py
+--- a/azure-mgmt-compute/setup.py	2019-04-29 17:29:42.000000000 +0200
++++ b/azure-mgmt-compute/setup.py	2019-05-06 10:59:49.862334534 +0200
+@@ -10,6 +10,7 @@
+ import os.path
+ from io import open
+ from setuptools import find_packages, setup
++import sys
+ 
+ # Change the PACKAGE_NAME only to change folder and different name
+ PACKAGE_NAME = "azure-mgmt-compute"
+@@ -48,6 +49,14 @@
+ with open('HISTORY.rst', encoding='utf-8') as f:
+     history = f.read()
+ 
++    requirements = [
++        'msrest>=0.5.0',
++        'msrestazure>=0.4.32,<2.0.0',
++        'azure-common>=1.1',
++    ]
++    if sys.version_info[0] < 3:
++	    requirements.append('azure-mgmt-nspkg')
++
+ setup(
+     name=PACKAGE_NAME,
+     version=version,
+@@ -77,12 +86,5 @@
+         'azure',
+         'azure.mgmt',
+     ]),
+-    install_requires=[
+-        'msrest>=0.5.0',
+-        'msrestazure>=0.4.32,<2.0.0',
+-        'azure-common~=1.1',
+-    ],
+-    extras_require={
+-        ":python_version<'3.0'": ['azure-mgmt-nspkg'],
+-    }
++    install_requires=requirements
+ )
+diff -uNr a/azure-mgmt-consumption/setup.py b/azure-mgmt-consumption/setup.py
+--- a/azure-mgmt-consumption/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-consumption/setup.py	2019-05-06 10:55:49.791716744 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-containerinstance/setup.py b/azure-mgmt-containerinstance/setup.py
+--- a/azure-mgmt-containerinstance/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-containerinstance/setup.py	2019-05-06 10:55:49.792716725 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-containerregistry/setup.py b/azure-mgmt-containerregistry/setup.py
+--- a/azure-mgmt-containerregistry/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-containerregistry/setup.py	2019-05-06 10:55:49.792716725 +0200
+@@ -80,7 +80,7 @@
+     install_requires=[
+         'msrest>=0.5.0',
+         'msrestazure>=0.4.32,<2.0.0',
+-        'azure-common~=1.1,>=1.1.10',
++        'azure-common>=1.1,>=1.1.10',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-containerservice/setup.py b/azure-mgmt-containerservice/setup.py
+--- a/azure-mgmt-containerservice/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-containerservice/setup.py	2019-05-06 10:55:49.792716725 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-cosmosdb/setup.py b/azure-mgmt-cosmosdb/setup.py
+--- a/azure-mgmt-cosmosdb/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-cosmosdb/setup.py	2019-05-06 10:55:49.792716725 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-datafactory/setup.py b/azure-mgmt-datafactory/setup.py
+--- a/azure-mgmt-datafactory/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-datafactory/setup.py	2019-05-06 10:55:49.792716725 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-datalake-analytics/setup.py b/azure-mgmt-datalake-analytics/setup.py
+--- a/azure-mgmt-datalake-analytics/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-datalake-analytics/setup.py	2019-05-06 10:55:49.792716725 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-datalake-store/setup.py b/azure-mgmt-datalake-store/setup.py
+--- a/azure-mgmt-datalake-store/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-datalake-store/setup.py	2019-05-06 10:55:49.792716725 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-datamigration/setup.py b/azure-mgmt-datamigration/setup.py
+--- a/azure-mgmt-datamigration/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-datamigration/setup.py	2019-05-06 10:55:49.792716725 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-devspaces/setup.py b/azure-mgmt-devspaces/setup.py
+--- a/azure-mgmt-devspaces/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-devspaces/setup.py	2019-05-06 10:55:49.792716725 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.32,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-devtestlabs/setup.py b/azure-mgmt-devtestlabs/setup.py
+--- a/azure-mgmt-devtestlabs/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-devtestlabs/setup.py	2019-05-06 10:55:49.793716707 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-dns/setup.py b/azure-mgmt-dns/setup.py
+--- a/azure-mgmt-dns/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-dns/setup.py	2019-05-06 10:55:49.793716707 +0200
+@@ -80,7 +80,7 @@
+     install_requires=[
+         'msrest>=0.5.0',
+         'msrestazure>=0.4.32,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-documentdb/setup.py b/azure-mgmt-documentdb/setup.py
+--- a/azure-mgmt-documentdb/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-documentdb/setup.py	2019-05-06 10:55:49.793716707 +0200
+@@ -78,8 +78,8 @@
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7',
++        'azure-common>=1.1.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-eventgrid/setup.py b/azure-mgmt-eventgrid/setup.py
+--- a/azure-mgmt-eventgrid/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-eventgrid/setup.py	2019-05-06 10:55:49.793716707 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-eventhub/setup.py b/azure-mgmt-eventhub/setup.py
+--- a/azure-mgmt-eventhub/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-eventhub/setup.py	2019-05-06 10:55:49.793716707 +0200
+@@ -80,7 +80,7 @@
+     install_requires=[
+         'msrest>=0.5.0',
+         'msrestazure>=0.4.32,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-hanaonazure/setup.py b/azure-mgmt-hanaonazure/setup.py
+--- a/azure-mgmt-hanaonazure/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-hanaonazure/setup.py	2019-05-06 10:55:49.793716707 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-iotcentral/setup.py b/azure-mgmt-iotcentral/setup.py
+--- a/azure-mgmt-iotcentral/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-iotcentral/setup.py	2019-05-06 10:55:49.793716707 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-iothub/setup.py b/azure-mgmt-iothub/setup.py
+--- a/azure-mgmt-iothub/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-iothub/setup.py	2019-05-06 10:55:49.793716707 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-iothubprovisioningservices/setup.py b/azure-mgmt-iothubprovisioningservices/setup.py
+--- a/azure-mgmt-iothubprovisioningservices/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-iothubprovisioningservices/setup.py	2019-05-06 10:55:49.793716707 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-keyvault/setup.py b/azure-mgmt-keyvault/setup.py
+--- a/azure-mgmt-keyvault/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-keyvault/setup.py	2019-05-06 10:55:49.794716689 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-loganalytics/setup.py b/azure-mgmt-loganalytics/setup.py
+--- a/azure-mgmt-loganalytics/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-loganalytics/setup.py	2019-05-06 10:55:49.794716689 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-logic/setup.py b/azure-mgmt-logic/setup.py
+--- a/azure-mgmt-logic/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-logic/setup.py	2019-05-06 10:55:49.794716689 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-machinelearningcompute/setup.py b/azure-mgmt-machinelearningcompute/setup.py
+--- a/azure-mgmt-machinelearningcompute/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-machinelearningcompute/setup.py	2019-05-06 10:55:49.794716689 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-managementgroups/setup.py b/azure-mgmt-managementgroups/setup.py
+--- a/azure-mgmt-managementgroups/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-managementgroups/setup.py	2019-05-06 10:55:49.794716689 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-managementpartner/setup.py b/azure-mgmt-managementpartner/setup.py
+--- a/azure-mgmt-managementpartner/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-managementpartner/setup.py	2019-05-06 10:55:49.794716689 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-maps/setup.py b/azure-mgmt-maps/setup.py
+--- a/azure-mgmt-maps/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-maps/setup.py	2019-05-06 10:55:49.794716689 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-marketplaceordering/setup.py b/azure-mgmt-marketplaceordering/setup.py
+--- a/azure-mgmt-marketplaceordering/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-marketplaceordering/setup.py	2019-05-06 10:55:49.795716671 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-media/setup.py b/azure-mgmt-media/setup.py
+--- a/azure-mgmt-media/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-media/setup.py	2019-05-06 10:55:49.795716671 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.32,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-monitor/setup.py b/azure-mgmt-monitor/setup.py
+--- a/azure-mgmt-monitor/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-monitor/setup.py	2019-05-06 10:55:49.795716671 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-msi/setup.py b/azure-mgmt-msi/setup.py
+--- a/azure-mgmt-msi/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-msi/setup.py	2019-05-06 10:55:49.795716671 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-network/setup.py b/azure-mgmt-network/setup.py
+--- a/azure-mgmt-network/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-network/setup.py	2019-05-06 10:55:49.795716671 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.32,<2.0.0',
+-        'azure-common~=1.1,>=1.1.9',
++        'azure-common>=1.1,>=1.1.9',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-notificationhubs/setup.py b/azure-mgmt-notificationhubs/setup.py
+--- a/azure-mgmt-notificationhubs/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-notificationhubs/setup.py	2019-05-06 10:55:49.795716671 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-policyinsights/setup.py b/azure-mgmt-policyinsights/setup.py
+--- a/azure-mgmt-policyinsights/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-policyinsights/setup.py	2019-05-06 10:55:49.795716671 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-powerbiembedded/setup.py b/azure-mgmt-powerbiembedded/setup.py
+--- a/azure-mgmt-powerbiembedded/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-powerbiembedded/setup.py	2019-05-06 10:55:49.795716671 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-rdbms/setup.py b/azure-mgmt-rdbms/setup.py
+--- a/azure-mgmt-rdbms/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-rdbms/setup.py	2019-05-06 10:55:49.796716652 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-recoveryservices/setup.py b/azure-mgmt-recoveryservices/setup.py
+--- a/azure-mgmt-recoveryservices/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-recoveryservices/setup.py	2019-05-06 10:55:49.796716652 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-recoveryservicesbackup/setup.py b/azure-mgmt-recoveryservicesbackup/setup.py
+--- a/azure-mgmt-recoveryservicesbackup/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-recoveryservicesbackup/setup.py	2019-05-06 10:55:49.796716652 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-redis/setup.py b/azure-mgmt-redis/setup.py
+--- a/azure-mgmt-redis/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-redis/setup.py	2019-05-06 10:55:49.796716652 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-relay/setup.py b/azure-mgmt-relay/setup.py
+--- a/azure-mgmt-relay/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-relay/setup.py	2019-05-06 10:55:49.796716652 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-reservations/setup.py b/azure-mgmt-reservations/setup.py
+--- a/azure-mgmt-reservations/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-reservations/setup.py	2019-05-06 10:55:49.796716652 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-resource/setup.py b/azure-mgmt-resource/setup.py
+--- a/azure-mgmt-resource/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-resource/setup.py	2019-05-06 10:55:49.796716652 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1,>=1.1.9',
++        'azure-common>=1.1,>=1.1.9',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-scheduler/setup.py b/azure-mgmt-scheduler/setup.py
+--- a/azure-mgmt-scheduler/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-scheduler/setup.py	2019-05-06 10:55:49.796716652 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-search/setup.py b/azure-mgmt-search/setup.py
+--- a/azure-mgmt-search/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-search/setup.py	2019-05-06 10:55:49.797716634 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-servermanager/setup.py b/azure-mgmt-servermanager/setup.py
+--- a/azure-mgmt-servermanager/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-servermanager/setup.py	2019-05-06 10:55:49.797716634 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-servicebus/setup.py b/azure-mgmt-servicebus/setup.py
+--- a/azure-mgmt-servicebus/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-servicebus/setup.py	2019-05-06 10:55:49.797716634 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-servicefabric/setup.py b/azure-mgmt-servicefabric/setup.py
+--- a/azure-mgmt-servicefabric/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-servicefabric/setup.py	2019-05-06 10:55:49.797716634 +0200
+@@ -80,7 +80,7 @@
+     install_requires=[
+         'msrest>=0.5.0',
+         'msrestazure>=0.4.32,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-signalr/setup.py b/azure-mgmt-signalr/setup.py
+--- a/azure-mgmt-signalr/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-signalr/setup.py	2019-05-06 10:55:49.797716634 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-sql/setup.py b/azure-mgmt-sql/setup.py
+--- a/azure-mgmt-sql/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-sql/setup.py	2019-05-06 10:55:49.797716634 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-storage/setup.py b/azure-mgmt-storage/setup.py
+--- a/azure-mgmt-storage/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-storage/setup.py	2019-05-06 10:55:49.797716634 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.32,<2.0.0',
+-        'azure-common~=1.1,>=1.1.10',
++        'azure-common>=1.1,>=1.1.10',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-subscription/setup.py b/azure-mgmt-subscription/setup.py
+--- a/azure-mgmt-subscription/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-subscription/setup.py	2019-05-06 10:55:49.797716634 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-trafficmanager/setup.py b/azure-mgmt-trafficmanager/setup.py
+--- a/azure-mgmt-trafficmanager/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-trafficmanager/setup.py	2019-05-06 10:55:49.797716634 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.27,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-mgmt-web/setup.py b/azure-mgmt-web/setup.py
+--- a/azure-mgmt-web/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-mgmt-web/setup.py	2019-05-06 10:55:49.797716634 +0200
+@@ -78,7 +78,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrestazure>=0.4.20,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )
+diff -uNr a/azure-servicefabric/setup.py b/azure-servicefabric/setup.py
+--- a/azure-servicefabric/setup.py	2018-08-02 18:37:34.000000000 +0200
++++ b/azure-servicefabric/setup.py	2019-05-06 10:55:49.798716616 +0200
+@@ -79,7 +79,7 @@
+     packages=find_packages(exclude=["tests"]),
+     install_requires=[
+         'msrest>=0.4.26,<2.0.0',
+-        'azure-common~=1.1',
++        'azure-common>=1.1',
+     ],
+     cmdclass=cmdclass
+ )

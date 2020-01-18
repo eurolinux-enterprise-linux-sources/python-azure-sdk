@@ -9,8 +9,8 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.pipeline import ClientRawResponse
 import uuid
+from msrest.pipeline import ClientRawResponse
 
 from .. import models
 
@@ -21,16 +21,18 @@ class ComputeNodeOperations(object):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
-    :ivar api_version: Client API Version. Constant value: "2017-05-01.5.0".
+    :param deserializer: An object model deserializer.
+    :ivar api_version: Client API Version. Constant value: "2018-03-01.6.1".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2017-05-01.5.0"
+        self.api_version = "2018-03-01.6.1"
 
         self.config = config
 
@@ -47,20 +49,18 @@ class ComputeNodeOperations(object):
          user account.
         :type node_id: str
         :param user: The user account to be created.
-        :type user: :class:`ComputeNodeUser
-         <azure.batch.models.ComputeNodeUser>`
+        :type user: ~azure.batch.models.ComputeNodeUser
         :param compute_node_add_user_options: Additional parameters for the
          operation
-        :type compute_node_add_user_options: :class:`ComputeNodeAddUserOptions
-         <azure.batch.models.ComputeNodeAddUserOptions>`
+        :type compute_node_add_user_options:
+         ~azure.batch.models.ComputeNodeAddUserOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -78,7 +78,7 @@ class ComputeNodeOperations(object):
             ocp_date = compute_node_add_user_options.ocp_date
 
         # Construct URL
-        url = '/pools/{poolId}/nodes/{nodeId}/users'
+        url = self.add_user.metadata['url']
         path_format_arguments = {
             'poolId': self._serialize.url("pool_id", pool_id, 'str'),
             'nodeId': self._serialize.url("node_id", node_id, 'str')
@@ -113,7 +113,7 @@ class ComputeNodeOperations(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [201]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -128,6 +128,7 @@ class ComputeNodeOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    add_user.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}/users'}
 
     def delete_user(
             self, pool_id, node_id, user_name, compute_node_delete_user_options=None, custom_headers=None, raw=False, **operation_config):
@@ -146,16 +147,14 @@ class ComputeNodeOperations(object):
         :param compute_node_delete_user_options: Additional parameters for the
          operation
         :type compute_node_delete_user_options:
-         :class:`ComputeNodeDeleteUserOptions
-         <azure.batch.models.ComputeNodeDeleteUserOptions>`
+         ~azure.batch.models.ComputeNodeDeleteUserOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -173,7 +172,7 @@ class ComputeNodeOperations(object):
             ocp_date = compute_node_delete_user_options.ocp_date
 
         # Construct URL
-        url = '/pools/{poolId}/nodes/{nodeId}/users/{userName}'
+        url = self.delete_user.metadata['url']
         path_format_arguments = {
             'poolId': self._serialize.url("pool_id", pool_id, 'str'),
             'nodeId': self._serialize.url("node_id", node_id, 'str'),
@@ -189,7 +188,7 @@ class ComputeNodeOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -205,7 +204,7 @@ class ComputeNodeOperations(object):
 
         # Construct and send request
         request = self._client.delete(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -217,10 +216,11 @@ class ComputeNodeOperations(object):
                 'request-id': 'str',
             })
             return client_raw_response
+    delete_user.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}/users/{userName}'}
 
     def update_user(
             self, pool_id, node_id, user_name, node_update_user_parameter, compute_node_update_user_options=None, custom_headers=None, raw=False, **operation_config):
-        """Updates the password or expiration time of a user account on the
+        """Updates the password and expiration time of a user account on the
         specified compute node.
 
         This operation replaces of all the updateable properties of the
@@ -237,21 +237,19 @@ class ComputeNodeOperations(object):
         :param user_name: The name of the user account to update.
         :type user_name: str
         :param node_update_user_parameter: The parameters for the request.
-        :type node_update_user_parameter: :class:`NodeUpdateUserParameter
-         <azure.batch.models.NodeUpdateUserParameter>`
+        :type node_update_user_parameter:
+         ~azure.batch.models.NodeUpdateUserParameter
         :param compute_node_update_user_options: Additional parameters for the
          operation
         :type compute_node_update_user_options:
-         :class:`ComputeNodeUpdateUserOptions
-         <azure.batch.models.ComputeNodeUpdateUserOptions>`
+         ~azure.batch.models.ComputeNodeUpdateUserOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -269,7 +267,7 @@ class ComputeNodeOperations(object):
             ocp_date = compute_node_update_user_options.ocp_date
 
         # Construct URL
-        url = '/pools/{poolId}/nodes/{nodeId}/users/{userName}'
+        url = self.update_user.metadata['url']
         path_format_arguments = {
             'poolId': self._serialize.url("pool_id", pool_id, 'str'),
             'nodeId': self._serialize.url("node_id", node_id, 'str'),
@@ -305,7 +303,7 @@ class ComputeNodeOperations(object):
         # Construct and send request
         request = self._client.put(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -320,6 +318,7 @@ class ComputeNodeOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    update_user.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}/users/{userName}'}
 
     def get(
             self, pool_id, node_id, compute_node_get_options=None, custom_headers=None, raw=False, **operation_config):
@@ -332,16 +331,16 @@ class ComputeNodeOperations(object):
         :type node_id: str
         :param compute_node_get_options: Additional parameters for the
          operation
-        :type compute_node_get_options: :class:`ComputeNodeGetOptions
-         <azure.batch.models.ComputeNodeGetOptions>`
+        :type compute_node_get_options:
+         ~azure.batch.models.ComputeNodeGetOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`ComputeNode <azure.batch.models.ComputeNode>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: ComputeNode or ClientRawResponse if raw=true
+        :rtype: ~azure.batch.models.ComputeNode or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -362,7 +361,7 @@ class ComputeNodeOperations(object):
             ocp_date = compute_node_get_options.ocp_date
 
         # Construct URL
-        url = '/pools/{poolId}/nodes/{nodeId}'
+        url = self.get.metadata['url']
         path_format_arguments = {
             'poolId': self._serialize.url("pool_id", pool_id, 'str'),
             'nodeId': self._serialize.url("node_id", node_id, 'str')
@@ -379,7 +378,7 @@ class ComputeNodeOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -395,7 +394,7 @@ class ComputeNodeOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -418,6 +417,7 @@ class ComputeNodeOperations(object):
             return client_raw_response
 
         return deserialized
+    get.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}'}
 
     def reboot(
             self, pool_id, node_id, compute_node_reboot_options=None, node_reboot_option=None, custom_headers=None, raw=False, **operation_config):
@@ -431,22 +431,21 @@ class ComputeNodeOperations(object):
         :type node_id: str
         :param compute_node_reboot_options: Additional parameters for the
          operation
-        :type compute_node_reboot_options: :class:`ComputeNodeRebootOptions
-         <azure.batch.models.ComputeNodeRebootOptions>`
+        :type compute_node_reboot_options:
+         ~azure.batch.models.ComputeNodeRebootOptions
         :param node_reboot_option: When to reboot the compute node and what to
          do with currently running tasks. The default value is requeue.
          Possible values include: 'requeue', 'terminate', 'taskCompletion',
          'retainedData'
-        :type node_reboot_option: str or :class:`ComputeNodeRebootOption
-         <azure.batch.models.ComputeNodeRebootOption>`
+        :type node_reboot_option: str or
+         ~azure.batch.models.ComputeNodeRebootOption
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -467,7 +466,7 @@ class ComputeNodeOperations(object):
             node_reboot_parameter = models.NodeRebootParameter(node_reboot_option=node_reboot_option)
 
         # Construct URL
-        url = '/pools/{poolId}/nodes/{nodeId}/reboot'
+        url = self.reboot.metadata['url']
         path_format_arguments = {
             'poolId': self._serialize.url("pool_id", pool_id, 'str'),
             'nodeId': self._serialize.url("node_id", node_id, 'str')
@@ -505,7 +504,7 @@ class ComputeNodeOperations(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [202]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -520,6 +519,7 @@ class ComputeNodeOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    reboot.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}/reboot'}
 
     def reimage(
             self, pool_id, node_id, compute_node_reimage_options=None, node_reimage_option=None, custom_headers=None, raw=False, **operation_config):
@@ -535,22 +535,21 @@ class ComputeNodeOperations(object):
         :type node_id: str
         :param compute_node_reimage_options: Additional parameters for the
          operation
-        :type compute_node_reimage_options: :class:`ComputeNodeReimageOptions
-         <azure.batch.models.ComputeNodeReimageOptions>`
+        :type compute_node_reimage_options:
+         ~azure.batch.models.ComputeNodeReimageOptions
         :param node_reimage_option: When to reimage the compute node and what
          to do with currently running tasks. The default value is requeue.
          Possible values include: 'requeue', 'terminate', 'taskCompletion',
          'retainedData'
-        :type node_reimage_option: str or :class:`ComputeNodeReimageOption
-         <azure.batch.models.ComputeNodeReimageOption>`
+        :type node_reimage_option: str or
+         ~azure.batch.models.ComputeNodeReimageOption
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -571,7 +570,7 @@ class ComputeNodeOperations(object):
             node_reimage_parameter = models.NodeReimageParameter(node_reimage_option=node_reimage_option)
 
         # Construct URL
-        url = '/pools/{poolId}/nodes/{nodeId}/reimage'
+        url = self.reimage.metadata['url']
         path_format_arguments = {
             'poolId': self._serialize.url("pool_id", pool_id, 'str'),
             'nodeId': self._serialize.url("node_id", node_id, 'str')
@@ -609,7 +608,7 @@ class ComputeNodeOperations(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [202]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -624,10 +623,14 @@ class ComputeNodeOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    reimage.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}/reimage'}
 
     def disable_scheduling(
             self, pool_id, node_id, compute_node_disable_scheduling_options=None, node_disable_scheduling_option=None, custom_headers=None, raw=False, **operation_config):
         """Disables task scheduling on the specified compute node.
+
+        You can disable task scheduling on a node only if its current
+        scheduling state is enabled.
 
         :param pool_id: The ID of the pool that contains the compute node.
         :type pool_id: str
@@ -637,23 +640,20 @@ class ComputeNodeOperations(object):
         :param compute_node_disable_scheduling_options: Additional parameters
          for the operation
         :type compute_node_disable_scheduling_options:
-         :class:`ComputeNodeDisableSchedulingOptions
-         <azure.batch.models.ComputeNodeDisableSchedulingOptions>`
+         ~azure.batch.models.ComputeNodeDisableSchedulingOptions
         :param node_disable_scheduling_option: What to do with currently
          running tasks when disabling task scheduling on the compute node. The
          default value is requeue. Possible values include: 'requeue',
          'terminate', 'taskCompletion'
         :type node_disable_scheduling_option: str or
-         :class:`DisableComputeNodeSchedulingOption
-         <azure.batch.models.DisableComputeNodeSchedulingOption>`
+         ~azure.batch.models.DisableComputeNodeSchedulingOption
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -674,7 +674,7 @@ class ComputeNodeOperations(object):
             node_disable_scheduling_parameter = models.NodeDisableSchedulingParameter(node_disable_scheduling_option=node_disable_scheduling_option)
 
         # Construct URL
-        url = '/pools/{poolId}/nodes/{nodeId}/disablescheduling'
+        url = self.disable_scheduling.metadata['url']
         path_format_arguments = {
             'poolId': self._serialize.url("pool_id", pool_id, 'str'),
             'nodeId': self._serialize.url("node_id", node_id, 'str')
@@ -712,7 +712,7 @@ class ComputeNodeOperations(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -727,10 +727,14 @@ class ComputeNodeOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    disable_scheduling.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}/disablescheduling'}
 
     def enable_scheduling(
             self, pool_id, node_id, compute_node_enable_scheduling_options=None, custom_headers=None, raw=False, **operation_config):
         """Enables task scheduling on the specified compute node.
+
+        You can enable task scheduling on a node only if its current scheduling
+        state is disabled.
 
         :param pool_id: The ID of the pool that contains the compute node.
         :type pool_id: str
@@ -740,16 +744,14 @@ class ComputeNodeOperations(object):
         :param compute_node_enable_scheduling_options: Additional parameters
          for the operation
         :type compute_node_enable_scheduling_options:
-         :class:`ComputeNodeEnableSchedulingOptions
-         <azure.batch.models.ComputeNodeEnableSchedulingOptions>`
+         ~azure.batch.models.ComputeNodeEnableSchedulingOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -767,7 +769,7 @@ class ComputeNodeOperations(object):
             ocp_date = compute_node_enable_scheduling_options.ocp_date
 
         # Construct URL
-        url = '/pools/{poolId}/nodes/{nodeId}/enablescheduling'
+        url = self.enable_scheduling.metadata['url']
         path_format_arguments = {
             'poolId': self._serialize.url("pool_id", pool_id, 'str'),
             'nodeId': self._serialize.url("node_id", node_id, 'str')
@@ -782,7 +784,7 @@ class ComputeNodeOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -798,7 +800,7 @@ class ComputeNodeOperations(object):
 
         # Construct and send request
         request = self._client.post(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -813,6 +815,7 @@ class ComputeNodeOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    enable_scheduling.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}/enablescheduling'}
 
     def get_remote_login_settings(
             self, pool_id, node_id, compute_node_get_remote_login_settings_options=None, custom_headers=None, raw=False, **operation_config):
@@ -821,7 +824,8 @@ class ComputeNodeOperations(object):
         Before you can remotely login to a node using the remote login
         settings, you must create a user account on the node. This API can be
         invoked only on pools created with the virtual machine configuration
-        property.
+        property. For pools created with a cloud service configuration, see the
+        GetRemoteDesktop API.
 
         :param pool_id: The ID of the pool that contains the compute node.
         :type pool_id: str
@@ -831,17 +835,16 @@ class ComputeNodeOperations(object):
         :param compute_node_get_remote_login_settings_options: Additional
          parameters for the operation
         :type compute_node_get_remote_login_settings_options:
-         :class:`ComputeNodeGetRemoteLoginSettingsOptions
-         <azure.batch.models.ComputeNodeGetRemoteLoginSettingsOptions>`
+         ~azure.batch.models.ComputeNodeGetRemoteLoginSettingsOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`ComputeNodeGetRemoteLoginSettingsResult
-         <azure.batch.models.ComputeNodeGetRemoteLoginSettingsResult>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
+        :return: ComputeNodeGetRemoteLoginSettingsResult or ClientRawResponse
          if raw=true
+        :rtype: ~azure.batch.models.ComputeNodeGetRemoteLoginSettingsResult or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -859,7 +862,7 @@ class ComputeNodeOperations(object):
             ocp_date = compute_node_get_remote_login_settings_options.ocp_date
 
         # Construct URL
-        url = '/pools/{poolId}/nodes/{nodeId}/remoteloginsettings'
+        url = self.get_remote_login_settings.metadata['url']
         path_format_arguments = {
             'poolId': self._serialize.url("pool_id", pool_id, 'str'),
             'nodeId': self._serialize.url("node_id", node_id, 'str')
@@ -874,7 +877,7 @@ class ComputeNodeOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -890,7 +893,7 @@ class ComputeNodeOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -913,6 +916,7 @@ class ComputeNodeOperations(object):
             return client_raw_response
 
         return deserialized
+    get_remote_login_settings.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}/remoteloginsettings'}
 
     def get_remote_desktop(
             self, pool_id, node_id, compute_node_get_remote_desktop_options=None, custom_headers=None, raw=False, callback=None, **operation_config):
@@ -920,7 +924,8 @@ class ComputeNodeOperations(object):
 
         Before you can access a node by using the RDP file, you must create a
         user account on the node. This API can only be invoked on pools created
-        with the cloud service configuration property.
+        with a cloud service configuration. For pools created with a virtual
+        machine configuration, see the GetRemoteLoginSettings API.
 
         :param pool_id: The ID of the pool that contains the compute node.
         :type pool_id: str
@@ -930,8 +935,7 @@ class ComputeNodeOperations(object):
         :param compute_node_get_remote_desktop_options: Additional parameters
          for the operation
         :type compute_node_get_remote_desktop_options:
-         :class:`ComputeNodeGetRemoteDesktopOptions
-         <azure.batch.models.ComputeNodeGetRemoteDesktopOptions>`
+         ~azure.batch.models.ComputeNodeGetRemoteDesktopOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -942,9 +946,8 @@ class ComputeNodeOperations(object):
         :type callback: Callable[Bytes, response=None]
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: Generator
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: object or ClientRawResponse if raw=true
+        :rtype: Generator or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -962,7 +965,112 @@ class ComputeNodeOperations(object):
             ocp_date = compute_node_get_remote_desktop_options.ocp_date
 
         # Construct URL
-        url = '/pools/{poolId}/nodes/{nodeId}/rdp'
+        url = self.get_remote_desktop.metadata['url']
+        path_format_arguments = {
+            'poolId': self._serialize.url("pool_id", pool_id, 'str'),
+            'nodeId': self._serialize.url("node_id", node_id, 'str')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        if timeout is not None:
+            query_parameters['timeout'] = self._serialize.query("timeout", timeout, 'int')
+
+        # Construct headers
+        header_parameters = {}
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        if self.config.generate_client_request_id:
+            header_parameters['client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+        if client_request_id is not None:
+            header_parameters['client-request-id'] = self._serialize.header("client_request_id", client_request_id, 'str')
+        if return_client_request_id is not None:
+            header_parameters['return-client-request-id'] = self._serialize.header("return_client_request_id", return_client_request_id, 'bool')
+        if ocp_date is not None:
+            header_parameters['ocp-date'] = self._serialize.header("ocp_date", ocp_date, 'rfc-1123')
+
+        # Construct and send request
+        request = self._client.get(url, query_parameters)
+        response = self._client.send(request, header_parameters, stream=True, **operation_config)
+
+        if response.status_code not in [200]:
+            raise models.BatchErrorException(self._deserialize, response)
+
+        deserialized = None
+        header_dict = {}
+
+        if response.status_code == 200:
+            deserialized = self._client.stream_download(response, callback)
+            header_dict = {
+                'client-request-id': 'str',
+                'request-id': 'str',
+                'ETag': 'str',
+                'Last-Modified': 'rfc-1123',
+            }
+
+        if raw:
+            client_raw_response = ClientRawResponse(deserialized, response)
+            client_raw_response.add_headers(header_dict)
+            return client_raw_response
+
+        return deserialized
+    get_remote_desktop.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}/rdp'}
+
+    def upload_batch_service_logs(
+            self, pool_id, node_id, upload_batch_service_logs_configuration, compute_node_upload_batch_service_logs_options=None, custom_headers=None, raw=False, **operation_config):
+        """Upload Azure Batch service log files from the specified compute node to
+        Azure Blob Storage.
+
+        This is for gathering Azure Batch service log files in an automated
+        fashion from nodes if you are experiencing an error and wish to
+        escalate to Azure support. The Azure Batch service log files should be
+        shared with Azure support to aid in debugging issues with the Batch
+        service.
+
+        :param pool_id: The ID of the pool that contains the compute node.
+        :type pool_id: str
+        :param node_id: The ID of the compute node from which you want to
+         upload the Azure Batch service log files.
+        :type node_id: str
+        :param upload_batch_service_logs_configuration: The Azure Batch
+         service log files upload configuration.
+        :type upload_batch_service_logs_configuration:
+         ~azure.batch.models.UploadBatchServiceLogsConfiguration
+        :param compute_node_upload_batch_service_logs_options: Additional
+         parameters for the operation
+        :type compute_node_upload_batch_service_logs_options:
+         ~azure.batch.models.ComputeNodeUploadBatchServiceLogsOptions
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: returns the direct response alongside the
+         deserialized response
+        :param operation_config: :ref:`Operation configuration
+         overrides<msrest:optionsforoperations>`.
+        :return: UploadBatchServiceLogsResult or ClientRawResponse if raw=true
+        :rtype: ~azure.batch.models.UploadBatchServiceLogsResult or
+         ~msrest.pipeline.ClientRawResponse
+        :raises:
+         :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
+        """
+        timeout = None
+        if compute_node_upload_batch_service_logs_options is not None:
+            timeout = compute_node_upload_batch_service_logs_options.timeout
+        client_request_id = None
+        if compute_node_upload_batch_service_logs_options is not None:
+            client_request_id = compute_node_upload_batch_service_logs_options.client_request_id
+        return_client_request_id = None
+        if compute_node_upload_batch_service_logs_options is not None:
+            return_client_request_id = compute_node_upload_batch_service_logs_options.return_client_request_id
+        ocp_date = None
+        if compute_node_upload_batch_service_logs_options is not None:
+            ocp_date = compute_node_upload_batch_service_logs_options.ocp_date
+
+        # Construct URL
+        url = self.upload_batch_service_logs.metadata['url']
         path_format_arguments = {
             'poolId': self._serialize.url("pool_id", pool_id, 'str'),
             'nodeId': self._serialize.url("node_id", node_id, 'str')
@@ -991,9 +1099,13 @@ class ComputeNodeOperations(object):
         if ocp_date is not None:
             header_parameters['ocp-date'] = self._serialize.header("ocp_date", ocp_date, 'rfc-1123')
 
+        # Construct body
+        body_content = self._serialize.body(upload_batch_service_logs_configuration, 'UploadBatchServiceLogsConfiguration')
+
         # Construct and send request
-        request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        request = self._client.post(url, query_parameters)
+        response = self._client.send(
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -1002,12 +1114,10 @@ class ComputeNodeOperations(object):
         header_dict = {}
 
         if response.status_code == 200:
-            deserialized = self._client.stream_download(response, callback)
+            deserialized = self._deserialize('UploadBatchServiceLogsResult', response)
             header_dict = {
                 'client-request-id': 'str',
                 'request-id': 'str',
-                'ETag': 'str',
-                'Last-Modified': 'rfc-1123',
             }
 
         if raw:
@@ -1016,6 +1126,7 @@ class ComputeNodeOperations(object):
             return client_raw_response
 
         return deserialized
+    upload_batch_service_logs.metadata = {'url': '/pools/{poolId}/nodes/{nodeId}/uploadbatchservicelogs'}
 
     def list(
             self, pool_id, compute_node_list_options=None, custom_headers=None, raw=False, **operation_config):
@@ -1025,15 +1136,16 @@ class ComputeNodeOperations(object):
         :type pool_id: str
         :param compute_node_list_options: Additional parameters for the
          operation
-        :type compute_node_list_options: :class:`ComputeNodeListOptions
-         <azure.batch.models.ComputeNodeListOptions>`
+        :type compute_node_list_options:
+         ~azure.batch.models.ComputeNodeListOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`ComputeNodePaged
-         <azure.batch.models.ComputeNodePaged>`
+        :return: An iterator like instance of ComputeNode
+        :rtype:
+         ~azure.batch.models.ComputeNodePaged[~azure.batch.models.ComputeNode]
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -1063,7 +1175,7 @@ class ComputeNodeOperations(object):
 
             if not next_link:
                 # Construct URL
-                url = '/pools/{poolId}/nodes'
+                url = self.list.metadata['url']
                 path_format_arguments = {
                     'poolId': self._serialize.url("pool_id", pool_id, 'str')
                 }
@@ -1087,7 +1199,7 @@ class ComputeNodeOperations(object):
 
             # Construct headers
             header_parameters = {}
-            header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+            header_parameters['Content-Type'] = 'application/json; charset=utf-8'
             if self.config.generate_client_request_id:
                 header_parameters['client-request-id'] = str(uuid.uuid1())
             if custom_headers:
@@ -1104,7 +1216,7 @@ class ComputeNodeOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 raise models.BatchErrorException(self._deserialize, response)
@@ -1120,3 +1232,4 @@ class ComputeNodeOperations(object):
             return client_raw_response
 
         return deserialized
+    list.metadata = {'url': '/pools/{poolId}/nodes'}

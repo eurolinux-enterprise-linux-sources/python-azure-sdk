@@ -9,10 +9,11 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
+import uuid
 from msrest.pipeline import ClientRawResponse
 from msrestazure.azure_exceptions import CloudError
-from msrestazure.azure_operation import AzureOperationPoller
-import uuid
+from msrest.polling import LROPoller, NoPolling
+from msrestazure.polling.arm_polling import ARMPolling
 
 from .. import models
 
@@ -23,9 +24,11 @@ class ResourcesOperations(object):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
+    :param deserializer: An object model deserializer.
     :ivar api_version: The API version to use for this operation. Constant value: "2017-05-10".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
@@ -55,17 +58,18 @@ class ResourcesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`GenericResourcePaged
-         <azure.mgmt.resource.resources.v2017_05_10.models.GenericResourcePaged>`
+        :return: An iterator like instance of GenericResource
+        :rtype:
+         ~azure.mgmt.resource.resources.v2017_05_10.models.GenericResourcePaged[~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         def internal_paging(next_link=None, raw=False):
 
             if not next_link:
                 # Construct URL
-                url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources'
+                url = self.list_by_resource_group.metadata['url']
                 path_format_arguments = {
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern='^[-\w\._\(\)]+$'),
+                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
@@ -97,7 +101,7 @@ class ResourcesOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 exp = CloudError(response)
@@ -115,40 +119,17 @@ class ResourcesOperations(object):
             return client_raw_response
 
         return deserialized
+    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources'}
 
-    def move_resources(
+
+    def _move_resources_initial(
             self, source_resource_group_name, resources=None, target_resource_group=None, custom_headers=None, raw=False, **operation_config):
-        """Moves resources from one resource group to another resource group.
-
-        The resources to move must be in the same source resource group. The
-        target resource group may be in a different subscription. When moving
-        resources, both the source group and the target group are locked for
-        the duration of the operation. Write and delete operations are blocked
-        on the groups until the move completes. .
-
-        :param source_resource_group_name: The name of the resource group
-         containing the rsources to move.
-        :type source_resource_group_name: str
-        :param resources: The IDs of the resources.
-        :type resources: list of str
-        :param target_resource_group: The target resource group.
-        :type target_resource_group: str
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :rtype:
-         :class:`AzureOperationPoller<msrestazure.azure_operation.AzureOperationPoller>`
-         instance that returns None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
-        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
-        """
         parameters = models.ResourcesMoveInfo(resources=resources, target_resource_group=target_resource_group)
 
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources'
+        url = self.move_resources.metadata['url']
         path_format_arguments = {
-            'sourceResourceGroupName': self._serialize.url("source_resource_group_name", source_resource_group_name, 'str', max_length=90, min_length=1, pattern='^[-\w\._\(\)]+$'),
+            'sourceResourceGroupName': self._serialize.url("source_resource_group_name", source_resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -171,41 +152,167 @@ class ResourcesOperations(object):
         body_content = self._serialize.body(parameters, 'ResourcesMoveInfo')
 
         # Construct and send request
-        def long_running_send():
+        request = self._client.post(url, query_parameters)
+        response = self._client.send(
+            request, header_parameters, body_content, stream=False, **operation_config)
 
-            request = self._client.post(url, query_parameters)
-            return self._client.send(
-                request, header_parameters, body_content, **operation_config)
+        if response.status_code not in [202, 204]:
+            exp = CloudError(response)
+            exp.request_id = response.headers.get('x-ms-request-id')
+            raise exp
 
-        def get_long_running_status(status_link, headers=None):
+        if raw:
+            client_raw_response = ClientRawResponse(None, response)
+            return client_raw_response
 
-            request = self._client.get(status_link)
-            if headers:
-                request.headers.update(headers)
-            return self._client.send(
-                request, header_parameters, **operation_config)
+    def move_resources(
+            self, source_resource_group_name, resources=None, target_resource_group=None, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Moves resources from one resource group to another resource group.
+
+        The resources to move must be in the same source resource group. The
+        target resource group may be in a different subscription. When moving
+        resources, both the source group and the target group are locked for
+        the duration of the operation. Write and delete operations are blocked
+        on the groups until the move completes. .
+
+        :param source_resource_group_name: The name of the resource group
+         containing the resources to move.
+        :type source_resource_group_name: str
+        :param resources: The IDs of the resources.
+        :type resources: list[str]
+        :param target_resource_group: The target resource group.
+        :type target_resource_group: str
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns None or
+         ClientRawResponse<None> if raw==True
+        :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
+        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        """
+        raw_result = self._move_resources_initial(
+            source_resource_group_name=source_resource_group_name,
+            resources=resources,
+            target_resource_group=target_resource_group,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
 
         def get_long_running_output(response):
-
-            if response.status_code not in [202, 204]:
-                exp = CloudError(response)
-                exp.request_id = response.headers.get('x-ms-request-id')
-                raise exp
-
             if raw:
                 client_raw_response = ClientRawResponse(None, response)
                 return client_raw_response
 
-        if raw:
-            response = long_running_send()
-            return get_long_running_output(response)
-
-        long_running_operation_timeout = operation_config.get(
+        lro_delay = operation_config.get(
             'long_running_operation_timeout',
             self.config.long_running_operation_timeout)
-        return AzureOperationPoller(
-            long_running_send, get_long_running_output,
-            get_long_running_status, long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    move_resources.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources'}
+
+
+    def _validate_move_resources_initial(
+            self, source_resource_group_name, resources=None, target_resource_group=None, custom_headers=None, raw=False, **operation_config):
+        parameters = models.ResourcesMoveInfo(resources=resources, target_resource_group=target_resource_group)
+
+        # Construct URL
+        url = self.validate_move_resources.metadata['url']
+        path_format_arguments = {
+            'sourceResourceGroupName': self._serialize.url("source_resource_group_name", source_resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        if self.config.generate_client_request_id:
+            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+        # Construct body
+        body_content = self._serialize.body(parameters, 'ResourcesMoveInfo')
+
+        # Construct and send request
+        request = self._client.post(url, query_parameters)
+        response = self._client.send(
+            request, header_parameters, body_content, stream=False, **operation_config)
+
+        if response.status_code not in [202, 204, 409]:
+            exp = CloudError(response)
+            exp.request_id = response.headers.get('x-ms-request-id')
+            raise exp
+
+        if raw:
+            client_raw_response = ClientRawResponse(None, response)
+            return client_raw_response
+
+    def validate_move_resources(
+            self, source_resource_group_name, resources=None, target_resource_group=None, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Validates whether resources can be moved from one resource group to
+        another resource group.
+
+        This operation checks whether the specified resources can be moved to
+        the target. The resources to move must be in the same source resource
+        group. The target resource group may be in a different subscription. If
+        validation succeeds, it returns HTTP response code 204 (no content). If
+        validation fails, it returns HTTP response code 409 (Conflict) with an
+        error message. Retrieve the URL in the Location header value to check
+        the result of the long-running operation.
+
+        :param source_resource_group_name: The name of the resource group
+         containing the resources to validate for move.
+        :type source_resource_group_name: str
+        :param resources: The IDs of the resources.
+        :type resources: list[str]
+        :param target_resource_group: The target resource group.
+        :type target_resource_group: str
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns None or
+         ClientRawResponse<None> if raw==True
+        :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
+        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        """
+        raw_result = self._validate_move_resources_initial(
+            source_resource_group_name=source_resource_group_name,
+            resources=resources,
+            target_resource_group=target_resource_group,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
+
+        def get_long_running_output(response):
+            if raw:
+                client_raw_response = ClientRawResponse(None, response)
+                return client_raw_response
+
+        lro_delay = operation_config.get(
+            'long_running_operation_timeout',
+            self.config.long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    validate_move_resources.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/validateMoveResources'}
 
     def list(
             self, filter=None, expand=None, top=None, custom_headers=None, raw=False, **operation_config):
@@ -223,15 +330,16 @@ class ResourcesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`GenericResourcePaged
-         <azure.mgmt.resource.resources.v2017_05_10.models.GenericResourcePaged>`
+        :return: An iterator like instance of GenericResource
+        :rtype:
+         ~azure.mgmt.resource.resources.v2017_05_10.models.GenericResourcePaged[~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         def internal_paging(next_link=None, raw=False):
 
             if not next_link:
                 # Construct URL
-                url = '/subscriptions/{subscriptionId}/resources'
+                url = self.list.metadata['url']
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
@@ -264,7 +372,7 @@ class ResourcesOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 exp = CloudError(response)
@@ -282,6 +390,7 @@ class ResourcesOperations(object):
             return client_raw_response
 
         return deserialized
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/resources'}
 
     def check_existence(
             self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, custom_headers=None, raw=False, **operation_config):
@@ -307,15 +416,14 @@ class ResourcesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: bool
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: bool or ClientRawResponse if raw=true
+        :rtype: bool or ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'
+        url = self.check_existence.metadata['url']
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern='^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'resourceProviderNamespace': self._serialize.url("resource_provider_namespace", resource_provider_namespace, 'str'),
             'parentResourcePath': self._serialize.url("parent_resource_path", parent_resource_path, 'str', skip_quote=True),
             'resourceType': self._serialize.url("resource_type", resource_type, 'str', skip_quote=True),
@@ -340,7 +448,7 @@ class ResourcesOperations(object):
 
         # Construct and send request
         request = self._client.head(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [204, 404]:
             exp = CloudError(response)
@@ -352,39 +460,15 @@ class ResourcesOperations(object):
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
         return deserialized
+    check_existence.metadata = {'url': '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'}
 
-    def delete(
+
+    def _delete_initial(
             self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, custom_headers=None, raw=False, **operation_config):
-        """Deletes a resource.
-
-        :param resource_group_name: The name of the resource group that
-         contains the resource to delete. The name is case insensitive.
-        :type resource_group_name: str
-        :param resource_provider_namespace: The namespace of the resource
-         provider.
-        :type resource_provider_namespace: str
-        :param parent_resource_path: The parent resource identity.
-        :type parent_resource_path: str
-        :param resource_type: The resource type.
-        :type resource_type: str
-        :param resource_name: The name of the resource to delete.
-        :type resource_name: str
-        :param api_version: The API version to use for the operation.
-        :type api_version: str
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :rtype:
-         :class:`AzureOperationPoller<msrestazure.azure_operation.AzureOperationPoller>`
-         instance that returns None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
-        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
-        """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'
+        url = self.delete.metadata['url']
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern='^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'resourceProviderNamespace': self._serialize.url("resource_provider_namespace", resource_provider_namespace, 'str'),
             'parentResourcePath': self._serialize.url("parent_resource_path", parent_resource_path, 'str', skip_quote=True),
             'resourceType': self._serialize.url("resource_type", resource_type, 'str', skip_quote=True),
@@ -408,77 +492,80 @@ class ResourcesOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct and send request
-        def long_running_send():
+        request = self._client.delete(url, query_parameters)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
-            request = self._client.delete(url, query_parameters)
-            return self._client.send(request, header_parameters, **operation_config)
-
-        def get_long_running_status(status_link, headers=None):
-
-            request = self._client.get(status_link)
-            if headers:
-                request.headers.update(headers)
-            return self._client.send(
-                request, header_parameters, **operation_config)
-
-        def get_long_running_output(response):
-
-            if response.status_code not in [200, 204, 202]:
-                exp = CloudError(response)
-                exp.request_id = response.headers.get('x-ms-request-id')
-                raise exp
-
-            if raw:
-                client_raw_response = ClientRawResponse(None, response)
-                return client_raw_response
+        if response.status_code not in [200, 202, 204]:
+            exp = CloudError(response)
+            exp.request_id = response.headers.get('x-ms-request-id')
+            raise exp
 
         if raw:
-            response = long_running_send()
-            return get_long_running_output(response)
+            client_raw_response = ClientRawResponse(None, response)
+            return client_raw_response
 
-        long_running_operation_timeout = operation_config.get(
-            'long_running_operation_timeout',
-            self.config.long_running_operation_timeout)
-        return AzureOperationPoller(
-            long_running_send, get_long_running_output,
-            get_long_running_status, long_running_operation_timeout)
+    def delete(
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Deletes a resource.
 
-    def create_or_update(
-            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, parameters, custom_headers=None, raw=False, **operation_config):
-        """Creates a resource.
-
-        :param resource_group_name: The name of the resource group for the
-         resource. The name is case insensitive.
+        :param resource_group_name: The name of the resource group that
+         contains the resource to delete. The name is case insensitive.
         :type resource_group_name: str
         :param resource_provider_namespace: The namespace of the resource
          provider.
         :type resource_provider_namespace: str
         :param parent_resource_path: The parent resource identity.
         :type parent_resource_path: str
-        :param resource_type: The resource type of the resource to create.
+        :param resource_type: The resource type.
         :type resource_type: str
-        :param resource_name: The name of the resource to create.
+        :param resource_name: The name of the resource to delete.
         :type resource_name: str
         :param api_version: The API version to use for the operation.
         :type api_version: str
-        :param parameters: Parameters for creating or updating the resource.
-        :type parameters: :class:`GenericResource
-         <azure.mgmt.resource.resources.v2017_05_10.models.GenericResource>`
         :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :rtype:
-         :class:`AzureOperationPoller<msrestazure.azure_operation.AzureOperationPoller>`
-         instance that returns :class:`GenericResource
-         <azure.mgmt.resource.resources.v2017_05_10.models.GenericResource>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns None or
+         ClientRawResponse<None> if raw==True
+        :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            resource_provider_namespace=resource_provider_namespace,
+            parent_resource_path=parent_resource_path,
+            resource_type=resource_type,
+            resource_name=resource_name,
+            api_version=api_version,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
+
+        def get_long_running_output(response):
+            if raw:
+                client_raw_response = ClientRawResponse(None, response)
+                return client_raw_response
+
+        lro_delay = operation_config.get(
+            'long_running_operation_timeout',
+            self.config.long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'}
+
+
+    def _create_or_update_initial(
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, parameters, custom_headers=None, raw=False, **operation_config):
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'
+        url = self.create_or_update.metadata['url']
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern='^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'resourceProviderNamespace': self._serialize.url("resource_provider_namespace", resource_provider_namespace, 'str'),
             'parentResourcePath': self._serialize.url("parent_resource_path", parent_resource_path, 'str', skip_quote=True),
             'resourceType': self._serialize.url("resource_type", resource_type, 'str', skip_quote=True),
@@ -505,33 +592,77 @@ class ResourcesOperations(object):
         body_content = self._serialize.body(parameters, 'GenericResource')
 
         # Construct and send request
-        def long_running_send():
+        request = self._client.put(url, query_parameters)
+        response = self._client.send(
+            request, header_parameters, body_content, stream=False, **operation_config)
 
-            request = self._client.put(url, query_parameters)
-            return self._client.send(
-                request, header_parameters, body_content, **operation_config)
+        if response.status_code not in [200, 201, 202]:
+            exp = CloudError(response)
+            exp.request_id = response.headers.get('x-ms-request-id')
+            raise exp
 
-        def get_long_running_status(status_link, headers=None):
+        deserialized = None
 
-            request = self._client.get(status_link)
-            if headers:
-                request.headers.update(headers)
-            return self._client.send(
-                request, header_parameters, **operation_config)
+        if response.status_code == 200:
+            deserialized = self._deserialize('GenericResource', response)
+        if response.status_code == 201:
+            deserialized = self._deserialize('GenericResource', response)
+
+        if raw:
+            client_raw_response = ClientRawResponse(deserialized, response)
+            return client_raw_response
+
+        return deserialized
+
+    def create_or_update(
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, parameters, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Creates a resource.
+
+        :param resource_group_name: The name of the resource group for the
+         resource. The name is case insensitive.
+        :type resource_group_name: str
+        :param resource_provider_namespace: The namespace of the resource
+         provider.
+        :type resource_provider_namespace: str
+        :param parent_resource_path: The parent resource identity.
+        :type parent_resource_path: str
+        :param resource_type: The resource type of the resource to create.
+        :type resource_type: str
+        :param resource_name: The name of the resource to create.
+        :type resource_name: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
+        :param parameters: Parameters for creating or updating the resource.
+        :type parameters:
+         ~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns GenericResource or
+         ClientRawResponse<GenericResource> if raw==True
+        :rtype:
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource]
+         or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource]]
+        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        """
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            resource_provider_namespace=resource_provider_namespace,
+            parent_resource_path=parent_resource_path,
+            resource_type=resource_type,
+            resource_name=resource_name,
+            api_version=api_version,
+            parameters=parameters,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
 
         def get_long_running_output(response):
-
-            if response.status_code not in [201, 200, 202]:
-                exp = CloudError(response)
-                exp.request_id = response.headers.get('x-ms-request-id')
-                raise exp
-
-            deserialized = None
-
-            if response.status_code == 201:
-                deserialized = self._deserialize('GenericResource', response)
-            if response.status_code == 200:
-                deserialized = self._deserialize('GenericResource', response)
+            deserialized = self._deserialize('GenericResource', response)
 
             if raw:
                 client_raw_response = ClientRawResponse(deserialized, response)
@@ -539,16 +670,132 @@ class ResourcesOperations(object):
 
             return deserialized
 
-        if raw:
-            response = long_running_send()
-            return get_long_running_output(response)
-
-        long_running_operation_timeout = operation_config.get(
+        lro_delay = operation_config.get(
             'long_running_operation_timeout',
             self.config.long_running_operation_timeout)
-        return AzureOperationPoller(
-            long_running_send, get_long_running_output,
-            get_long_running_status, long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'}
+
+
+    def _update_initial(
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, parameters, custom_headers=None, raw=False, **operation_config):
+        # Construct URL
+        url = self.update.metadata['url']
+        path_format_arguments = {
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceProviderNamespace': self._serialize.url("resource_provider_namespace", resource_provider_namespace, 'str'),
+            'parentResourcePath': self._serialize.url("parent_resource_path", parent_resource_path, 'str', skip_quote=True),
+            'resourceType': self._serialize.url("resource_type", resource_type, 'str', skip_quote=True),
+            'resourceName': self._serialize.url("resource_name", resource_name, 'str'),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        if self.config.generate_client_request_id:
+            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+        # Construct body
+        body_content = self._serialize.body(parameters, 'GenericResource')
+
+        # Construct and send request
+        request = self._client.patch(url, query_parameters)
+        response = self._client.send(
+            request, header_parameters, body_content, stream=False, **operation_config)
+
+        if response.status_code not in [200, 202]:
+            exp = CloudError(response)
+            exp.request_id = response.headers.get('x-ms-request-id')
+            raise exp
+
+        deserialized = None
+
+        if response.status_code == 200:
+            deserialized = self._deserialize('GenericResource', response)
+
+        if raw:
+            client_raw_response = ClientRawResponse(deserialized, response)
+            return client_raw_response
+
+        return deserialized
+
+    def update(
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, parameters, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Updates a resource.
+
+        :param resource_group_name: The name of the resource group for the
+         resource. The name is case insensitive.
+        :type resource_group_name: str
+        :param resource_provider_namespace: The namespace of the resource
+         provider.
+        :type resource_provider_namespace: str
+        :param parent_resource_path: The parent resource identity.
+        :type parent_resource_path: str
+        :param resource_type: The resource type of the resource to update.
+        :type resource_type: str
+        :param resource_name: The name of the resource to update.
+        :type resource_name: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
+        :param parameters: Parameters for updating the resource.
+        :type parameters:
+         ~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns GenericResource or
+         ClientRawResponse<GenericResource> if raw==True
+        :rtype:
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource]
+         or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource]]
+        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        """
+        raw_result = self._update_initial(
+            resource_group_name=resource_group_name,
+            resource_provider_namespace=resource_provider_namespace,
+            parent_resource_path=parent_resource_path,
+            resource_type=resource_type,
+            resource_name=resource_name,
+            api_version=api_version,
+            parameters=parameters,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
+
+        def get_long_running_output(response):
+            deserialized = self._deserialize('GenericResource', response)
+
+            if raw:
+                client_raw_response = ClientRawResponse(deserialized, response)
+                return client_raw_response
+
+            return deserialized
+
+        lro_delay = operation_config.get(
+            'long_running_operation_timeout',
+            self.config.long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'}
 
     def get(
             self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, custom_headers=None, raw=False, **operation_config):
@@ -573,16 +820,16 @@ class ResourcesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`GenericResource
-         <azure.mgmt.resource.resources.v2017_05_10.models.GenericResource>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: GenericResource or ClientRawResponse if raw=true
+        :rtype:
+         ~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'
+        url = self.get.metadata['url']
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern='^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'resourceProviderNamespace': self._serialize.url("resource_provider_namespace", resource_provider_namespace, 'str'),
             'parentResourcePath': self._serialize.url("parent_resource_path", parent_resource_path, 'str', skip_quote=True),
             'resourceType': self._serialize.url("resource_type", resource_type, 'str', skip_quote=True),
@@ -607,7 +854,7 @@ class ResourcesOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)
@@ -624,6 +871,7 @@ class ResourcesOperations(object):
             return client_raw_response
 
         return deserialized
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'}
 
     def check_existence_by_id(
             self, resource_id, api_version, custom_headers=None, raw=False, **operation_config):
@@ -640,13 +888,12 @@ class ResourcesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: bool
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: bool or ClientRawResponse if raw=true
+        :rtype: bool or ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/{resourceId}'
+        url = self.check_existence_by_id.metadata['url']
         path_format_arguments = {
             'resourceId': self._serialize.url("resource_id", resource_id, 'str', skip_quote=True)
         }
@@ -668,7 +915,7 @@ class ResourcesOperations(object):
 
         # Construct and send request
         request = self._client.head(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [204, 404]:
             exp = CloudError(response)
@@ -680,29 +927,13 @@ class ResourcesOperations(object):
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
         return deserialized
+    check_existence_by_id.metadata = {'url': '/{resourceId}'}
 
-    def delete_by_id(
+
+    def _delete_by_id_initial(
             self, resource_id, api_version, custom_headers=None, raw=False, **operation_config):
-        """Deletes a resource by ID.
-
-        :param resource_id: The fully qualified ID of the resource, including
-         the resource name and resource type. Use the format,
-         /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
-        :type resource_id: str
-        :param api_version: The API version to use for the operation.
-        :type api_version: str
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :rtype:
-         :class:`AzureOperationPoller<msrestazure.azure_operation.AzureOperationPoller>`
-         instance that returns None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
-        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
-        """
         # Construct URL
-        url = '/{resourceId}'
+        url = self.delete_by_id.metadata['url']
         path_format_arguments = {
             'resourceId': self._serialize.url("resource_id", resource_id, 'str', skip_quote=True)
         }
@@ -723,44 +954,21 @@ class ResourcesOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct and send request
-        def long_running_send():
+        request = self._client.delete(url, query_parameters)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
-            request = self._client.delete(url, query_parameters)
-            return self._client.send(request, header_parameters, **operation_config)
-
-        def get_long_running_status(status_link, headers=None):
-
-            request = self._client.get(status_link)
-            if headers:
-                request.headers.update(headers)
-            return self._client.send(
-                request, header_parameters, **operation_config)
-
-        def get_long_running_output(response):
-
-            if response.status_code not in [200, 204, 202]:
-                exp = CloudError(response)
-                exp.request_id = response.headers.get('x-ms-request-id')
-                raise exp
-
-            if raw:
-                client_raw_response = ClientRawResponse(None, response)
-                return client_raw_response
+        if response.status_code not in [200, 202, 204]:
+            exp = CloudError(response)
+            exp.request_id = response.headers.get('x-ms-request-id')
+            raise exp
 
         if raw:
-            response = long_running_send()
-            return get_long_running_output(response)
+            client_raw_response = ClientRawResponse(None, response)
+            return client_raw_response
 
-        long_running_operation_timeout = operation_config.get(
-            'long_running_operation_timeout',
-            self.config.long_running_operation_timeout)
-        return AzureOperationPoller(
-            long_running_send, get_long_running_output,
-            get_long_running_status, long_running_operation_timeout)
-
-    def create_or_update_by_id(
-            self, resource_id, api_version, parameters, custom_headers=None, raw=False, **operation_config):
-        """Create a resource by ID.
+    def delete_by_id(
+            self, resource_id, api_version, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Deletes a resource by ID.
 
         :param resource_id: The fully qualified ID of the resource, including
          the resource name and resource type. Use the format,
@@ -768,22 +976,44 @@ class ResourcesOperations(object):
         :type resource_id: str
         :param api_version: The API version to use for the operation.
         :type api_version: str
-        :param parameters: Create or update resource parameters.
-        :type parameters: :class:`GenericResource
-         <azure.mgmt.resource.resources.v2017_05_10.models.GenericResource>`
         :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :rtype:
-         :class:`AzureOperationPoller<msrestazure.azure_operation.AzureOperationPoller>`
-         instance that returns :class:`GenericResource
-         <azure.mgmt.resource.resources.v2017_05_10.models.GenericResource>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns None or
+         ClientRawResponse<None> if raw==True
+        :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
+        raw_result = self._delete_by_id_initial(
+            resource_id=resource_id,
+            api_version=api_version,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
+
+        def get_long_running_output(response):
+            if raw:
+                client_raw_response = ClientRawResponse(None, response)
+                return client_raw_response
+
+        lro_delay = operation_config.get(
+            'long_running_operation_timeout',
+            self.config.long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    delete_by_id.metadata = {'url': '/{resourceId}'}
+
+
+    def _create_or_update_by_id_initial(
+            self, resource_id, api_version, parameters, custom_headers=None, raw=False, **operation_config):
         # Construct URL
-        url = '/{resourceId}'
+        url = self.create_or_update_by_id.metadata['url']
         path_format_arguments = {
             'resourceId': self._serialize.url("resource_id", resource_id, 'str', skip_quote=True)
         }
@@ -807,33 +1037,65 @@ class ResourcesOperations(object):
         body_content = self._serialize.body(parameters, 'GenericResource')
 
         # Construct and send request
-        def long_running_send():
+        request = self._client.put(url, query_parameters)
+        response = self._client.send(
+            request, header_parameters, body_content, stream=False, **operation_config)
 
-            request = self._client.put(url, query_parameters)
-            return self._client.send(
-                request, header_parameters, body_content, **operation_config)
+        if response.status_code not in [200, 201, 202]:
+            exp = CloudError(response)
+            exp.request_id = response.headers.get('x-ms-request-id')
+            raise exp
 
-        def get_long_running_status(status_link, headers=None):
+        deserialized = None
 
-            request = self._client.get(status_link)
-            if headers:
-                request.headers.update(headers)
-            return self._client.send(
-                request, header_parameters, **operation_config)
+        if response.status_code == 200:
+            deserialized = self._deserialize('GenericResource', response)
+        if response.status_code == 201:
+            deserialized = self._deserialize('GenericResource', response)
+
+        if raw:
+            client_raw_response = ClientRawResponse(deserialized, response)
+            return client_raw_response
+
+        return deserialized
+
+    def create_or_update_by_id(
+            self, resource_id, api_version, parameters, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Create a resource by ID.
+
+        :param resource_id: The fully qualified ID of the resource, including
+         the resource name and resource type. Use the format,
+         /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
+        :type resource_id: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
+        :param parameters: Create or update resource parameters.
+        :type parameters:
+         ~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns GenericResource or
+         ClientRawResponse<GenericResource> if raw==True
+        :rtype:
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource]
+         or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource]]
+        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        """
+        raw_result = self._create_or_update_by_id_initial(
+            resource_id=resource_id,
+            api_version=api_version,
+            parameters=parameters,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
 
         def get_long_running_output(response):
-
-            if response.status_code not in [201, 200, 202]:
-                exp = CloudError(response)
-                exp.request_id = response.headers.get('x-ms-request-id')
-                raise exp
-
-            deserialized = None
-
-            if response.status_code == 201:
-                deserialized = self._deserialize('GenericResource', response)
-            if response.status_code == 200:
-                deserialized = self._deserialize('GenericResource', response)
+            deserialized = self._deserialize('GenericResource', response)
 
             if raw:
                 client_raw_response = ClientRawResponse(deserialized, response)
@@ -841,16 +1103,115 @@ class ResourcesOperations(object):
 
             return deserialized
 
-        if raw:
-            response = long_running_send()
-            return get_long_running_output(response)
-
-        long_running_operation_timeout = operation_config.get(
+        lro_delay = operation_config.get(
             'long_running_operation_timeout',
             self.config.long_running_operation_timeout)
-        return AzureOperationPoller(
-            long_running_send, get_long_running_output,
-            get_long_running_status, long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    create_or_update_by_id.metadata = {'url': '/{resourceId}'}
+
+
+    def _update_by_id_initial(
+            self, resource_id, api_version, parameters, custom_headers=None, raw=False, **operation_config):
+        # Construct URL
+        url = self.update_by_id.metadata['url']
+        path_format_arguments = {
+            'resourceId': self._serialize.url("resource_id", resource_id, 'str', skip_quote=True)
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        if self.config.generate_client_request_id:
+            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+        # Construct body
+        body_content = self._serialize.body(parameters, 'GenericResource')
+
+        # Construct and send request
+        request = self._client.patch(url, query_parameters)
+        response = self._client.send(
+            request, header_parameters, body_content, stream=False, **operation_config)
+
+        if response.status_code not in [200, 202]:
+            exp = CloudError(response)
+            exp.request_id = response.headers.get('x-ms-request-id')
+            raise exp
+
+        deserialized = None
+
+        if response.status_code == 200:
+            deserialized = self._deserialize('GenericResource', response)
+
+        if raw:
+            client_raw_response = ClientRawResponse(deserialized, response)
+            return client_raw_response
+
+        return deserialized
+
+    def update_by_id(
+            self, resource_id, api_version, parameters, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Updates a resource by ID.
+
+        :param resource_id: The fully qualified ID of the resource, including
+         the resource name and resource type. Use the format,
+         /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
+        :type resource_id: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
+        :param parameters: Update resource parameters.
+        :type parameters:
+         ~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns GenericResource or
+         ClientRawResponse<GenericResource> if raw==True
+        :rtype:
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource]
+         or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource]]
+        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        """
+        raw_result = self._update_by_id_initial(
+            resource_id=resource_id,
+            api_version=api_version,
+            parameters=parameters,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
+
+        def get_long_running_output(response):
+            deserialized = self._deserialize('GenericResource', response)
+
+            if raw:
+                client_raw_response = ClientRawResponse(deserialized, response)
+                return client_raw_response
+
+            return deserialized
+
+        lro_delay = operation_config.get(
+            'long_running_operation_timeout',
+            self.config.long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    update_by_id.metadata = {'url': '/{resourceId}'}
 
     def get_by_id(
             self, resource_id, api_version, custom_headers=None, raw=False, **operation_config):
@@ -867,14 +1228,14 @@ class ResourcesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`GenericResource
-         <azure.mgmt.resource.resources.v2017_05_10.models.GenericResource>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: GenericResource or ClientRawResponse if raw=true
+        :rtype:
+         ~azure.mgmt.resource.resources.v2017_05_10.models.GenericResource or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/{resourceId}'
+        url = self.get_by_id.metadata['url']
         path_format_arguments = {
             'resourceId': self._serialize.url("resource_id", resource_id, 'str', skip_quote=True)
         }
@@ -896,7 +1257,7 @@ class ResourcesOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)
@@ -913,3 +1274,4 @@ class ResourcesOperations(object):
             return client_raw_response
 
         return deserialized
+    get_by_id.metadata = {'url': '/{resourceId}'}

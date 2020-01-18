@@ -13,20 +13,24 @@ from msrest.serialization import Model
 
 
 class Sku(Model):
-    """SKU of the namespace.
+    """SKU parameters supplied to the create namespace operation.
 
-    :param name: Name of this SKU. Possible values include: 'Basic',
-     'Standard', 'Premium'
-    :type name: str or :class:`SkuName <azure.mgmt.eventhub.models.SkuName>`
+    All required parameters must be populated in order to send to Azure.
+
+    :param name: Required. Name of this SKU. Possible values include: 'Basic',
+     'Standard'
+    :type name: str or ~azure.mgmt.eventhub.models.SkuName
     :param tier: The billing tier of this particular SKU. Possible values
-     include: 'Basic', 'Standard', 'Premium'
-    :type tier: str or :class:`SkuTier <azure.mgmt.eventhub.models.SkuTier>`
-    :param capacity: The Event Hubs throughput units.
+     include: 'Basic', 'Standard'
+    :type tier: str or ~azure.mgmt.eventhub.models.SkuTier
+    :param capacity: The Event Hubs throughput units, vaule should be 0 to 20
+     throughput units.
     :type capacity: int
     """
 
     _validation = {
-        'tier': {'required': True},
+        'name': {'required': True},
+        'capacity': {'maximum': 20, 'minimum': 0},
     }
 
     _attribute_map = {
@@ -35,7 +39,8 @@ class Sku(Model):
         'capacity': {'key': 'capacity', 'type': 'int'},
     }
 
-    def __init__(self, tier, name=None, capacity=None):
-        self.name = name
-        self.tier = tier
-        self.capacity = capacity
+    def __init__(self, **kwargs):
+        super(Sku, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.tier = kwargs.get('tier', None)
+        self.capacity = kwargs.get('capacity', None)

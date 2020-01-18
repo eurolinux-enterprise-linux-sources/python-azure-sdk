@@ -17,7 +17,7 @@ class CloudJobSchedule(Model):
     and a specification used to create each job.
 
     :param id: A string that uniquely identifies the schedule within the
-     account. It is common to use a GUID for the id.
+     account.
     :type id: str
     :param display_name: The display name for the schedule.
     :type display_name: str
@@ -38,8 +38,7 @@ class CloudJobSchedule(Model):
     :type creation_time: datetime
     :param state: The current state of the job schedule. Possible values
      include: 'active', 'completed', 'disabled', 'terminating', 'deleting'
-    :type state: str or :class:`JobScheduleState
-     <azure.batch.models.JobScheduleState>`
+    :type state: str or ~azure.batch.models.JobScheduleState
     :param state_transition_time: The time at which the job schedule entered
      the current state.
     :type state_transition_time: datetime
@@ -47,30 +46,28 @@ class CloudJobSchedule(Model):
      property is not present if the job schedule is in its initial active
      state. Possible values include: 'active', 'completed', 'disabled',
      'terminating', 'deleting'
-    :type previous_state: str or :class:`JobScheduleState
-     <azure.batch.models.JobScheduleState>`
+    :type previous_state: str or ~azure.batch.models.JobScheduleState
     :param previous_state_transition_time: The time at which the job schedule
      entered its previous state. This property is not present if the job
      schedule is in its initial active state.
     :type previous_state_transition_time: datetime
     :param schedule: The schedule according to which jobs will be created.
-    :type schedule: :class:`Schedule <azure.batch.models.Schedule>`
+    :type schedule: ~azure.batch.models.Schedule
     :param job_specification: The details of the jobs to be created on this
      schedule.
-    :type job_specification: :class:`JobSpecification
-     <azure.batch.models.JobSpecification>`
+    :type job_specification: ~azure.batch.models.JobSpecification
     :param execution_info: Information about jobs that have been and will be
      run under this schedule.
-    :type execution_info: :class:`JobScheduleExecutionInformation
-     <azure.batch.models.JobScheduleExecutionInformation>`
+    :type execution_info: ~azure.batch.models.JobScheduleExecutionInformation
     :param metadata: A list of name-value pairs associated with the schedule
      as metadata. The Batch service does not assign any meaning to metadata; it
      is solely for the use of user code.
-    :type metadata: list of :class:`MetadataItem
-     <azure.batch.models.MetadataItem>`
+    :type metadata: list[~azure.batch.models.MetadataItem]
     :param stats: The lifetime resource usage statistics for the job schedule.
-    :type stats: :class:`JobScheduleStatistics
-     <azure.batch.models.JobScheduleStatistics>`
+     The statistics may not be immediately available. The Batch service
+     performs periodic roll-up of statistics. The typical delay is about 30
+     minutes.
+    :type stats: ~azure.batch.models.JobScheduleStatistics
     """
 
     _attribute_map = {
@@ -92,6 +89,7 @@ class CloudJobSchedule(Model):
     }
 
     def __init__(self, id=None, display_name=None, url=None, e_tag=None, last_modified=None, creation_time=None, state=None, state_transition_time=None, previous_state=None, previous_state_transition_time=None, schedule=None, job_specification=None, execution_info=None, metadata=None, stats=None):
+        super(CloudJobSchedule, self).__init__()
         self.id = id
         self.display_name = display_name
         self.url = url

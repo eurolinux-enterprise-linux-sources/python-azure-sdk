@@ -15,9 +15,10 @@ from msrest.serialization import Model
 class SiteSealRequest(Model):
     """Site seal request.
 
-    :param light_theme: Theme
+    :param light_theme: If <code>true</code> use the light color theme for
+     site seal; otherwise, use the default color theme.
     :type light_theme: bool
-    :param locale: Locale
+    :param locale: Locale of site seal.
     :type locale: str
     """
 
@@ -27,5 +28,6 @@ class SiteSealRequest(Model):
     }
 
     def __init__(self, light_theme=None, locale=None):
+        super(SiteSealRequest, self).__init__()
         self.light_theme = light_theme
         self.locale = locale

@@ -20,8 +20,7 @@ class NodeDisableSchedulingParameter(Model):
      value is requeue. Possible values include: 'requeue', 'terminate',
      'taskCompletion'
     :type node_disable_scheduling_option: str or
-     :class:`DisableComputeNodeSchedulingOption
-     <azure.batch.models.DisableComputeNodeSchedulingOption>`
+     ~azure.batch.models.DisableComputeNodeSchedulingOption
     """
 
     _attribute_map = {
@@ -29,4 +28,5 @@ class NodeDisableSchedulingParameter(Model):
     }
 
     def __init__(self, node_disable_scheduling_option=None):
+        super(NodeDisableSchedulingParameter, self).__init__()
         self.node_disable_scheduling_option = node_disable_scheduling_option

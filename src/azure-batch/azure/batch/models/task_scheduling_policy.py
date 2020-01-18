@@ -15,10 +15,9 @@ from msrest.serialization import Model
 class TaskSchedulingPolicy(Model):
     """Specifies how tasks should be distributed across compute nodes.
 
-    :param node_fill_type: How tasks should be distributed across compute
-     nodes. Possible values include: 'spread', 'pack'
-    :type node_fill_type: str or :class:`ComputeNodeFillType
-     <azure.batch.models.ComputeNodeFillType>`
+    :param node_fill_type: How tasks are distributed across compute nodes in a
+     pool. Possible values include: 'spread', 'pack'
+    :type node_fill_type: str or ~azure.batch.models.ComputeNodeFillType
     """
 
     _validation = {
@@ -30,4 +29,5 @@ class TaskSchedulingPolicy(Model):
     }
 
     def __init__(self, node_fill_type):
+        super(TaskSchedulingPolicy, self).__init__()
         self.node_fill_type = node_fill_type

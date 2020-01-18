@@ -16,9 +16,8 @@ class NetworkAccessControlEntry(Model):
     """Network access control entry.
 
     :param action: Action object. Possible values include: 'Permit', 'Deny'
-    :type action: str or :class:`AccessControlEntryAction
-     <azure.mgmt.web.models.AccessControlEntryAction>`
-    :param description: Description.
+    :type action: str or ~azure.mgmt.web.models.AccessControlEntryAction
+    :param description: Description of network access control entry.
     :type description: str
     :param order: Order of precedence.
     :type order: int
@@ -34,6 +33,7 @@ class NetworkAccessControlEntry(Model):
     }
 
     def __init__(self, action=None, description=None, order=None, remote_subnet=None):
+        super(NetworkAccessControlEntry, self).__init__()
         self.action = action
         self.description = description
         self.order = order

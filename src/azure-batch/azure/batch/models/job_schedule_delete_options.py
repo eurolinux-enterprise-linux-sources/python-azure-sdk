@@ -13,7 +13,7 @@ from msrest.serialization import Model
 
 
 class JobScheduleDeleteOptions(Model):
-    """Additional parameters for the JobSchedule_delete operation.
+    """Additional parameters for delete operation.
 
     :param timeout: The maximum time that the server can spend processing the
      request, in seconds. The default is 30 seconds. Default value: 30 .
@@ -51,6 +51,7 @@ class JobScheduleDeleteOptions(Model):
     """
 
     def __init__(self, timeout=30, client_request_id=None, return_client_request_id=False, ocp_date=None, if_match=None, if_none_match=None, if_modified_since=None, if_unmodified_since=None):
+        super(JobScheduleDeleteOptions, self).__init__()
         self.timeout = timeout
         self.client_request_id = client_request_id
         self.return_client_request_id = return_client_request_id

@@ -17,18 +17,21 @@ class TaskAddResult(Model):
 
     :param status: The status of the add task request. Possible values
      include: 'success', 'clientError', 'serverError'
-    :type status: str or :class:`TaskAddStatus
-     <azure.batch.models.TaskAddStatus>`
+    :type status: str or ~azure.batch.models.TaskAddStatus
     :param task_id: The ID of the task for which this is the result.
     :type task_id: str
     :param e_tag: The ETag of the task, if the task was successfully added.
+     You can use this to detect whether the task has changed between requests.
+     In particular, you can be pass the ETag with an Update Task request to
+     specify that your changes should take effect only if nobody else has
+     modified the job in the meantime.
     :type e_tag: str
     :param last_modified: The last modified time of the task.
     :type last_modified: datetime
     :param location: The URL of the task, if the task was successfully added.
     :type location: str
     :param error: The error encountered while attempting to add the task.
-    :type error: :class:`BatchError <azure.batch.models.BatchError>`
+    :type error: ~azure.batch.models.BatchError
     """
 
     _validation = {
@@ -46,6 +49,7 @@ class TaskAddResult(Model):
     }
 
     def __init__(self, status, task_id, e_tag=None, last_modified=None, location=None, error=None):
+        super(TaskAddResult, self).__init__()
         self.status = status
         self.task_id = task_id
         self.e_tag = e_tag

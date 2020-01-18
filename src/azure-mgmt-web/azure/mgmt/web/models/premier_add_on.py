@@ -20,37 +20,39 @@ class PremierAddOn(Resource):
 
     :ivar id: Resource Id.
     :vartype id: str
-    :param name: Resource Name.
-    :type name: str
+    :ivar name: Resource Name.
+    :vartype name: str
     :param kind: Kind of resource.
     :type kind: str
     :param location: Resource Location.
     :type location: str
-    :param type: Resource type.
-    :type type: str
+    :ivar type: Resource type.
+    :vartype type: str
     :param tags: Resource tags.
-    :type tags: dict
-    :param sku: SKU.
+    :type tags: dict[str, str]
+    :param sku: Premier add on SKU.
     :type sku: str
-    :param product: Product.
+    :param product: Premier add on Product.
     :type product: str
-    :param vendor: Vendor.
+    :param vendor: Premier add on Vendor.
     :type vendor: str
-    :param premier_add_on_name: Name.
+    :param premier_add_on_name: Premier add on Name.
     :type premier_add_on_name: str
-    :param premier_add_on_location: Location.
+    :param premier_add_on_location: Premier add on Location.
     :type premier_add_on_location: str
-    :param premier_add_on_tags: Tags.
-    :type premier_add_on_tags: dict
-    :param marketplace_publisher: Marketplace publisher.
+    :param premier_add_on_tags: Premier add on Tags.
+    :type premier_add_on_tags: dict[str, str]
+    :param marketplace_publisher: Premier add on Marketplace publisher.
     :type marketplace_publisher: str
-    :param marketplace_offer: Marketplace offer.
+    :param marketplace_offer: Premier add on Marketplace offer.
     :type marketplace_offer: str
     """
 
     _validation = {
         'id': {'readonly': True},
+        'name': {'readonly': True},
         'location': {'required': True},
+        'type': {'readonly': True},
     }
 
     _attribute_map = {
@@ -70,8 +72,8 @@ class PremierAddOn(Resource):
         'marketplace_offer': {'key': 'properties.marketplaceOffer', 'type': 'str'},
     }
 
-    def __init__(self, location, name=None, kind=None, type=None, tags=None, sku=None, product=None, vendor=None, premier_add_on_name=None, premier_add_on_location=None, premier_add_on_tags=None, marketplace_publisher=None, marketplace_offer=None):
-        super(PremierAddOn, self).__init__(name=name, kind=kind, location=location, type=type, tags=tags)
+    def __init__(self, location, kind=None, tags=None, sku=None, product=None, vendor=None, premier_add_on_name=None, premier_add_on_location=None, premier_add_on_tags=None, marketplace_publisher=None, marketplace_offer=None):
+        super(PremierAddOn, self).__init__(kind=kind, location=location, tags=tags)
         self.sku = sku
         self.product = product
         self.vendor = vendor

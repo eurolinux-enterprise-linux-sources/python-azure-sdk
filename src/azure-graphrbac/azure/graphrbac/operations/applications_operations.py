@@ -9,8 +9,8 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.pipeline import ClientRawResponse
 import uuid
+from msrest.pipeline import ClientRawResponse
 
 from .. import models
 
@@ -24,6 +24,8 @@ class ApplicationsOperations(object):
     :param deserializer: An objec model deserializer.
     :ivar api_version: Client API version. Constant value: "1.6".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
@@ -39,16 +41,15 @@ class ApplicationsOperations(object):
         """Create a new application.
 
         :param parameters: The parameters for creating an application.
-        :type parameters: :class:`ApplicationCreateParameters
-         <azure.graphrbac.models.ApplicationCreateParameters>`
+        :type parameters: ~azure.graphrbac.models.ApplicationCreateParameters
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`Application <azure.graphrbac.models.Application>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: Application or ClientRawResponse if raw=true
+        :rtype: ~azure.graphrbac.models.Application or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
         """
@@ -79,7 +80,7 @@ class ApplicationsOperations(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [201]:
             raise models.GraphErrorException(self._deserialize, response)
@@ -106,8 +107,9 @@ class ApplicationsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`ApplicationPaged
-         <azure.graphrbac.models.ApplicationPaged>`
+        :return: An iterator like instance of Application
+        :rtype:
+         ~azure.graphrbac.models.ApplicationPaged[~azure.graphrbac.models.Application]
         :raises:
          :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
         """
@@ -150,7 +152,7 @@ class ApplicationsOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 raise models.GraphErrorException(self._deserialize, response)
@@ -178,16 +180,15 @@ class ApplicationsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
         """
         # Construct URL
         url = '/{tenantID}/applications/{applicationObjectId}'
         path_format_arguments = {
-            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str', skip_quote=True),
+            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str'),
             'tenantID': self._serialize.url("self.config.tenant_id", self.config.tenant_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -208,7 +209,7 @@ class ApplicationsOperations(object):
 
         # Construct and send request
         request = self._client.delete(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [204]:
             raise models.GraphErrorException(self._deserialize, response)
@@ -228,16 +229,16 @@ class ApplicationsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`Application <azure.graphrbac.models.Application>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: Application or ClientRawResponse if raw=true
+        :rtype: ~azure.graphrbac.models.Application or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
         """
         # Construct URL
         url = '/{tenantID}/applications/{applicationObjectId}'
         path_format_arguments = {
-            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str', skip_quote=True),
+            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str'),
             'tenantID': self._serialize.url("self.config.tenant_id", self.config.tenant_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -258,7 +259,7 @@ class ApplicationsOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.GraphErrorException(self._deserialize, response)
@@ -281,23 +282,21 @@ class ApplicationsOperations(object):
         :param application_object_id: Application object ID.
         :type application_object_id: str
         :param parameters: Parameters to update an existing application.
-        :type parameters: :class:`ApplicationUpdateParameters
-         <azure.graphrbac.models.ApplicationUpdateParameters>`
+        :type parameters: ~azure.graphrbac.models.ApplicationUpdateParameters
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
         """
         # Construct URL
         url = '/{tenantID}/applications/{applicationObjectId}'
         path_format_arguments = {
-            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str', skip_quote=True),
+            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str'),
             'tenantID': self._serialize.url("self.config.tenant_id", self.config.tenant_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -322,7 +321,7 @@ class ApplicationsOperations(object):
         # Construct and send request
         request = self._client.patch(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [204]:
             raise models.GraphErrorException(self._deserialize, response)
@@ -331,19 +330,24 @@ class ApplicationsOperations(object):
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
 
-    def list_key_credentials(
+    def list_owners(
             self, application_object_id, custom_headers=None, raw=False, **operation_config):
-        """Get the keyCredentials associated with an application.
+        """Directory objects that are owners of the application.
 
-        :param application_object_id: Application object ID.
+        The owners are a set of non-admin users who are allowed to modify this
+        object.
+
+        :param application_object_id: The object ID of the application for
+         which to get owners.
         :type application_object_id: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`KeyCredentialPaged
-         <azure.graphrbac.models.KeyCredentialPaged>`
+        :return: An iterator like instance of DirectoryObject
+        :rtype:
+         ~azure.graphrbac.models.DirectoryObjectPaged[~azure.graphrbac.models.DirectoryObject]
         :raises:
          :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
         """
@@ -351,9 +355,9 @@ class ApplicationsOperations(object):
 
             if not next_link:
                 # Construct URL
-                url = '/{tenantID}/applications/{applicationObjectId}/keyCredentials'
+                url = '/{tenantID}/applications/{applicationObjectId}/owners'
                 path_format_arguments = {
-                    'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str', skip_quote=True),
+                    'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str'),
                     'tenantID': self._serialize.url("self.config.tenant_id", self.config.tenant_id, 'str')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
@@ -379,7 +383,138 @@ class ApplicationsOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
+
+            if response.status_code not in [200]:
+                raise models.GraphErrorException(self._deserialize, response)
+
+            return response
+
+        # Deserialize response
+        deserialized = models.DirectoryObjectPaged(internal_paging, self._deserialize.dependencies)
+
+        if raw:
+            header_dict = {}
+            client_raw_response = models.DirectoryObjectPaged(internal_paging, self._deserialize.dependencies, header_dict)
+            return client_raw_response
+
+        return deserialized
+
+    def add_owner(
+            self, application_object_id, url, additional_properties=None, custom_headers=None, raw=False, **operation_config):
+        """Add an owner to an application.
+
+        :param application_object_id: The object ID of the application to
+         which to add the owner.
+        :type application_object_id: str
+        :param url: A owner object URL, such as
+         "https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd",
+         where "0b1f9851-1bf0-433f-aec3-cb9272f093dc" is the tenantId and
+         "f260bbc4-c254-447b-94cf-293b5ec434dd" is the objectId of the owner
+         (user, application, servicePrincipal, group) to be added.
+        :type url: str
+        :param additional_properties: Unmatched properties from the message
+         are deserialized this collection
+        :type additional_properties: dict[str, object]
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: returns the direct response alongside the
+         deserialized response
+        :param operation_config: :ref:`Operation configuration
+         overrides<msrest:optionsforoperations>`.
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
+        :raises:
+         :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
+        """
+        parameters = models.ApplicationAddOwnerParameters(additional_properties=additional_properties, url=url)
+
+        # Construct URL
+        url = '/{tenantID}/applications/{applicationObjectId}/$links/owners'
+        path_format_arguments = {
+            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str'),
+            'tenantID': self._serialize.url("self.config.tenant_id", self.config.tenant_id, 'str')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        if self.config.generate_client_request_id:
+            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+        # Construct body
+        body_content = self._serialize.body(parameters, 'ApplicationAddOwnerParameters')
+
+        # Construct and send request
+        request = self._client.post(url, query_parameters)
+        response = self._client.send(
+            request, header_parameters, body_content, stream=False, **operation_config)
+
+        if response.status_code not in [204]:
+            raise models.GraphErrorException(self._deserialize, response)
+
+        if raw:
+            client_raw_response = ClientRawResponse(None, response)
+            return client_raw_response
+
+    def list_key_credentials(
+            self, application_object_id, custom_headers=None, raw=False, **operation_config):
+        """Get the keyCredentials associated with an application.
+
+        :param application_object_id: Application object ID.
+        :type application_object_id: str
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: returns the direct response alongside the
+         deserialized response
+        :param operation_config: :ref:`Operation configuration
+         overrides<msrest:optionsforoperations>`.
+        :return: An iterator like instance of KeyCredential
+        :rtype:
+         ~azure.graphrbac.models.KeyCredentialPaged[~azure.graphrbac.models.KeyCredential]
+        :raises:
+         :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
+        """
+        def internal_paging(next_link=None, raw=False):
+
+            if not next_link:
+                # Construct URL
+                url = '/{tenantID}/applications/{applicationObjectId}/keyCredentials'
+                path_format_arguments = {
+                    'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str'),
+                    'tenantID': self._serialize.url("self.config.tenant_id", self.config.tenant_id, 'str')
+                }
+                url = self._client.format_url(url, **path_format_arguments)
+
+                # Construct parameters
+                query_parameters = {}
+                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+
+            else:
+                url = next_link
+                query_parameters = {}
+
+            # Construct headers
+            header_parameters = {}
+            header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+            if self.config.generate_client_request_id:
+                header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+            if custom_headers:
+                header_parameters.update(custom_headers)
+            if self.config.accept_language is not None:
+                header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters)
+            response = self._client.send(
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 raise models.GraphErrorException(self._deserialize, response)
@@ -403,16 +538,14 @@ class ApplicationsOperations(object):
         :param application_object_id: Application object ID.
         :type application_object_id: str
         :param value: A collection of KeyCredentials.
-        :type value: list of :class:`KeyCredential
-         <azure.graphrbac.models.KeyCredential>`
+        :type value: list[~azure.graphrbac.models.KeyCredential]
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
         """
@@ -421,7 +554,7 @@ class ApplicationsOperations(object):
         # Construct URL
         url = '/{tenantID}/applications/{applicationObjectId}/keyCredentials'
         path_format_arguments = {
-            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str', skip_quote=True),
+            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str'),
             'tenantID': self._serialize.url("self.config.tenant_id", self.config.tenant_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -446,7 +579,7 @@ class ApplicationsOperations(object):
         # Construct and send request
         request = self._client.patch(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [204]:
             raise models.GraphErrorException(self._deserialize, response)
@@ -466,8 +599,9 @@ class ApplicationsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`PasswordCredentialPaged
-         <azure.graphrbac.models.PasswordCredentialPaged>`
+        :return: An iterator like instance of PasswordCredential
+        :rtype:
+         ~azure.graphrbac.models.PasswordCredentialPaged[~azure.graphrbac.models.PasswordCredential]
         :raises:
          :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
         """
@@ -477,7 +611,7 @@ class ApplicationsOperations(object):
                 # Construct URL
                 url = '/{tenantID}/applications/{applicationObjectId}/passwordCredentials'
                 path_format_arguments = {
-                    'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str', skip_quote=True),
+                    'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str'),
                     'tenantID': self._serialize.url("self.config.tenant_id", self.config.tenant_id, 'str')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
@@ -503,7 +637,7 @@ class ApplicationsOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 raise models.GraphErrorException(self._deserialize, response)
@@ -527,16 +661,14 @@ class ApplicationsOperations(object):
         :param application_object_id: Application object ID.
         :type application_object_id: str
         :param value: A collection of PasswordCredentials.
-        :type value: list of :class:`PasswordCredential
-         <azure.graphrbac.models.PasswordCredential>`
+        :type value: list[~azure.graphrbac.models.PasswordCredential]
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
         """
@@ -545,7 +677,7 @@ class ApplicationsOperations(object):
         # Construct URL
         url = '/{tenantID}/applications/{applicationObjectId}/passwordCredentials'
         path_format_arguments = {
-            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str', skip_quote=True),
+            'applicationObjectId': self._serialize.url("application_object_id", application_object_id, 'str'),
             'tenantID': self._serialize.url("self.config.tenant_id", self.config.tenant_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -570,7 +702,7 @@ class ApplicationsOperations(object):
         # Construct and send request
         request = self._client.patch(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [204]:
             raise models.GraphErrorException(self._deserialize, response)

@@ -13,40 +13,26 @@ from msrest.serialization import Model
 
 
 class Resource(Model):
-    """The Resource model definition.
+    """The core properties of ARM resources.
 
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :param location: Resource location
-    :type location: str
-    :param tags: Resource tags
-    :type tags: dict
+    :param id: Fully qualified resource Id for the resource. Ex -
+     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}
+    :type id: str
+    :param name: The name of the resource
+    :type name: str
+    :param type: The type of the resource. Ex-
+     Microsoft.Network/trafficmanagerProfiles.
+    :type type: str
     """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
     }
 
-    def __init__(self, location=None, tags=None):
-        self.id = None
-        self.name = None
-        self.type = None
-        self.location = location
-        self.tags = tags
+    def __init__(self, **kwargs):
+        super(Resource, self).__init__(**kwargs)
+        self.id = kwargs.get('id', None)
+        self.name = kwargs.get('name', None)
+        self.type = kwargs.get('type', None)

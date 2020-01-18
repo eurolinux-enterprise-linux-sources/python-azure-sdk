@@ -15,9 +15,9 @@ from msrest.serialization import Model
 class CheckTrafficManagerRelativeDnsNameAvailabilityParameters(Model):
     """Parameters supplied to check Traffic Manager name operation.
 
-    :param name: Gets or sets the name of the resource.
+    :param name: The name of the resource.
     :type name: str
-    :param type: Gets or sets the type of the resource.
+    :param type: The type of the resource.
     :type type: str
     """
 
@@ -26,6 +26,7 @@ class CheckTrafficManagerRelativeDnsNameAvailabilityParameters(Model):
         'type': {'key': 'type', 'type': 'str'},
     }
 
-    def __init__(self, name=None, type=None):
-        self.name = name
-        self.type = type
+    def __init__(self, **kwargs):
+        super(CheckTrafficManagerRelativeDnsNameAvailabilityParameters, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.type = kwargs.get('type', None)

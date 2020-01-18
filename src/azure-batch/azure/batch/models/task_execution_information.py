@@ -36,14 +36,17 @@ class TaskExecutionInformation(Model):
      termination via the API) you may see an operating system-defined exit
      code.
     :type exit_code: int
+    :param container_info: Information about the container under which the
+     task is executing. This property is set only if the task runs in a
+     container context.
+    :type container_info:
+     ~azure.batch.models.TaskContainerExecutionInformation
     :param failure_info: Information describing the task failure, if any. This
      property is set only if the task is in the completed state and encountered
      a failure.
-    :type failure_info: :class:`TaskFailureInformation
-     <azure.batch.models.TaskFailureInformation>`
+    :type failure_info: ~azure.batch.models.TaskFailureInformation
     :param retry_count: The number of times the task has been retried by the
-     Batch service. The number of times the task has been retried by the Batch
-     service. Task application failures (non-zero exit code) are retried,
+     Batch service. Task application failures (non-zero exit code) are retried,
      pre-processing errors (the task could not be run) and file upload errors
      are not retried. The Batch service will retry the task up to the limit
      specified by the constraints.
@@ -69,8 +72,7 @@ class TaskExecutionInformation(Model):
     :param result: The result of the task execution. If the value is 'failed',
      then the details of the failure can be found in the failureInfo property.
      Possible values include: 'success', 'failure'
-    :type result: str or :class:`TaskExecutionResult
-     <azure.batch.models.TaskExecutionResult>`
+    :type result: str or ~azure.batch.models.TaskExecutionResult
     """
 
     _validation = {
@@ -82,6 +84,7 @@ class TaskExecutionInformation(Model):
         'start_time': {'key': 'startTime', 'type': 'iso-8601'},
         'end_time': {'key': 'endTime', 'type': 'iso-8601'},
         'exit_code': {'key': 'exitCode', 'type': 'int'},
+        'container_info': {'key': 'containerInfo', 'type': 'TaskContainerExecutionInformation'},
         'failure_info': {'key': 'failureInfo', 'type': 'TaskFailureInformation'},
         'retry_count': {'key': 'retryCount', 'type': 'int'},
         'last_retry_time': {'key': 'lastRetryTime', 'type': 'iso-8601'},
@@ -90,10 +93,12 @@ class TaskExecutionInformation(Model):
         'result': {'key': 'result', 'type': 'TaskExecutionResult'},
     }
 
-    def __init__(self, retry_count, requeue_count, start_time=None, end_time=None, exit_code=None, failure_info=None, last_retry_time=None, last_requeue_time=None, result=None):
+    def __init__(self, retry_count, requeue_count, start_time=None, end_time=None, exit_code=None, container_info=None, failure_info=None, last_retry_time=None, last_requeue_time=None, result=None):
+        super(TaskExecutionInformation, self).__init__()
         self.start_time = start_time
         self.end_time = end_time
         self.exit_code = exit_code
+        self.container_info = container_info
         self.failure_info = failure_info
         self.retry_count = retry_count
         self.last_retry_time = last_retry_time

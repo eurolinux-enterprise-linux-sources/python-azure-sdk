@@ -13,7 +13,7 @@ from msrest.serialization import Model
 
 
 class CertificateGetOptions(Model):
-    """Additional parameters for the Certificate_get operation.
+    """Additional parameters for get operation.
 
     :param select: An OData $select clause.
     :type select: str
@@ -34,6 +34,7 @@ class CertificateGetOptions(Model):
     """
 
     def __init__(self, select=None, timeout=30, client_request_id=None, return_client_request_id=False, ocp_date=None):
+        super(CertificateGetOptions, self).__init__()
         self.select = select
         self.timeout = timeout
         self.client_request_id = client_request_id

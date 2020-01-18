@@ -21,7 +21,7 @@ class WnsCredential(Model):
     :type secret_key: str
     :param windows_live_endpoint: The Windows Live endpoint.
     :type windows_live_endpoint: str
-    """ 
+    """
 
     _attribute_map = {
         'package_sid': {'key': 'properties.packageSid', 'type': 'str'},
@@ -29,7 +29,8 @@ class WnsCredential(Model):
         'windows_live_endpoint': {'key': 'properties.windowsLiveEndpoint', 'type': 'str'},
     }
 
-    def __init__(self, package_sid=None, secret_key=None, windows_live_endpoint=None):
-        self.package_sid = package_sid
-        self.secret_key = secret_key
-        self.windows_live_endpoint = windows_live_endpoint
+    def __init__(self, **kwargs):
+        super(WnsCredential, self).__init__(**kwargs)
+        self.package_sid = kwargs.get('package_sid', None)
+        self.secret_key = kwargs.get('secret_key', None)
+        self.windows_live_endpoint = kwargs.get('windows_live_endpoint', None)

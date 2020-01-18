@@ -27,12 +27,10 @@ class PoolStatistics(Model):
     :type last_update_time: datetime
     :param usage_stats: Statistics related to pool usage, such as the amount
      of core-time used.
-    :type usage_stats: :class:`UsageStatistics
-     <azure.batch.models.UsageStatistics>`
+    :type usage_stats: ~azure.batch.models.UsageStatistics
     :param resource_stats: Statistics related to resource consumption by
      compute nodes in the pool.
-    :type resource_stats: :class:`ResourceStatistics
-     <azure.batch.models.ResourceStatistics>`
+    :type resource_stats: ~azure.batch.models.ResourceStatistics
     """
 
     _validation = {
@@ -50,6 +48,7 @@ class PoolStatistics(Model):
     }
 
     def __init__(self, url, start_time, last_update_time, usage_stats=None, resource_stats=None):
+        super(PoolStatistics, self).__init__()
         self.url = url
         self.start_time = start_time
         self.last_update_time = last_update_time

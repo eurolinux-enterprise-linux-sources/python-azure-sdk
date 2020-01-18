@@ -18,16 +18,16 @@
     </CommandLineArguments>
     <InterpreterPath />
     <InterpreterArguments />
-    <InterpreterId>
-    </InterpreterId>
-    <InterpreterVersion>
-    </InterpreterVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccProvider>SAK</SccProvider>
     <SccAuxPath>SAK</SccAuxPath>
     <SccLocalPath>SAK</SccLocalPath>
-    <SearchPath>azure-common\;azure-servicebus\;azure-servicemanagement-legacy\;azure-mgmt-storage\;azure-mgmt-compute\;azure-mgmt-network\;azure-mgmt-resource\;azure-mgmt-redis\;azure-mgmt-authorization\;azure-mgmt-cdn\;azure-mgmt-logic\;azure-mgmt-notificationhubs\;azure-mgmt-scheduler\;azure-mgmt-web\;azure-graphrbac\;azure-mgmt\;azure-batch\;azure-mgmt-batch\;azure-mgmt-keyvault\;azure-mgmt-dns\;azure-mgmt-trafficmanager\;azure-mgmt-iothub\;azure-mgmt-devtestlabs\;azure-mgmt-servermanager\;..\msrest-for-python\;..\msrestazure-for-python\;azure-mgmt-datalake-analytics\;azure-mgmt-datalake-store;azure-mgmt-eventhub\;azure-mgmt-servicebus\;azure-monitor\;azure-mgmt-monitor\;azure-mgmt-sql\;azure-mgmt-media\;azure-mgmt-search\;azure-keyvault\;azure-mgmt-documentdb\;azure-mgmt-containerregistry\</SearchPath>
+    <SearchPath>azure-common\;azure-servicebus\;azure-servicemanagement-legacy\;azure-mgmt-storage\;azure-mgmt-compute\;azure-mgmt-network\;azure-mgmt-resource\;azure-mgmt-redis\;azure-mgmt-authorization\;azure-mgmt-cdn\;azure-mgmt-logic\;azure-mgmt-notificationhubs\;azure-mgmt-scheduler\;azure-mgmt-web\;azure-graphrbac\;azure-mgmt\;azure-batch\;azure-mgmt-batch\;azure-mgmt-keyvault\;azure-mgmt-dns\;azure-mgmt-trafficmanager\;azure-mgmt-iothub\;azure-mgmt-devtestlabs\;azure-mgmt-servermanager\;..\msrest-for-python\;..\msrestazure-for-python\;azure-mgmt-datalake-analytics\;azure-mgmt-datalake-store;azure-mgmt-eventhub\;azure-mgmt-servicebus\;azure-monitor\;azure-mgmt-monitor\;azure-mgmt-sql\;azure-mgmt-media\;azure-mgmt-search\;azure-keyvault\;azure-mgmt-documentdb\;azure-mgmt-containerregistry\;azure-mgmt-recoveryservicesbackup\;azure-mgmt-cosmosdb;azure-sdk-testutils</SearchPath>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <InterpreterId>
+    </InterpreterId>
+    <InterpreterVersion>
+    </InterpreterVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,6 +79,7 @@
     <Compile Include="azure-batch\azure\batch\models\compute_node_delete_user_options.py" />
     <Compile Include="azure-batch\azure\batch\models\compute_node_disable_scheduling_options.py" />
     <Compile Include="azure-batch\azure\batch\models\compute_node_enable_scheduling_options.py" />
+    <Compile Include="azure-batch\azure\batch\models\compute_node_endpoint_configuration.py" />
     <Compile Include="azure-batch\azure\batch\models\compute_node_error.py" />
     <Compile Include="azure-batch\azure\batch\models\compute_node_get_options.py" />
     <Compile Include="azure-batch\azure\batch\models\compute_node_get_remote_desktop_options.py" />
@@ -108,6 +109,8 @@
     <Compile Include="azure-batch\azure\batch\models\file_list_from_task_options.py" />
     <Compile Include="azure-batch\azure\batch\models\file_properties.py" />
     <Compile Include="azure-batch\azure\batch\models\image_reference.py" />
+    <Compile Include="azure-batch\azure\batch\models\inbound_endpoint.py" />
+    <Compile Include="azure-batch\azure\batch\models\inbound_nat_pool.py" />
     <Compile Include="azure-batch\azure\batch\models\job_add_options.py" />
     <Compile Include="azure-batch\azure\batch\models\job_add_parameter.py" />
     <Compile Include="azure-batch\azure\batch\models\job_constraints.py" />
@@ -118,6 +121,7 @@
     <Compile Include="azure-batch\azure\batch\models\job_execution_information.py" />
     <Compile Include="azure-batch\azure\batch\models\job_get_all_lifetime_statistics_options.py" />
     <Compile Include="azure-batch\azure\batch\models\job_get_options.py" />
+    <Compile Include="azure-batch\azure\batch\models\job_get_task_counts_options.py" />
     <Compile Include="azure-batch\azure\batch\models\job_list_from_job_schedule_options.py" />
     <Compile Include="azure-batch\azure\batch\models\job_list_options.py" />
     <Compile Include="azure-batch\azure\batch\models\job_list_preparation_and_release_task_status_options.py" />
@@ -157,6 +161,7 @@
     <Compile Include="azure-batch\azure\batch\models\multi_instance_settings.py" />
     <Compile Include="azure-batch\azure\batch\models\name_value_pair.py" />
     <Compile Include="azure-batch\azure\batch\models\network_configuration.py" />
+    <Compile Include="azure-batch\azure\batch\models\network_security_group_rule.py" />
     <Compile Include="azure-batch\azure\batch\models\node_agent_sku.py" />
     <Compile Include="azure-batch\azure\batch\models\node_agent_sku_paged.py" />
     <Compile Include="azure-batch\azure\batch\models\node_disable_scheduling_parameter.py" />
@@ -177,6 +182,7 @@
     <Compile Include="azure-batch\azure\batch\models\pool_disable_auto_scale_options.py" />
     <Compile Include="azure-batch\azure\batch\models\pool_enable_auto_scale_options.py" />
     <Compile Include="azure-batch\azure\batch\models\pool_enable_auto_scale_parameter.py" />
+    <Compile Include="azure-batch\azure\batch\models\pool_endpoint_configuration.py" />
     <Compile Include="azure-batch\azure\batch\models\pool_evaluate_auto_scale_options.py" />
     <Compile Include="azure-batch\azure\batch\models\pool_evaluate_auto_scale_parameter.py" />
     <Compile Include="azure-batch\azure\batch\models\pool_exists_options.py" />
@@ -214,6 +220,7 @@
     <Compile Include="azure-batch\azure\batch\models\task_add_parameter.py" />
     <Compile Include="azure-batch\azure\batch\models\task_add_result.py" />
     <Compile Include="azure-batch\azure\batch\models\task_constraints.py" />
+    <Compile Include="azure-batch\azure\batch\models\task_counts.py" />
     <Compile Include="azure-batch\azure\batch\models\task_delete_options.py" />
     <Compile Include="azure-batch\azure\batch\models\task_dependencies.py" />
     <Compile Include="azure-batch\azure\batch\models\task_execution_information.py" />
@@ -245,9 +252,16 @@
     <Compile Include="azure-batch\azure\batch\operations\pool_operations.py" />
     <Compile Include="azure-batch\azure\batch\operations\task_operations.py" />
     <Compile Include="azure-batch\azure\batch\operations\__init__.py" />
+    <Compile Include="azure-batch\azure\batch\version.py" />
     <Compile Include="azure-batch\azure\batch\__init__.py" />
     <Compile Include="azure-batch\azure\__init__.py" />
     <Compile Include="azure-batch\setup.py" />
+    <Compile Include="azure-common\azure\common\client_factory.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="azure-common\azure\common\cloud.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="azure-common\azure\common\credentials.py" />
     <Compile Include="azure-common\azure\common\exceptions.py" />
     <Compile Include="azure-common\azure\__init__.py" />
@@ -674,16 +688,19 @@
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\data_lake_analytics_account_management_client.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\add_data_lake_store_parameters.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\add_storage_account_parameters.py" />
-    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\create_storage_account_info.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\compute_policy.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\compute_policy_account_create_parameters.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\compute_policy_create_or_update_parameters.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\compute_policy_paged.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\data_lake_analytics_account.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\data_lake_analytics_account_management_client_enums.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\data_lake_analytics_account_paged.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\data_lake_analytics_account_update_parameters.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\data_lake_store_account_info.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\data_lake_store_account_info_paged.py" />
-    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\error.py" />
-    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\error_details.py" />
-    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\inner_error.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\firewall_rule.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\firewall_rule_paged.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\optional_sub_resource.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\resource.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\sas_token_info.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\sas_token_info_paged.py" />
@@ -691,10 +708,14 @@
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\storage_account_info_paged.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\storage_container.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\storage_container_paged.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\sub_resource.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\update_firewall_rule_parameters.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\update_storage_account_parameters.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\models\__init__.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\operations\account_operations.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\operations\compute_policies_operations.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\operations\data_lake_store_accounts_operations.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\operations\firewall_rules_operations.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\operations\storage_accounts_operations.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\operations\__init__.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\account\version.py" />
@@ -725,6 +746,8 @@
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\catalog\models\usql_external_data_source.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\catalog\models\usql_external_data_source_paged.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\catalog\models\usql_index.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\catalog\models\usql_package.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\catalog\models\usql_package_paged.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\catalog\models\usql_procedure.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\catalog\models\usql_procedure_paged.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\catalog\models\usql_schema.py" />
@@ -759,7 +782,13 @@
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_information.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_information_paged.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_inner_error.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_pipeline_information.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_pipeline_information_paged.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_pipeline_run_information.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_properties.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_recurrence_information.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_recurrence_information_paged.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_relationship_properties.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_resource.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_state_audit_record.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\job_statistics.py" />
@@ -767,6 +796,8 @@
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\usql_job_properties.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\models\__init__.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\operations\job_operations.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\operations\pipeline_operations.py" />
+    <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\operations\recurrence_operations.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\operations\__init__.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\version.py" />
     <Compile Include="azure-mgmt-datalake-analytics\azure\mgmt\datalake\analytics\job\__init__.py" />
@@ -783,16 +814,18 @@
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\data_lake_store_account_update_parameters.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\encryption_config.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\encryption_identity.py" />
-    <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\error.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\error_details.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\firewall_rule.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\firewall_rule_paged.py" />
-    <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\inner_error.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\key_vault_meta_info.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\resource.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\sub_resource.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\trusted_id_provider.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\trusted_id_provider_paged.py" />
+    <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\update_encryption_config.py" />
+    <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\update_firewall_rule_parameters.py" />
+    <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\update_key_vault_meta_info.py" />
+    <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\update_trusted_id_provider_parameters.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\models\__init__.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\operations\account_operations.py" />
     <Compile Include="azure-mgmt-datalake-store\azure\mgmt\datalake\store\operations\firewall_rules_operations.py" />
@@ -1189,6 +1222,177 @@
     <Compile Include="azure-mgmt-powerbiembedded\azure\mgmt\__init__.py" />
     <Compile Include="azure-mgmt-powerbiembedded\azure\__init__.py" />
     <Compile Include="azure-mgmt-powerbiembedded\setup.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_backup_server_container.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_backup_server_engine.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_sclassic_compute_vm_container.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_sclassic_compute_vm_protectable_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_sclassic_compute_vm_protected_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_scompute_vm_container.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_scompute_vm_protectable_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_scompute_vm_protected_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_svm_error_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_svm_health_details.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_svm_job.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_svm_job_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_svm_job_task_details.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_svm_protected_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_svm_protected_item_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_iaa_svm_protection_policy.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_sql_container.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_sql_protected_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_sql_protected_item_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\azure_sql_protection_policy.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_engine_base.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_engine_base_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_engine_base_resource_paged.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_engine_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_management_usage.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_management_usage_paged.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_request.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_request_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_resource_config.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_resource_config_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_resource_vault_config.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\backup_resource_vault_config_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\bek_details.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\bmspo_query_object.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\bmsrp_query_object.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\bms_backup_engines_query_object.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\bms_backup_engine_query_object.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\bms_backup_summaries_query_object.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\bms_container_query_object.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\client_discovery_display.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\client_discovery_for_log_specification.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\client_discovery_for_properties.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\client_discovery_for_service_specification.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\client_discovery_value_for_single_api.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\client_discovery_value_for_single_api_paged.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\client_script_for_connect.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\daily_retention_format.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\daily_retention_schedule.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\day.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\dpm_backup_engine.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\dpm_container.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\dpm_container_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\dpm_error_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\dpm_job.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\dpm_job_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\dpm_job_task_details.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\dpm_protected_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\dpm_protected_item_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\encryption_details.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\export_jobs_operation_result_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\generic_recovery_point.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\get_protected_item_query_object.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\iaas_vmilr_registration_request.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\iaas_vm_backup_request.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\iaas_vm_recovery_point.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\iaas_vm_restore_request.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\iaa_svm_container.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\iaa_svm_protectable_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\ilr_request.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\ilr_request_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\instant_item_recovery_target.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\job.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\job_query_object.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\job_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\job_resource_paged.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\kek_details.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\key_and_secret_details.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\long_term_retention_policy.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\long_term_schedule_policy.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\mab_container.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\mab_container_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\mab_error_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\mab_file_folder_protected_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\mab_file_folder_protected_item_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\mab_job.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\mab_job_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\mab_job_task_details.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\mab_protection_policy.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\monthly_retention_schedule.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\name_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\operation_result_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\operation_result_info_base.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\operation_result_info_base_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\operation_status.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\operation_status_error.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\operation_status_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\operation_status_jobs_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\operation_status_job_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\operation_status_provision_ilr_extended_info.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\operation_worker_response.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protected_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protected_item_query_object.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protected_item_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protected_item_resource_paged.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protection_container.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protection_container_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protection_container_resource_paged.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protection_policy.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protection_policy_query_object.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protection_policy_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\protection_policy_resource_paged.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\recovery_point.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\recovery_point_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\recovery_point_resource_paged.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\recovery_point_tier_information.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\recovery_services_backup_client_enums.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\resource_list.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\restore_request.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\restore_request_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\retention_duration.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\retention_policy.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\schedule_policy.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\simple_retention_policy.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\simple_schedule_policy.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\token_information.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\weekly_retention_format.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\weekly_retention_schedule.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\workload_protectable_item.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\workload_protectable_item_resource.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\workload_protectable_item_resource_paged.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\yearly_retention_schedule.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\__init__.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backups_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_engines_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_jobs_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_operation_results_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_operation_statuses_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_policies_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_protectable_items_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_protected_items_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_protection_containers_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_resource_storage_configs_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_resource_vault_configs_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\backup_usage_summaries_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\export_jobs_operation_results_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\item_level_recovery_connections_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\jobs_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\job_cancellations_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\job_details_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\job_operation_results_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\protected_items_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\protected_item_operation_results_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\protected_item_operation_statuses_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\protection_containers_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\protection_container_operation_results_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\protection_container_refresh_operation_results_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\protection_policies_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\protection_policy_operation_results_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\protection_policy_operation_statuses_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\recovery_points_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\restores_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\security_pi_ns_operations.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\__init__.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\recovery_services_backup_client.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\version.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\__init__.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\__init__.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\azure\__init__.py" />
+    <Compile Include="azure-mgmt-recoveryservicesbackup\setup.py" />
     <Compile Include="azure-mgmt-redis\azure\mgmt\redis\models\redis_access_keys.py" />
     <Compile Include="azure-mgmt-redis\azure\mgmt\redis\models\redis_create_or_update_parameters.py" />
     <Compile Include="azure-mgmt-redis\azure\mgmt\redis\models\redis_list_keys_result.py" />
@@ -1402,6 +1606,7 @@
     <Compile Include="azure-mgmt-servermanager\azure\mgmt\__init__.py" />
     <Compile Include="azure-mgmt-servermanager\azure\__init__.py" />
     <Compile Include="azure-mgmt-servermanager\setup.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\models.py" />
     <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2015_06_15\models\check_name_availability_result.py" />
     <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2015_06_15\models\custom_domain.py" />
     <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2015_06_15\models\endpoints.py" />
@@ -1482,9 +1687,54 @@
     <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2016_12_01\storage_management_client.py" />
     <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2016_12_01\version.py" />
     <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2016_12_01\__init__.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\account_sas_parameters.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\check_name_availability_result.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\custom_domain.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\dimension.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\encryption.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\encryption_service.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\encryption_services.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\endpoints.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\identity.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\ip_rule.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\key_vault_properties.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\list_account_sas_response.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\list_service_sas_response.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\metric_specification.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\operation.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\operation_display.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\operation_paged.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\resource.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\service_sas_parameters.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\service_specification.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\sku.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\storage_account.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\storage_account_check_name_availability_parameters.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\storage_account_create_parameters.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\storage_account_key.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\storage_account_list_keys_result.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\storage_account_paged.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\storage_account_regenerate_key_parameters.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\storage_account_update_parameters.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\storage_management_client_enums.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\storage_network_acls.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\usage.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\usage_name.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\usage_paged.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\virtual_network_rule.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\__init__.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\operations\operations.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\operations\storage_accounts_operations.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\operations\usage_operations.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\operations\__init__.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\storage_management_client.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\version.py" />
+    <Compile Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\__init__.py" />
     <Compile Include="azure-mgmt-storage\azure\mgmt\storage\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="azure-mgmt-storage\tests\test_mgmt_storage.py" />
+    <Compile Include="azure-mgmt-storage\tests\__init__.py" />
     <Compile Include="azure-mgmt-trafficmanager\azure\mgmt\trafficmanager\models\check_traffic_manager_relative_dns_name_availability_parameters.py" />
     <Compile Include="azure-mgmt-trafficmanager\azure\mgmt\trafficmanager\models\dns_config.py" />
     <Compile Include="azure-mgmt-trafficmanager\azure\mgmt\trafficmanager\models\endpoint.py" />
@@ -1675,7 +1925,11 @@
     <Compile Include="azure-mgmt\tests\mgmt_settings_real.py" />
     <Compile Include="azure-mgmt\tests\mgmt_settings_fake.py" />
     <Compile Include="azure-mgmt\tests\mgmt_testcase.py" />
+    <Compile Include="azure-mgmt\tests\recoveryservicesbackup_testcase.py" />
     <Compile Include="azure-mgmt\tests\test_batch.py" />
+    <Compile Include="azure-mgmt\tests\test_common.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="azure-mgmt\tests\test_graphrbac.py" />
     <Compile Include="azure-mgmt\tests\test_key_vault_data.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_authorization.py" />
@@ -1686,6 +1940,7 @@
     <Compile Include="azure-mgmt\tests\test_mgmt_apps.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_consumption.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_containerregistry.py" />
+    <Compile Include="azure-mgmt\tests\test_mgmt_cosmosdb.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_datalake_analytics.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_datalake_store.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_devtestlabs.py" />
@@ -1699,6 +1954,9 @@
     <Compile Include="azure-mgmt\tests\test_mgmt_monitor.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_network.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_notificationhubs.py" />
+    <Compile Include="azure-mgmt\tests\test_mgmt_recoveryservices_backup.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="azure-mgmt\tests\test_mgmt_redis.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_resource.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_resource_features.py" />
@@ -1709,10 +1967,19 @@
     <Compile Include="azure-mgmt\tests\test_mgmt_scheduler.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_search.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_servermanager.py" />
+    <Compile Include="azure-mgmt\tests\test_mgmt_servicebus.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_sql.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_storage.py" />
     <Compile Include="azure-mgmt\tests\test_mgmt_trafficmanager.py" />
     <Compile Include="azure-mgmt\tests\__init__.py" />
+    <Compile Include="azure-sdk-testutils\devtools_testutils\config.py" />
+    <Compile Include="azure-sdk-testutils\devtools_testutils\mgmt_settings_fake.py" />
+    <Compile Include="azure-sdk-testutils\devtools_testutils\mgmt_settings_real.py" />
+    <Compile Include="azure-sdk-testutils\devtools_testutils\mgmt_testcase.py" />
+    <Compile Include="azure-sdk-testutils\devtools_testutils\resource_testcase.py" />
+    <Compile Include="azure-sdk-testutils\devtools_testutils\setup.py" />
+    <Compile Include="azure-sdk-testutils\devtools_testutils\storage_testcase.py" />
+    <Compile Include="azure-sdk-testutils\devtools_testutils\__init__.py" />
     <Compile Include="azure-servicebus\azure\servicebus\constants.py">
       <SubType>Code</SubType>
     </Compile>
@@ -1934,6 +2201,12 @@
     <Folder Include="azure-mgmt-powerbiembedded\azure\mgmt\powerbiembedded\" />
     <Folder Include="azure-mgmt-powerbiembedded\azure\mgmt\powerbiembedded\models\" />
     <Folder Include="azure-mgmt-powerbiembedded\azure\mgmt\powerbiembedded\operations\" />
+    <Folder Include="azure-mgmt-recoveryservicesbackup\" />
+    <Folder Include="azure-mgmt-recoveryservicesbackup\azure\" />
+    <Folder Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\" />
+    <Folder Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\" />
+    <Folder Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\models\" />
+    <Folder Include="azure-mgmt-recoveryservicesbackup\azure\mgmt\recoveryservicesbackup\operations\" />
     <Folder Include="azure-mgmt-redis\" />
     <Folder Include="azure-mgmt-redis\azure\" />
     <Folder Include="azure-mgmt-redis\azure\mgmt\" />
@@ -1991,6 +2264,11 @@
     <Folder Include="azure-mgmt-storage\azure\mgmt\storage\v2016_12_01\models\__pycache__\" />
     <Folder Include="azure-mgmt-storage\azure\mgmt\storage\v2016_12_01\operations\" />
     <Folder Include="azure-mgmt-storage\azure\mgmt\storage\v2016_12_01\operations\__pycache__\" />
+    <Folder Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\" />
+    <Folder Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\models\" />
+    <Folder Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\operations\" />
+    <Folder Include="azure-mgmt-storage\tests\" />
+    <Folder Include="azure-mgmt-storage\tests\recordings\" />
     <Folder Include="azure-mgmt-trafficmanager\" />
     <Folder Include="azure-mgmt-trafficmanager\azure\" />
     <Folder Include="azure-mgmt-trafficmanager\azure\mgmt\" />
@@ -2011,6 +2289,8 @@
     <Folder Include="azure-mgmt-storage\azure\mgmt\storage\" />
     <Folder Include="azure-mgmt\tests\" />
     <Folder Include="azure-mgmt\tests\recordings\" />
+    <Folder Include="azure-sdk-testutils\" />
+    <Folder Include="azure-sdk-testutils\devtools_testutils\" />
     <Folder Include="azure-servicebus\tests\" />
     <Folder Include="azure-servicebus\tests\recordings\" />
     <Folder Include="azure-servicemanagement-legacy\" />
@@ -2206,6 +2486,7 @@
     <Content Include="azure-mgmt-storage\azure\mgmt\storage\v2016_12_01\operations\__pycache__\storage_accounts_operations.cpython-35.pyc" />
     <Content Include="azure-mgmt-storage\azure\mgmt\storage\v2016_12_01\operations\__pycache__\usage_operations.cpython-35.pyc" />
     <Content Include="azure-mgmt-storage\azure\mgmt\storage\v2016_12_01\operations\__pycache__\__init__.cpython-35.pyc" />
+    <Content Include="azure-mgmt-storage\azure\mgmt\storage\v2017_06_01\build.json" />
     <Content Include="azure-mgmt-storage\MANIFEST.in" />
     <Content Include="azure-mgmt-storage\README.rst" />
     <Content Include="azure-mgmt-storage\setup.cfg" />
@@ -2259,6 +2540,7 @@
     <Content Include="azure-mgmt\tests\recordings\test_mgmt_resource.test_resource_groups.yaml" />
     <Content Include="azure-mgmt\tests\recordings\test_mgmt_scheduler.test_scheduler.yaml" />
     <Content Include="azure-mgmt\tests\recordings\test_mgmt_storage.test_storage_accounts.yaml" />
+    <Content Include="azure-sdk-testutils\devtools_testutils\testsettings_local.cfg" />
     <Content Include="azure-servicebus\MANIFEST.in" />
     <Content Include="azure-servicebus\README.rst" />
     <Content Include="azure-servicebus\setup.cfg" />
@@ -2606,8 +2888,6 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <PtvsTargetsFile>$(VSToolsPath)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
-  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
-  <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

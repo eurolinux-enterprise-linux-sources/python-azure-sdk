@@ -32,8 +32,7 @@ class PoolResizeParameter(Model):
      requeue. Possible values include: 'requeue', 'terminate',
      'taskCompletion', 'retainedData'
     :type node_deallocation_option: str or
-     :class:`ComputeNodeDeallocationOption
-     <azure.batch.models.ComputeNodeDeallocationOption>`
+     ~azure.batch.models.ComputeNodeDeallocationOption
     """
 
     _attribute_map = {
@@ -44,6 +43,7 @@ class PoolResizeParameter(Model):
     }
 
     def __init__(self, target_dedicated_nodes=None, target_low_priority_nodes=None, resize_timeout=None, node_deallocation_option=None):
+        super(PoolResizeParameter, self).__init__()
         self.target_dedicated_nodes = target_dedicated_nodes
         self.target_low_priority_nodes = target_low_priority_nodes
         self.resize_timeout = resize_timeout

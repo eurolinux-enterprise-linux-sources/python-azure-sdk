@@ -25,14 +25,12 @@ class JobPreparationAndReleaseTaskExecutionInformation(Model):
     :param job_preparation_task_execution_info: Information about the
      execution status of the Job Preparation task on this compute node.
     :type job_preparation_task_execution_info:
-     :class:`JobPreparationTaskExecutionInformation
-     <azure.batch.models.JobPreparationTaskExecutionInformation>`
+     ~azure.batch.models.JobPreparationTaskExecutionInformation
     :param job_release_task_execution_info: Information about the execution
      status of the Job Release task on this compute node. This property is set
      only if the Job Release task has run on the node.
     :type job_release_task_execution_info:
-     :class:`JobReleaseTaskExecutionInformation
-     <azure.batch.models.JobReleaseTaskExecutionInformation>`
+     ~azure.batch.models.JobReleaseTaskExecutionInformation
     """
 
     _attribute_map = {
@@ -44,6 +42,7 @@ class JobPreparationAndReleaseTaskExecutionInformation(Model):
     }
 
     def __init__(self, pool_id=None, node_id=None, node_url=None, job_preparation_task_execution_info=None, job_release_task_execution_info=None):
+        super(JobPreparationAndReleaseTaskExecutionInformation, self).__init__()
         self.pool_id = pool_id
         self.node_id = node_id
         self.node_url = node_url

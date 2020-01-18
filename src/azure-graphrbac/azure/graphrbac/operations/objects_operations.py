@@ -9,9 +9,9 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
+import uuid
 from msrest.pipeline import ClientRawResponse
 from msrestazure.azure_exceptions import CloudError
-import uuid
 
 from .. import models
 
@@ -25,6 +25,8 @@ class ObjectsOperations(object):
     :param deserializer: An objec model deserializer.
     :ivar api_version: Client API version. Constant value: "1.6".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
@@ -44,9 +46,9 @@ class ObjectsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`AADObject <azure.graphrbac.models.AADObject>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: AADObject or ClientRawResponse if raw=true
+        :rtype: ~azure.graphrbac.models.AADObject or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`GraphErrorException<azure.graphrbac.models.GraphErrorException>`
         """
@@ -73,7 +75,7 @@ class ObjectsOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.GraphErrorException(self._deserialize, response)
@@ -94,15 +96,15 @@ class ObjectsOperations(object):
         """Gets AD group membership for the specified AD object IDs.
 
         :param parameters: Objects filtering parameters.
-        :type parameters: :class:`GetObjectsParameters
-         <azure.graphrbac.models.GetObjectsParameters>`
+        :type parameters: ~azure.graphrbac.models.GetObjectsParameters
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`AADObjectPaged
-         <azure.graphrbac.models.AADObjectPaged>`
+        :return: An iterator like instance of AADObject
+        :rtype:
+         ~azure.graphrbac.models.AADObjectPaged[~azure.graphrbac.models.AADObject]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         def internal_paging(next_link=None, raw=False):
@@ -145,7 +147,7 @@ class ObjectsOperations(object):
             # Construct and send request
             request = self._client.post(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, body_content, **operation_config)
+                request, header_parameters, body_content, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 exp = CloudError(response)

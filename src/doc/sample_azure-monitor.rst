@@ -9,7 +9,7 @@ Create the Monitor client
 The following code creates an instance of the client.
 
 You will need to provide your ``subscription_id`` which can be retrieved
-from `your subscription list <https://manage.windowsazure.com/#Workspaces/AdminTasks/SubscriptionMapping>`__.
+from `your subscription list <https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade>`__.
 
 See :doc:`Resource Management Authentication <quickstart_authentication>`
 for details on handling Azure Active Directory authentication with the Python SDK, and creating a ``Credentials`` instance.
@@ -17,6 +17,7 @@ for details on handling Azure Active Directory authentication with the Python SD
 .. code:: python
 
     from azure.monitor import MonitorClient
+    from azure.mgmt.monitor import MonitorMgmtClient
     from azure.common.credentials import UserPassCredentials
 
     # Replace this with your subscription id
@@ -33,24 +34,13 @@ for details on handling Azure Active Directory authentication with the Python SD
         subscription_id
     )
 
-Registration
-------------
-
-Some operations in the ARM APIs require a one-time registration of the
-provider with your subscription.
-
-Use the following code to do the registration. You can use the same
-credentials you created in the previous section.
-
-.. code:: python
-
-    from azure.mgmt.resource.resources import ResourceManagementClient
-
-    resource_client = ResourceManagementClient(
+    monitor_mgmt_client = MonitorMgmtClient(
         credentials,
         subscription_id
     )
-    resource_client.providers.register('Microsoft.Insights')
+
+Registration
+------------
     
 You also might need to add the "Monitoring Contributor Service Role" role
 to your credentials. See here to do it using the Python CLI: 
@@ -97,6 +87,9 @@ This sample get the metrics of a resource on Azure (VMs, etc.).
 
 A complete list of available keywords for filters is available
 here: https://msdn.microsoft.com/en-us/library/azure/mt743622.aspx
+
+Supported metrics per resource type is available here:
+https://docs.microsoft.com/azure/monitoring-and-diagnostics/monitoring-supported-metrics
 
 .. code:: python
 
@@ -180,3 +173,107 @@ here: https://msdn.microsoft.com/en-us/library/azure/mt743622.aspx
     # 2016-11-16 21:00:00+00:00: 146.73
     # 2016-11-16 22:00:00+00:00: 73.86
     # 2016-11-16 23:00:00+00:00: 84.7
+
+Alert rules
+-----------
+
+This section shows how you can use the Python SDK to configure Azure metrics alerts. 
+This enables you to automatically set up alerts on your resources when they are created to ensure that 
+all resources are monitored correctly.
+
+You need the `azure-mgmt-monitor` package for this feature.
+
+You need to define three objects:
+
+- A data source
+- A condition on this data source
+- At least one action
+
+There two possible data source:
+
+- `RuleMetricDataSource <https://docs.microsoft.com/python/api/azure.mgmt.monitor.models.rulemetricdatasource>`__
+- `RuleManagementEventDataSource <https://docs.microsoft.com/python/api/azure.mgmt.monitor.models.rulemanagementeventdatasource>`__
+
+For instance, to create a data source on a VM to alert on CPU usage:
+
+.. code:: python
+
+    from azure.mgmt.monitor.models import RuleMetricDataSource
+
+    resource_id = (
+        "subscriptions/{}/"
+        "resourceGroups/MonitorTestsDoNotDelete/"
+        "providers/Microsoft.Compute/virtualMachines/MonitorTest"
+    ).format(self.settings.SUBSCRIPTION_ID)
+
+    # I need a subclass of "RuleDataSource"
+    data_source = RuleMetricDataSource(
+        resource_uri = resource_id,
+        metric_name = 'Percentage CPU'
+    )
+
+Supported metrics per resource type is available here:
+https://docs.microsoft.com/azure/monitoring-and-diagnostics/monitoring-supported-metrics
+
+
+There is three possible conditions:
+
+- `ThresholdRuleCondition <https://docs.microsoft.com/python/api/azure.mgmt.monitor.models.thresholdrulecondition>`__
+- `LocationThresholdRuleCondition <https://docs.microsoft.com/python/api/azure.mgmt.monitor.models.locationthresholdrulecondition>`__
+- `ManagementEventRuleCondition <https://docs.microsoft.com/python/api/azure.mgmt.monitor.models.managementeventrulecondition>`__
+
+For instance, to create a threshold condition that triggers when the average CPU
+usage of a VM for the last 5 minutes is above 90% (using the preceding data source):
+
+.. code:: python
+
+    from azure.mgmt.monitor.models import ThresholdRuleCondition
+
+    # I need a subclasses of "RuleCondition"
+    rule_condition = ThresholdRuleCondition(
+        data_source = data_source,
+        operator = 'GreaterThanOrEqual',
+        threshold = 90,
+        window_size = 'PT5M',
+        time_aggregation = 'Average'
+    )
+
+There is two possible actions:
+
+- `RuleEmailAction <https://docs.microsoft.com/python/api/azure.mgmt.monitor.models.ruleemailaction>`__
+- `RuleWebhookAction <https://docs.microsoft.com/python/api/azure.mgmt.monitor.models.rulewebhookaction>`__
+
+For instance, to create an email action:
+
+.. code:: python
+
+    from azure.mgmt.monitor.models import RuleEmailAction
+
+    # I need a subclass of "RuleAction"
+    rule_action = RuleEmailAction(
+        send_to_service_owners = True,
+        custom_emails = [
+            'monitoringemail@microsoft.com'
+        ]
+    )
+
+Once you defined these thress objects that fit your needs, create the alert is a simple call:
+
+.. code:: python
+
+    rule_name = 'MyPyTestAlertRule'
+    my_alert = monitor_mgmt_client.alert_rules.create_or_update(
+        group_name,
+        rule_name,
+        {
+            'location': 'westus',
+            'alert_rule_resource_name': rule_name,
+            'description': 'Testing Alert rule creation',
+            'is_enabled': True,
+            'condition': rule_condition,
+            'actions': [
+                rule_action
+            ]
+        }
+    )
+

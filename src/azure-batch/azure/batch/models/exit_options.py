@@ -19,22 +19,21 @@ class ExitOptions(Model):
      the task completes with the given exit condition and the job's
      onTaskFailed property is 'performExitOptionsJobAction'. The default is
      none for exit code 0 and terminate for all other exit conditions. If the
-     job's onTaskFailed property is noAction, then specify this property
-     returns an error. The add task request fails with an invalid property
-     value error;; if you are calling the REST API directly, the HTTP status
+     job's onTaskFailed property is noaction, then specifying this property
+     returns an error and the add task request fails with an invalid property
+     value error; if you are calling the REST API directly, the HTTP status
      code is 400 (Bad Request). Possible values include: 'none', 'disable',
      'terminate'
-    :type job_action: str or :class:`JobAction <azure.batch.models.JobAction>`
+    :type job_action: str or ~azure.batch.models.JobAction
     :param dependency_action: An action that the Batch service performs on
      tasks that depend on this task. The default is 'satisfy' for exit code 0,
      and 'block' for all other exit conditions. If the job's
      usesTaskDependencies property is set to false, then specifying the
-     dependencyAction property returns an error. The add task request fails
+     dependencyAction property returns an error and the add task request fails
      with an invalid property value error; if you are calling the REST API
      directly, the HTTP status code is 400  (Bad Request). Possible values
      include: 'satisfy', 'block'
-    :type dependency_action: str or :class:`DependencyAction
-     <azure.batch.models.DependencyAction>`
+    :type dependency_action: str or ~azure.batch.models.DependencyAction
     """
 
     _attribute_map = {
@@ -43,5 +42,6 @@ class ExitOptions(Model):
     }
 
     def __init__(self, job_action=None, dependency_action=None):
+        super(ExitOptions, self).__init__()
         self.job_action = job_action
         self.dependency_action = dependency_action

@@ -26,8 +26,10 @@
 Microsoft Azure components such as ServiceManagement, Storage*, and ServiceBus.
 
 Name:           python-%{srcname}
-Version:        2.0.0
-Release:        %{?prerelease:0.}3%{?prerelease:.%{prerelease}}%{?dist}
+# Remember to delete examples-directory from Source file for new releases
+# due to possible licensing issues
+Version:        4.0.0
+Release:        %{?prerelease:0.}0%{?prerelease:.%{prerelease}}%{?dist}.1
 Summary:        %{common_summary}
 
 Group:          System Environment/Libraries
@@ -36,18 +38,24 @@ Group:          System Environment/Libraries
 # - azure-servicemanagement-legacy
 License:        MIT and ASL 2.0
 URL:            https://github.com/Azure/azure-sdk-for-python/
-# Remember to delete examples-directory from Source file for new releases
-# due to possible licensing issues
 Source0:        %{srcname}-%{version}%{?prerelease}.tar.gz
-# Fix install_requires option, for EPEL especially
-Patch0:         %{name}-2.0.0-build.patch
+# azure-mgmt-compute directory from:
+# https://github.com/Azure/azure-sdk-for-python/releases/tag/azure-mgmt-compute_5.0.0
+Source1:        azure-mgmt-compute-5.0.0.tar.gz
+# Install namespace package modules (disabled by default, may be required by
+# modules depending on Azure SDK for development)
+Patch0:         %{name}-4.0.0-nspkgs.patch
+# Disable tests requiring online access to Azure
+Patch1:         %{name}-4.0.0-tests.patch
+# Fix python 3 setup.py tests
+Patch2:         setup.py-fix.patch
 
 BuildRequires:  %{py2_prefix}-setuptools
 BuildRequires:  python2-devel
 
 Requires:       pyOpenSSL
-Requires:       %{py2_prefix}-msrest
-Requires:       %{py2_prefix}-msrestazure
+Requires:       %{py2_prefix}-msrest >= 0.5.4
+Requires:       %{py2_prefix}-msrestazure >= 0.5.1
 Requires:       %{py2_prefix}-requests
 
 # Needed to build documentation
@@ -123,27 +131,17 @@ This package provides documentation for %{name}.
 
 
 %prep
-%autosetup -n %{srcname}-for-python-azure_%{version}%{?prerelease} -p0
+%setup -q -n %{srcname}-for-python-azure_%{version}%{?prerelease}
 
-# Disable online tests requiring a valid Azure subscription
-pushd azure-mgmt/tests/
-rm test_batch.py \
-   test_key_vault_data.py \
-   test_mgmt_cdn.py \
-   test_mgmt_compute.py \
-   test_mgmt_datalake_analytics.py \
-   test_mgmt_datalake_store.py \
-   test_mgmt_dns.py \
-   test_mgmt_network.py \
-   test_mgmt_notificationhubs.py \
-   test_mgmt_redis.py \
-   test_mgmt_resource.py \
-   test_mgmt_resource_links.py \
-   test_mgmt_resource_locks.py \
-   test_mgmt_resource_policy.py \
-   test_mgmt_storage.py
-popd
-rm azure-servicebus/tests/test_servicebus_servicebus.py
+rm -rf azure-mgmt-compute
+tar -xzf %SOURCE1
+
+%patch0 -p0
+%patch1 -p0
+%patch2 -p1
+
+# delete Python 3 specific code that fails in Python 2 in Azure SDK 4.0+
+find -name "*_py3.py" -exec rm -v {} \;
 
 # Disable online tests requiring python-azure-storage
 # TODO: once the python-azure-storage package available, re-enable it
@@ -179,14 +177,14 @@ rm doc/_build/html/.buildinfo
 
 
 %files -n python-%{srcname}
-%doc ChangeLog.rst HOWTO.txt README.rst
+%doc CONTRIBUTING.md README.rst
 %license LICENSE.txt
 %{python2_sitelib}/*
 
 
 %if 0%{?_with_python3}
 %files -n python3-%{srcname}
-%doc ChangeLog.rst HOWTO.txt README.rst
+%doc CONTRIBUTING.md README.rst
 %license LICENSE.txt
 %{python3_sitelib}/*
 %endif
@@ -200,6 +198,11 @@ rm doc/_build/html/.buildinfo
 
 
 %changelog
+* Thu May 16 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.0.0-0.1
+- Update to 4.0.0 + azure-mgmt-compute 5.0.0 (for skip_shutdown feature)
+
+  Resolves: rhbz#1709473
+
 * Thu Jan 25 2018 Oyvind Albrigtsen <oalbrigt@redhat.com> - 2.0.0-3
 - Remove examples-directory from Source tarball due to possible
   licensing issues

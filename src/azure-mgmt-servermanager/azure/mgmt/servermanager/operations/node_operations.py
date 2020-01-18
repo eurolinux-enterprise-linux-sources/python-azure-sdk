@@ -9,9 +9,10 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.pipeline import ClientRawResponse
-from msrestazure.azure_operation import AzureOperationPoller
 import uuid
+from msrest.pipeline import ClientRawResponse
+from msrest.polling import LROPoller, NoPolling
+from msrestazure.polling.arm_polling import ARMPolling
 
 from .. import models
 
@@ -22,19 +23,75 @@ class NodeOperations(object):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
+    :param deserializer: An object model deserializer.
+    :ivar api_version: Client API Version. Constant value: "2016-07-01-preview".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
+        self.api_version = "2016-07-01-preview"
 
         self.config = config
 
-    def create(
+
+    def _create_initial(
             self, resource_group_name, node_name, location=None, tags=None, gateway_id=None, connection_name=None, user_name=None, password=None, custom_headers=None, raw=False, **operation_config):
+        gateway_parameters = models.NodeParameters(location=location, tags=tags, gateway_id=gateway_id, connection_name=connection_name, user_name=user_name, password=password)
+
+        # Construct URL
+        url = self.create.metadata['url']
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', min_length=3, pattern=r'[a-zA-Z0-9]+'),
+            'nodeName': self._serialize.url("node_name", node_name, 'str', max_length=256, min_length=1, pattern=r'^[a-zA-Z0-9][a-zA-Z0-9_.-]*$')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        if self.config.generate_client_request_id:
+            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+        # Construct body
+        body_content = self._serialize.body(gateway_parameters, 'NodeParameters')
+
+        # Construct and send request
+        request = self._client.put(url, query_parameters)
+        response = self._client.send(
+            request, header_parameters, body_content, stream=False, **operation_config)
+
+        if response.status_code not in [200, 201, 202]:
+            raise models.ErrorException(self._deserialize, response)
+
+        deserialized = None
+
+        if response.status_code == 200:
+            deserialized = self._deserialize('NodeResource', response)
+        if response.status_code == 201:
+            deserialized = self._deserialize('NodeResource', response)
+
+        if raw:
+            client_raw_response = ClientRawResponse(deserialized, response)
+            return client_raw_response
+
+        return deserialized
+
+    def create(
+            self, resource_group_name, node_name, location=None, tags=None, gateway_id=None, connection_name=None, user_name=None, password=None, custom_headers=None, raw=False, polling=True, **operation_config):
         """Creates or updates a management node.
 
         :param resource_group_name: The resource group name uniquely
@@ -55,31 +112,68 @@ class NodeOperations(object):
         :param password: Password associated with user name.
         :type password: str
         :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns NodeResource or
+         ClientRawResponse<NodeResource> if raw==True
         :rtype:
-         :class:`AzureOperationPoller<msrestazure.azure_operation.AzureOperationPoller>`
-         instance that returns :class:`NodeResource
-         <azure.mgmt.servermanager.models.NodeResource>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.servermanager.models.NodeResource]
+         or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.servermanager.models.NodeResource]]
         :raises:
          :class:`ErrorException<azure.mgmt.servermanager.models.ErrorException>`
         """
-        gateway_parameters = models.NodeParameters(location=location, tags=tags, gateway_id=gateway_id, connection_name=connection_name, user_name=user_name, password=password)
+        raw_result = self._create_initial(
+            resource_group_name=resource_group_name,
+            node_name=node_name,
+            location=location,
+            tags=tags,
+            gateway_id=gateway_id,
+            connection_name=connection_name,
+            user_name=user_name,
+            password=password,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
+
+        def get_long_running_output(response):
+            deserialized = self._deserialize('NodeResource', response)
+
+            if raw:
+                client_raw_response = ClientRawResponse(deserialized, response)
+                return client_raw_response
+
+            return deserialized
+
+        lro_delay = operation_config.get(
+            'long_running_operation_timeout',
+            self.config.long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServerManagement/nodes/{nodeName}'}
+
+
+    def _update_initial(
+            self, resource_group_name, node_name, location=None, tags=None, gateway_id=None, connection_name=None, user_name=None, password=None, custom_headers=None, raw=False, **operation_config):
+        node_parameters = models.NodeParameters(location=location, tags=tags, gateway_id=gateway_id, connection_name=connection_name, user_name=user_name, password=password)
 
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServerManagement/nodes/{nodeName}'
+        url = self.update.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', min_length=3, pattern='[a-zA-Z0-9]+'),
-            'nodeName': self._serialize.url("node_name", node_name, 'str', max_length=256, min_length=1, pattern='^[a-zA-Z0-9][a-zA-Z0-9_.-]*$')
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', min_length=3, pattern=r'[a-zA-Z0-9]+'),
+            'nodeName': self._serialize.url("node_name", node_name, 'str', max_length=256, min_length=1, pattern=r'^[a-zA-Z0-9][a-zA-Z0-9_.-]*$')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.config.api_version", self.config.api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -92,54 +186,29 @@ class NodeOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(gateway_parameters, 'NodeParameters')
+        body_content = self._serialize.body(node_parameters, 'NodeParameters')
 
         # Construct and send request
-        def long_running_send():
+        request = self._client.patch(url, query_parameters)
+        response = self._client.send(
+            request, header_parameters, body_content, stream=False, **operation_config)
 
-            request = self._client.put(url, query_parameters)
-            return self._client.send(
-                request, header_parameters, body_content, **operation_config)
+        if response.status_code not in [200, 202]:
+            raise models.ErrorException(self._deserialize, response)
 
-        def get_long_running_status(status_link, headers=None):
+        deserialized = None
 
-            request = self._client.get(status_link)
-            if headers:
-                request.headers.update(headers)
-            return self._client.send(
-                request, header_parameters, **operation_config)
-
-        def get_long_running_output(response):
-
-            if response.status_code not in [200, 201, 202]:
-                raise models.ErrorException(self._deserialize, response)
-
-            deserialized = None
-
-            if response.status_code == 200:
-                deserialized = self._deserialize('NodeResource', response)
-            if response.status_code == 201:
-                deserialized = self._deserialize('NodeResource', response)
-
-            if raw:
-                client_raw_response = ClientRawResponse(deserialized, response)
-                return client_raw_response
-
-            return deserialized
+        if response.status_code == 200:
+            deserialized = self._deserialize('NodeResource', response)
 
         if raw:
-            response = long_running_send()
-            return get_long_running_output(response)
+            client_raw_response = ClientRawResponse(deserialized, response)
+            return client_raw_response
 
-        long_running_operation_timeout = operation_config.get(
-            'long_running_operation_timeout',
-            self.config.long_running_operation_timeout)
-        return AzureOperationPoller(
-            long_running_send, get_long_running_output,
-            get_long_running_status, long_running_operation_timeout)
+        return deserialized
 
     def update(
-            self, resource_group_name, node_name, location=None, tags=None, gateway_id=None, connection_name=None, user_name=None, password=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, node_name, location=None, tags=None, gateway_id=None, connection_name=None, user_name=None, password=None, custom_headers=None, raw=False, polling=True, **operation_config):
         """Updates a management node.
 
         :param resource_group_name: The resource group name uniquely
@@ -160,69 +229,35 @@ class NodeOperations(object):
         :param password: Password associated with user name.
         :type password: str
         :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns NodeResource or
+         ClientRawResponse<NodeResource> if raw==True
         :rtype:
-         :class:`AzureOperationPoller<msrestazure.azure_operation.AzureOperationPoller>`
-         instance that returns :class:`NodeResource
-         <azure.mgmt.servermanager.models.NodeResource>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.servermanager.models.NodeResource]
+         or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.servermanager.models.NodeResource]]
         :raises:
          :class:`ErrorException<azure.mgmt.servermanager.models.ErrorException>`
         """
-        node_parameters = models.NodeParameters(location=location, tags=tags, gateway_id=gateway_id, connection_name=connection_name, user_name=user_name, password=password)
-
-        # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServerManagement/nodes/{nodeName}'
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', min_length=3, pattern='[a-zA-Z0-9]+'),
-            'nodeName': self._serialize.url("node_name", node_name, 'str', max_length=256, min_length=1, pattern='^[a-zA-Z0-9][a-zA-Z0-9_.-]*$')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.config.api_version", self.config.api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-        if self.config.generate_client_request_id:
-            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
-        if custom_headers:
-            header_parameters.update(custom_headers)
-        if self.config.accept_language is not None:
-            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
-
-        # Construct body
-        body_content = self._serialize.body(node_parameters, 'NodeParameters')
-
-        # Construct and send request
-        def long_running_send():
-
-            request = self._client.patch(url, query_parameters)
-            return self._client.send(
-                request, header_parameters, body_content, **operation_config)
-
-        def get_long_running_status(status_link, headers=None):
-
-            request = self._client.get(status_link)
-            if headers:
-                request.headers.update(headers)
-            return self._client.send(
-                request, header_parameters, **operation_config)
+        raw_result = self._update_initial(
+            resource_group_name=resource_group_name,
+            node_name=node_name,
+            location=location,
+            tags=tags,
+            gateway_id=gateway_id,
+            connection_name=connection_name,
+            user_name=user_name,
+            password=password,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
 
         def get_long_running_output(response):
-
-            if response.status_code not in [200, 202]:
-                raise models.ErrorException(self._deserialize, response)
-
-            deserialized = None
-
-            if response.status_code == 200:
-                deserialized = self._deserialize('NodeResource', response)
+            deserialized = self._deserialize('NodeResource', response)
 
             if raw:
                 client_raw_response = ClientRawResponse(deserialized, response)
@@ -230,16 +265,14 @@ class NodeOperations(object):
 
             return deserialized
 
-        if raw:
-            response = long_running_send()
-            return get_long_running_output(response)
-
-        long_running_operation_timeout = operation_config.get(
+        lro_delay = operation_config.get(
             'long_running_operation_timeout',
             self.config.long_running_operation_timeout)
-        return AzureOperationPoller(
-            long_running_send, get_long_running_output,
-            get_long_running_status, long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServerManagement/nodes/{nodeName}'}
 
     def delete(
             self, resource_group_name, node_name, custom_headers=None, raw=False, **operation_config):
@@ -255,24 +288,23 @@ class NodeOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorException<azure.mgmt.servermanager.models.ErrorException>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServerManagement/nodes/{nodeName}'
+        url = self.delete.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', min_length=3, pattern='[a-zA-Z0-9]+'),
-            'nodeName': self._serialize.url("node_name", node_name, 'str', max_length=256, min_length=1, pattern='^[a-zA-Z0-9][a-zA-Z0-9_.-]*$')
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', min_length=3, pattern=r'[a-zA-Z0-9]+'),
+            'nodeName': self._serialize.url("node_name", node_name, 'str', max_length=256, min_length=1, pattern=r'^[a-zA-Z0-9][a-zA-Z0-9_.-]*$')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.config.api_version", self.config.api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -286,7 +318,7 @@ class NodeOperations(object):
 
         # Construct and send request
         request = self._client.delete(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200, 204]:
             raise models.ErrorException(self._deserialize, response)
@@ -294,6 +326,7 @@ class NodeOperations(object):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServerManagement/nodes/{nodeName}'}
 
     def get(
             self, resource_group_name, node_name, custom_headers=None, raw=False, **operation_config):
@@ -309,25 +342,24 @@ class NodeOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`NodeResource
-         <azure.mgmt.servermanager.models.NodeResource>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: NodeResource or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.servermanager.models.NodeResource or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorException<azure.mgmt.servermanager.models.ErrorException>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServerManagement/nodes/{nodeName}'
+        url = self.get.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', min_length=3, pattern='[a-zA-Z0-9]+'),
-            'nodeName': self._serialize.url("node_name", node_name, 'str', max_length=256, min_length=1, pattern='^[a-zA-Z0-9][a-zA-Z0-9_.-]*$')
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', min_length=3, pattern=r'[a-zA-Z0-9]+'),
+            'nodeName': self._serialize.url("node_name", node_name, 'str', max_length=256, min_length=1, pattern=r'^[a-zA-Z0-9][a-zA-Z0-9_.-]*$')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.config.api_version", self.config.api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -341,7 +373,7 @@ class NodeOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.ErrorException(self._deserialize, response)
@@ -356,6 +388,7 @@ class NodeOperations(object):
             return client_raw_response
 
         return deserialized
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServerManagement/nodes/{nodeName}'}
 
     def list(
             self, custom_headers=None, raw=False, **operation_config):
@@ -366,8 +399,9 @@ class NodeOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`NodeResourcePaged
-         <azure.mgmt.servermanager.models.NodeResourcePaged>`
+        :return: An iterator like instance of NodeResource
+        :rtype:
+         ~azure.mgmt.servermanager.models.NodeResourcePaged[~azure.mgmt.servermanager.models.NodeResource]
         :raises:
          :class:`ErrorException<azure.mgmt.servermanager.models.ErrorException>`
         """
@@ -375,7 +409,7 @@ class NodeOperations(object):
 
             if not next_link:
                 # Construct URL
-                url = '/subscriptions/{subscriptionId}/providers/Microsoft.ServerManagement/nodes'
+                url = self.list.metadata['url']
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
@@ -383,7 +417,7 @@ class NodeOperations(object):
 
                 # Construct parameters
                 query_parameters = {}
-                query_parameters['api-version'] = self._serialize.query("self.config.api_version", self.config.api_version, 'str')
+                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
             else:
                 url = next_link
@@ -402,7 +436,7 @@ class NodeOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 raise models.ErrorException(self._deserialize, response)
@@ -418,6 +452,7 @@ class NodeOperations(object):
             return client_raw_response
 
         return deserialized
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.ServerManagement/nodes'}
 
     def list_for_resource_group(
             self, resource_group_name, custom_headers=None, raw=False, **operation_config):
@@ -431,8 +466,9 @@ class NodeOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`NodeResourcePaged
-         <azure.mgmt.servermanager.models.NodeResourcePaged>`
+        :return: An iterator like instance of NodeResource
+        :rtype:
+         ~azure.mgmt.servermanager.models.NodeResourcePaged[~azure.mgmt.servermanager.models.NodeResource]
         :raises:
          :class:`ErrorException<azure.mgmt.servermanager.models.ErrorException>`
         """
@@ -440,16 +476,16 @@ class NodeOperations(object):
 
             if not next_link:
                 # Construct URL
-                url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServerManagement/nodes'
+                url = self.list_for_resource_group.metadata['url']
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', min_length=3, pattern='[a-zA-Z0-9]+')
+                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', min_length=3, pattern=r'[a-zA-Z0-9]+')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
 
                 # Construct parameters
                 query_parameters = {}
-                query_parameters['api-version'] = self._serialize.query("self.config.api_version", self.config.api_version, 'str')
+                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
             else:
                 url = next_link
@@ -468,7 +504,7 @@ class NodeOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 raise models.ErrorException(self._deserialize, response)
@@ -484,3 +520,4 @@ class NodeOperations(object):
             return client_raw_response
 
         return deserialized
+    list_for_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServerManagement/nodes'}

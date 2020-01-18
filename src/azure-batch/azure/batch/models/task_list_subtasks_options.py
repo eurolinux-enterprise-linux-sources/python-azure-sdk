@@ -13,7 +13,7 @@ from msrest.serialization import Model
 
 
 class TaskListSubtasksOptions(Model):
-    """Additional parameters for the Task_list_subtasks operation.
+    """Additional parameters for list_subtasks operation.
 
     :param select: An OData $select clause.
     :type select: str
@@ -34,6 +34,7 @@ class TaskListSubtasksOptions(Model):
     """
 
     def __init__(self, select=None, timeout=30, client_request_id=None, return_client_request_id=False, ocp_date=None):
+        super(TaskListSubtasksOptions, self).__init__()
         self.select = select
         self.timeout = timeout
         self.client_request_id = client_request_id

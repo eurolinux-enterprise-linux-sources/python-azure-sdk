@@ -3,6 +3,53 @@
 Release History
 ===============
 
+4.1.3 (2018-04-24)
+++++++++++++++++++
+
+- Update some APIs' comments
+- New property `leaving_pool` in `node_counts` type.
+
+4.1.2 (2018-04-23)
+++++++++++++++++++
+
+**Bugfixes**
+
+- Compatibility of the sdist with wheel 0.31.0
+- Compatibility with msrestazure 0.4.28
+
+4.1.1 (2018-03-26)
+++++++++++++++++++
+
+- Fix regression on method `enable_auto_scale`.
+
+4.1.0 (2018-03-07)
+++++++++++++++++++
+
+- Using REST API version 2018-03-01.6.1.
+- Added the ability to query pool node counts by state, via the new `list_pool_node_counts` method.
+- Added the ability to upload Azure Batch node agent logs from a particular node, via the `upload_batch_service_logs` method.
+   - This is intended for use in debugging by Microsoft support when there are problems on a node.
+
+4.0.0 (2017-09-25)
+++++++++++++++++++
+
+- Using REST API version 2017-09-01.6.0.
+- Added the ability to get a discount on Windows VM pricing if you have on-premises licenses for the OS SKUs you are deploying, via `license_type` on `VirtualMachineConfiguration`.
+- Added support for attaching empty data drives to `VirtualMachineConfiguration` based pools, via the new `data_disks` attribute on `VirtualMachineConfiguration`.
+- [Breaking] Custom images must now be deployed using a reference to an ARM Image, instead of pointing to .vhd files in blobs directly.
+  - The new `virtual_machine_image_id` property on `ImageReference` contains the reference to the ARM Image, and `OSDisk.image_uris` no longer exists.
+  - Because of this, `image_reference` is now a required attribute of `VirtualMachineConfiguration`.
+- [Breaking] Multi-instance tasks (created using `MultiInstanceSettings`) must now specify a `coordination_commandLine`, and `number_of_instances` is now optional and defaults to 1.
+- Added support for tasks run using Docker containers. To run a task using a Docker container you must specify a `container_configuration` on the `VirtualMachineConfiguration` for a pool, and then add `container_settings` on the Task.
+
+3.1.0 (2017-07-24)
+++++++++++++++++++
+
+- Added a new operation `job.get_task_counts` to retrieve the number of tasks in each state.
+- Added suuport for inbound endpoint configuration on a pool - there is a new `pool_endpoint_configuration` attribute on `NetworkConfiguration`.
+  This property is only supported on pools that use `virtual_machine_configuration`.
+- A `ComputeNode` now also has an `endpoint_configuration` attribute with the details of the applied endpoint configuration for that node.
+
 3.0.0 (2017-05-10)
 ++++++++++++++++++
 

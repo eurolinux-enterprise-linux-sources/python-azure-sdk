@@ -19,11 +19,12 @@ class PolicykeyResource(Model):
      Namespace/Notification Hub Authorization Rule. The value can be Primary
      Key/Secondary Key.
     :type policy_key: str
-    """ 
+    """
 
     _attribute_map = {
         'policy_key': {'key': 'policyKey', 'type': 'str'},
     }
 
-    def __init__(self, policy_key=None):
-        self.policy_key = policy_key
+    def __init__(self, **kwargs):
+        super(PolicykeyResource, self).__init__(**kwargs)
+        self.policy_key = kwargs.get('policy_key', None)

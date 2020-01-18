@@ -13,8 +13,8 @@ from msrest.serialization import Model
 
 
 class RateCardQueryParameters(Model):
-    """Parameters that are used in the odata $filter query parameter for
-    providing RateCard information.
+    """Parameters that are used in the odata $filter query parameter for providing
+    RateCard information.
 
     :param offer_durable_id: The Offer ID parameter consists of the 'MS-AZR-'
      prefix, plus the Offer ID number (e.g., MS-AZR-0026P). See
@@ -29,10 +29,10 @@ class RateCardQueryParameters(Model):
     :type locale: str
     :param region_info: 2 letter ISO code where the offer was purchased.
     :type region_info: str
-    """ 
+    """
 
     _validation = {
-        'offer_durable_id': {'required': True, 'pattern': '^MS-AZR-\d{4}P(-\d{4}P)*$'},
+        'offer_durable_id': {'required': True, 'pattern': r'^MS-AZR-\d{4}P(-\d{4}P)*$'},
         'currency': {'required': True},
         'locale': {'required': True},
         'region_info': {'required': True},
@@ -46,6 +46,7 @@ class RateCardQueryParameters(Model):
     }
 
     def __init__(self, offer_durable_id, currency, locale, region_info):
+        super(RateCardQueryParameters, self).__init__()
         self.offer_durable_id = offer_durable_id
         self.currency = currency
         self.locale = locale

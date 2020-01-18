@@ -12,36 +12,36 @@
 from enum import Enum
 
 
-class upgradeMode(Enum):
+class UpgradeMode(str, Enum):
 
     manual = "Manual"
     automatic = "Automatic"
 
 
-class retentionPeriod(Enum):
+class RetentionPeriod(str, Enum):
 
     session = "Session"
     persistent = "Persistent"
 
 
-class credentialDataFormat(Enum):
+class CredentialDataFormat(str, Enum):
 
     rsa_encrypted = "RsaEncrypted"
 
 
-class PromptFieldType(Enum):
+class PromptFieldType(str, Enum):
 
     string = "String"
     secure_string = "SecureString"
     credential = "Credential"
 
 
-class GatewayExpandOption(Enum):
+class GatewayExpandOption(str, Enum):
 
     status = "status"
     download = "download"
 
 
-class PowerShellExpandOption(Enum):
+class PowerShellExpandOption(str, Enum):
 
     output = "output"

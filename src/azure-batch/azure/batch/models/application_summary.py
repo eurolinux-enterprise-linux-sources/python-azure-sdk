@@ -20,8 +20,8 @@ class ApplicationSummary(Model):
     :type id: str
     :param display_name: The display name for the application.
     :type display_name: str
-    :param versions: The versions of the application which are available.
-    :type versions: list of str
+    :param versions: The list of available versions of the application.
+    :type versions: list[str]
     """
 
     _validation = {
@@ -37,6 +37,7 @@ class ApplicationSummary(Model):
     }
 
     def __init__(self, id, display_name, versions):
+        super(ApplicationSummary, self).__init__()
         self.id = id
         self.display_name = display_name
         self.versions = versions

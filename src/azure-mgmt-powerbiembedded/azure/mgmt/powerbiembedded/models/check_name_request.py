@@ -20,13 +20,14 @@ class CheckNameRequest(Model):
     :param type: Resource type. Default value:
      "Microsoft.PowerBI/workspaceCollections" .
     :type type: str
-    """ 
+    """
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
     }
 
-    def __init__(self, name=None, type="Microsoft.PowerBI/workspaceCollections"):
-        self.name = name
-        self.type = type
+    def __init__(self, **kwargs):
+        super(CheckNameRequest, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.type = kwargs.get('type', "Microsoft.PowerBI/workspaceCollections")

@@ -13,7 +13,7 @@ from msrest.serialization import Model
 
 
 class JobPatchOptions(Model):
-    """Additional parameters for the Job_patch operation.
+    """Additional parameters for patch operation.
 
     :param timeout: The maximum time that the server can spend processing the
      request, in seconds. The default is 30 seconds. Default value: 30 .
@@ -51,6 +51,7 @@ class JobPatchOptions(Model):
     """
 
     def __init__(self, timeout=30, client_request_id=None, return_client_request_id=False, ocp_date=None, if_match=None, if_none_match=None, if_modified_since=None, if_unmodified_since=None):
+        super(JobPatchOptions, self).__init__()
         self.timeout = timeout
         self.client_request_id = client_request_id
         self.return_client_request_id = return_client_request_id

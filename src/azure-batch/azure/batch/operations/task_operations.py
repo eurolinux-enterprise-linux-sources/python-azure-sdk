@@ -9,8 +9,8 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.pipeline import ClientRawResponse
 import uuid
+from msrest.pipeline import ClientRawResponse
 
 from .. import models
 
@@ -21,16 +21,18 @@ class TaskOperations(object):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
-    :ivar api_version: Client API Version. Constant value: "2017-05-01.5.0".
+    :param deserializer: An object model deserializer.
+    :ivar api_version: Client API Version. Constant value: "2018-03-01.6.1".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2017-05-01.5.0"
+        self.api_version = "2018-03-01.6.1"
 
         self.config = config
 
@@ -38,22 +40,24 @@ class TaskOperations(object):
             self, job_id, task, task_add_options=None, custom_headers=None, raw=False, **operation_config):
         """Adds a task to the specified job.
 
+        The maximum lifetime of a task from addition to completion is 7 days.
+        If a task has not completed within 7 days of being added it will be
+        terminated by the Batch service and left in whatever state it was in at
+        that time.
+
         :param job_id: The ID of the job to which the task is to be added.
         :type job_id: str
         :param task: The task to be added.
-        :type task: :class:`TaskAddParameter
-         <azure.batch.models.TaskAddParameter>`
+        :type task: ~azure.batch.models.TaskAddParameter
         :param task_add_options: Additional parameters for the operation
-        :type task_add_options: :class:`TaskAddOptions
-         <azure.batch.models.TaskAddOptions>`
+        :type task_add_options: ~azure.batch.models.TaskAddOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -71,7 +75,7 @@ class TaskOperations(object):
             ocp_date = task_add_options.ocp_date
 
         # Construct URL
-        url = '/jobs/{jobId}/tasks'
+        url = self.add.metadata['url']
         path_format_arguments = {
             'jobId': self._serialize.url("job_id", job_id, 'str')
         }
@@ -105,7 +109,7 @@ class TaskOperations(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [201]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -120,6 +124,7 @@ class TaskOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    add.metadata = {'url': '/jobs/{jobId}/tasks'}
 
     def list(
             self, job_id, task_list_options=None, custom_headers=None, raw=False, **operation_config):
@@ -132,14 +137,15 @@ class TaskOperations(object):
         :param job_id: The ID of the job.
         :type job_id: str
         :param task_list_options: Additional parameters for the operation
-        :type task_list_options: :class:`TaskListOptions
-         <azure.batch.models.TaskListOptions>`
+        :type task_list_options: ~azure.batch.models.TaskListOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`CloudTaskPaged <azure.batch.models.CloudTaskPaged>`
+        :return: An iterator like instance of CloudTask
+        :rtype:
+         ~azure.batch.models.CloudTaskPaged[~azure.batch.models.CloudTask]
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -172,7 +178,7 @@ class TaskOperations(object):
 
             if not next_link:
                 # Construct URL
-                url = '/jobs/{jobId}/tasks'
+                url = self.list.metadata['url']
                 path_format_arguments = {
                     'jobId': self._serialize.url("job_id", job_id, 'str')
                 }
@@ -198,7 +204,7 @@ class TaskOperations(object):
 
             # Construct headers
             header_parameters = {}
-            header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+            header_parameters['Content-Type'] = 'application/json; charset=utf-8'
             if self.config.generate_client_request_id:
                 header_parameters['client-request-id'] = str(uuid.uuid1())
             if custom_headers:
@@ -215,7 +221,7 @@ class TaskOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 raise models.BatchErrorException(self._deserialize, response)
@@ -231,6 +237,7 @@ class TaskOperations(object):
             return client_raw_response
 
         return deserialized
+    list.metadata = {'url': '/jobs/{jobId}/tasks'}
 
     def add_collection(
             self, job_id, value, task_add_collection_options=None, custom_headers=None, raw=False, **operation_config):
@@ -243,28 +250,37 @@ class TaskOperations(object):
         processed, or not at all. In such cases, the user should re-issue the
         request. Note that it is up to the user to correctly handle failures
         when re-issuing a request. For example, you should use the same task
-        ids during a retry so that if the prior operation succeeded, the retry
-        will not create extra tasks unexpectedly.
+        IDs during a retry so that if the prior operation succeeded, the retry
+        will not create extra tasks unexpectedly. If the response contains any
+        tasks which failed to add, a client can retry the request. In a retry,
+        it is most efficient to resubmit only tasks that failed to add, and to
+        omit tasks that were successfully added on the first attempt. The
+        maximum lifetime of a task from addition to completion is 7 days. If a
+        task has not completed within 7 days of being added it will be
+        terminated by the Batch service and left in whatever state it was in at
+        that time.
 
         :param job_id: The ID of the job to which the task collection is to be
          added.
         :type job_id: str
-        :param value: The collection of tasks to add.
-        :type value: list of :class:`TaskAddParameter
-         <azure.batch.models.TaskAddParameter>`
+        :param value: The collection of tasks to add. The total serialized
+         size of this collection must be less than 4MB. If it is greater than
+         4MB (for example if each task has 100's of resource files or
+         environment variables), the request will fail with code
+         'RequestBodyTooLarge' and should be retried again with fewer tasks.
+        :type value: list[~azure.batch.models.TaskAddParameter]
         :param task_add_collection_options: Additional parameters for the
          operation
-        :type task_add_collection_options: :class:`TaskAddCollectionOptions
-         <azure.batch.models.TaskAddCollectionOptions>`
+        :type task_add_collection_options:
+         ~azure.batch.models.TaskAddCollectionOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`TaskAddCollectionResult
-         <azure.batch.models.TaskAddCollectionResult>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: TaskAddCollectionResult or ClientRawResponse if raw=true
+        :rtype: ~azure.batch.models.TaskAddCollectionResult or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -283,7 +299,7 @@ class TaskOperations(object):
         task_collection = models.TaskAddCollectionParameter(value=value)
 
         # Construct URL
-        url = '/jobs/{jobId}/addtaskcollection'
+        url = self.add_collection.metadata['url']
         path_format_arguments = {
             'jobId': self._serialize.url("job_id", job_id, 'str')
         }
@@ -317,7 +333,7 @@ class TaskOperations(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -338,6 +354,7 @@ class TaskOperations(object):
             return client_raw_response
 
         return deserialized
+    add_collection.metadata = {'url': '/jobs/{jobId}/addtaskcollection'}
 
     def delete(
             self, job_id, task_id, task_delete_options=None, custom_headers=None, raw=False, **operation_config):
@@ -354,16 +371,14 @@ class TaskOperations(object):
         :param task_id: The ID of the task to delete.
         :type task_id: str
         :param task_delete_options: Additional parameters for the operation
-        :type task_delete_options: :class:`TaskDeleteOptions
-         <azure.batch.models.TaskDeleteOptions>`
+        :type task_delete_options: ~azure.batch.models.TaskDeleteOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -393,7 +408,7 @@ class TaskOperations(object):
             if_unmodified_since = task_delete_options.if_unmodified_since
 
         # Construct URL
-        url = '/jobs/{jobId}/tasks/{taskId}'
+        url = self.delete.metadata['url']
         path_format_arguments = {
             'jobId': self._serialize.url("job_id", job_id, 'str'),
             'taskId': self._serialize.url("task_id", task_id, 'str')
@@ -408,7 +423,7 @@ class TaskOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -432,7 +447,7 @@ class TaskOperations(object):
 
         # Construct and send request
         request = self._client.delete(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -444,6 +459,7 @@ class TaskOperations(object):
                 'request-id': 'str',
             })
             return client_raw_response
+    delete.metadata = {'url': '/jobs/{jobId}/tasks/{taskId}'}
 
     def get(
             self, job_id, task_id, task_get_options=None, custom_headers=None, raw=False, **operation_config):
@@ -458,16 +474,15 @@ class TaskOperations(object):
         :param task_id: The ID of the task to get information about.
         :type task_id: str
         :param task_get_options: Additional parameters for the operation
-        :type task_get_options: :class:`TaskGetOptions
-         <azure.batch.models.TaskGetOptions>`
+        :type task_get_options: ~azure.batch.models.TaskGetOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`CloudTask <azure.batch.models.CloudTask>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: CloudTask or ClientRawResponse if raw=true
+        :rtype: ~azure.batch.models.CloudTask or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -503,7 +518,7 @@ class TaskOperations(object):
             if_unmodified_since = task_get_options.if_unmodified_since
 
         # Construct URL
-        url = '/jobs/{jobId}/tasks/{taskId}'
+        url = self.get.metadata['url']
         path_format_arguments = {
             'jobId': self._serialize.url("job_id", job_id, 'str'),
             'taskId': self._serialize.url("task_id", task_id, 'str')
@@ -522,7 +537,7 @@ class TaskOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -546,7 +561,7 @@ class TaskOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -570,6 +585,7 @@ class TaskOperations(object):
             return client_raw_response
 
         return deserialized
+    get.metadata = {'url': '/jobs/{jobId}/tasks/{taskId}'}
 
     def update(
             self, job_id, task_id, task_update_options=None, constraints=None, custom_headers=None, raw=False, **operation_config):
@@ -580,20 +596,19 @@ class TaskOperations(object):
         :param task_id: The ID of the task to update.
         :type task_id: str
         :param task_update_options: Additional parameters for the operation
-        :type task_update_options: :class:`TaskUpdateOptions
-         <azure.batch.models.TaskUpdateOptions>`
+        :type task_update_options: ~azure.batch.models.TaskUpdateOptions
         :param constraints: Constraints that apply to this task. If omitted,
-         the task is given the default constraints.
-        :type constraints: :class:`TaskConstraints
-         <azure.batch.models.TaskConstraints>`
+         the task is given the default constraints. For multi-instance tasks,
+         updating the retention time applies only to the primary task and not
+         subtasks.
+        :type constraints: ~azure.batch.models.TaskConstraints
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -624,7 +639,7 @@ class TaskOperations(object):
         task_update_parameter = models.TaskUpdateParameter(constraints=constraints)
 
         # Construct URL
-        url = '/jobs/{jobId}/tasks/{taskId}'
+        url = self.update.metadata['url']
         path_format_arguments = {
             'jobId': self._serialize.url("job_id", job_id, 'str'),
             'taskId': self._serialize.url("task_id", task_id, 'str')
@@ -667,7 +682,7 @@ class TaskOperations(object):
         # Construct and send request
         request = self._client.put(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -682,6 +697,7 @@ class TaskOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    update.metadata = {'url': '/jobs/{jobId}/tasks/{taskId}'}
 
     def list_subtasks(
             self, job_id, task_id, task_list_subtasks_options=None, custom_headers=None, raw=False, **operation_config):
@@ -697,17 +713,16 @@ class TaskOperations(object):
         :type task_id: str
         :param task_list_subtasks_options: Additional parameters for the
          operation
-        :type task_list_subtasks_options: :class:`TaskListSubtasksOptions
-         <azure.batch.models.TaskListSubtasksOptions>`
+        :type task_list_subtasks_options:
+         ~azure.batch.models.TaskListSubtasksOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`CloudTaskListSubtasksResult
-         <azure.batch.models.CloudTaskListSubtasksResult>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: CloudTaskListSubtasksResult or ClientRawResponse if raw=true
+        :rtype: ~azure.batch.models.CloudTaskListSubtasksResult or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -728,7 +743,7 @@ class TaskOperations(object):
             ocp_date = task_list_subtasks_options.ocp_date
 
         # Construct URL
-        url = '/jobs/{jobId}/tasks/{taskId}/subtasksinfo'
+        url = self.list_subtasks.metadata['url']
         path_format_arguments = {
             'jobId': self._serialize.url("job_id", job_id, 'str'),
             'taskId': self._serialize.url("task_id", task_id, 'str')
@@ -745,7 +760,7 @@ class TaskOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -761,7 +776,7 @@ class TaskOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -784,6 +799,7 @@ class TaskOperations(object):
             return client_raw_response
 
         return deserialized
+    list_subtasks.metadata = {'url': '/jobs/{jobId}/tasks/{taskId}/subtasksinfo'}
 
     def terminate(
             self, job_id, task_id, task_terminate_options=None, custom_headers=None, raw=False, **operation_config):
@@ -799,16 +815,14 @@ class TaskOperations(object):
         :param task_id: The ID of the task to terminate.
         :type task_id: str
         :param task_terminate_options: Additional parameters for the operation
-        :type task_terminate_options: :class:`TaskTerminateOptions
-         <azure.batch.models.TaskTerminateOptions>`
+        :type task_terminate_options: ~azure.batch.models.TaskTerminateOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -838,7 +852,7 @@ class TaskOperations(object):
             if_unmodified_since = task_terminate_options.if_unmodified_since
 
         # Construct URL
-        url = '/jobs/{jobId}/tasks/{taskId}/terminate'
+        url = self.terminate.metadata['url']
         path_format_arguments = {
             'jobId': self._serialize.url("job_id", job_id, 'str'),
             'taskId': self._serialize.url("task_id", task_id, 'str')
@@ -853,7 +867,7 @@ class TaskOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -877,7 +891,7 @@ class TaskOperations(object):
 
         # Construct and send request
         request = self._client.post(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [204]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -892,17 +906,20 @@ class TaskOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    terminate.metadata = {'url': '/jobs/{jobId}/tasks/{taskId}/terminate'}
 
     def reactivate(
             self, job_id, task_id, task_reactivate_options=None, custom_headers=None, raw=False, **operation_config):
-        """Reactivates the specified task.
+        """Reactivates a task, allowing it to run again even if its retry count
+        has been exhausted.
 
         Reactivation makes a task eligible to be retried again up to its
         maximum retry count. The task's state is changed to active. As the task
-        is no longer in the completed state, any previous exit code or
-        scheduling error is no longer available after reactivation. This will
-        fail for tasks that are not completed or that previously completed
-        successfully (with an exit code of 0). Additionally, this will fail if
+        is no longer in the completed state, any previous exit code or failure
+        information is no longer available after reactivation. Each time a task
+        is reactivated, its retry count is reset to 0. Reactivation will fail
+        for tasks that are not completed or that previously completed
+        successfully (with an exit code of 0). Additionally, it will fail if
         the job has completed (or is terminating or deleting).
 
         :param job_id: The ID of the job containing the task.
@@ -911,16 +928,15 @@ class TaskOperations(object):
         :type task_id: str
         :param task_reactivate_options: Additional parameters for the
          operation
-        :type task_reactivate_options: :class:`TaskReactivateOptions
-         <azure.batch.models.TaskReactivateOptions>`
+        :type task_reactivate_options:
+         ~azure.batch.models.TaskReactivateOptions
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
@@ -950,7 +966,7 @@ class TaskOperations(object):
             if_unmodified_since = task_reactivate_options.if_unmodified_since
 
         # Construct URL
-        url = '/jobs/{jobId}/tasks/{taskId}/reactivate'
+        url = self.reactivate.metadata['url']
         path_format_arguments = {
             'jobId': self._serialize.url("job_id", job_id, 'str'),
             'taskId': self._serialize.url("task_id", task_id, 'str')
@@ -965,7 +981,7 @@ class TaskOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; odata=minimalmetadata; charset=utf-8'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -989,7 +1005,7 @@ class TaskOperations(object):
 
         # Construct and send request
         request = self._client.post(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [204]:
             raise models.BatchErrorException(self._deserialize, response)
@@ -1004,3 +1020,4 @@ class TaskOperations(object):
                 'DataServiceId': 'str',
             })
             return client_raw_response
+    reactivate.metadata = {'url': '/jobs/{jobId}/tasks/{taskId}/reactivate'}

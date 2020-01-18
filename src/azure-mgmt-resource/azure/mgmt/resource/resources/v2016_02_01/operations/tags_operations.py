@@ -9,9 +9,9 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
+import uuid
 from msrest.pipeline import ClientRawResponse
 from msrestazure.azure_exceptions import CloudError
-import uuid
 
 from .. import models
 
@@ -22,9 +22,11 @@ class TagsOperations(object):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
+    :param deserializer: An object model deserializer.
     :ivar api_version: Client Api Version. Constant value: "2016-02-01".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
@@ -48,13 +50,12 @@ class TagsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}'
+        url = self.delete_value.metadata['url']
         path_format_arguments = {
             'tagName': self._serialize.url("tag_name", tag_name, 'str'),
             'tagValue': self._serialize.url("tag_value", tag_value, 'str'),
@@ -78,7 +79,7 @@ class TagsOperations(object):
 
         # Construct and send request
         request = self._client.delete(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200, 204]:
             exp = CloudError(response)
@@ -88,6 +89,7 @@ class TagsOperations(object):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
+    delete_value.metadata = {'url': '/subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}'}
 
     def create_or_update_value(
             self, tag_name, tag_value, custom_headers=None, raw=False, **operation_config):
@@ -102,14 +104,13 @@ class TagsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`TagValue
-         <azure.mgmt.resource.resources.v2016_02_01.models.TagValue>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: TagValue or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.resource.resources.v2016_02_01.models.TagValue or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}'
+        url = self.create_or_update_value.metadata['url']
         path_format_arguments = {
             'tagName': self._serialize.url("tag_name", tag_name, 'str'),
             'tagValue': self._serialize.url("tag_value", tag_value, 'str'),
@@ -133,7 +134,7 @@ class TagsOperations(object):
 
         # Construct and send request
         request = self._client.put(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200, 201]:
             exp = CloudError(response)
@@ -152,6 +153,7 @@ class TagsOperations(object):
             return client_raw_response
 
         return deserialized
+    create_or_update_value.metadata = {'url': '/subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}'}
 
     def create_or_update(
             self, tag_name, custom_headers=None, raw=False, **operation_config):
@@ -164,14 +166,13 @@ class TagsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`TagDetails
-         <azure.mgmt.resource.resources.v2016_02_01.models.TagDetails>`
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: TagDetails or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.resource.resources.v2016_02_01.models.TagDetails
+         or ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/tagNames/{tagName}'
+        url = self.create_or_update.metadata['url']
         path_format_arguments = {
             'tagName': self._serialize.url("tag_name", tag_name, 'str'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
@@ -194,7 +195,7 @@ class TagsOperations(object):
 
         # Construct and send request
         request = self._client.put(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200, 201]:
             exp = CloudError(response)
@@ -213,6 +214,7 @@ class TagsOperations(object):
             return client_raw_response
 
         return deserialized
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/tagNames/{tagName}'}
 
     def delete(
             self, tag_name, custom_headers=None, raw=False, **operation_config):
@@ -225,13 +227,12 @@ class TagsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
-        :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
-         if raw=true
+        :return: None or ClientRawResponse if raw=true
+        :rtype: None or ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/tagNames/{tagName}'
+        url = self.delete.metadata['url']
         path_format_arguments = {
             'tagName': self._serialize.url("tag_name", tag_name, 'str'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
@@ -254,7 +255,7 @@ class TagsOperations(object):
 
         # Construct and send request
         request = self._client.delete(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = self._client.send(request, header_parameters, stream=False, **operation_config)
 
         if response.status_code not in [200, 204]:
             exp = CloudError(response)
@@ -264,6 +265,7 @@ class TagsOperations(object):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/tagNames/{tagName}'}
 
     def list(
             self, custom_headers=None, raw=False, **operation_config):
@@ -274,15 +276,16 @@ class TagsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`TagDetailsPaged
-         <azure.mgmt.resource.resources.v2016_02_01.models.TagDetailsPaged>`
+        :return: An iterator like instance of TagDetails
+        :rtype:
+         ~azure.mgmt.resource.resources.v2016_02_01.models.TagDetailsPaged[~azure.mgmt.resource.resources.v2016_02_01.models.TagDetails]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         def internal_paging(next_link=None, raw=False):
 
             if not next_link:
                 # Construct URL
-                url = '/subscriptions/{subscriptionId}/tagNames'
+                url = self.list.metadata['url']
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
@@ -309,7 +312,7 @@ class TagsOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 exp = CloudError(response)
@@ -327,3 +330,4 @@ class TagsOperations(object):
             return client_raw_response
 
         return deserialized
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/tagNames'}

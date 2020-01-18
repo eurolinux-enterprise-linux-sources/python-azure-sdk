@@ -27,7 +27,7 @@ class ResourceListKeys(Model):
     :type secondary_key: str
     :param key_name: KeyName of the created AuthorizationRule
     :type key_name: str
-    """ 
+    """
 
     _attribute_map = {
         'primary_connection_string': {'key': 'primaryConnectionString', 'type': 'str'},
@@ -37,9 +37,10 @@ class ResourceListKeys(Model):
         'key_name': {'key': 'keyName', 'type': 'str'},
     }
 
-    def __init__(self, primary_connection_string=None, secondary_connection_string=None, primary_key=None, secondary_key=None, key_name=None):
-        self.primary_connection_string = primary_connection_string
-        self.secondary_connection_string = secondary_connection_string
-        self.primary_key = primary_key
-        self.secondary_key = secondary_key
-        self.key_name = key_name
+    def __init__(self, **kwargs):
+        super(ResourceListKeys, self).__init__(**kwargs)
+        self.primary_connection_string = kwargs.get('primary_connection_string', None)
+        self.secondary_connection_string = kwargs.get('secondary_connection_string', None)
+        self.primary_key = kwargs.get('primary_key', None)
+        self.secondary_key = kwargs.get('secondary_key', None)
+        self.key_name = kwargs.get('key_name', None)

@@ -13,10 +13,12 @@ from msrest.serialization import Model
 
 
 class JobListPreparationAndReleaseTaskStatusOptions(Model):
-    """Additional parameters for the Job_list_preparation_and_release_task_status
+    """Additional parameters for list_preparation_and_release_task_status
     operation.
 
-    :param filter: An OData $filter clause.
+    :param filter: An OData $filter clause. For more information on
+     constructing this filter, see
+     https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
     :type filter: str
     :param select: An OData $select clause.
     :type select: str
@@ -40,6 +42,7 @@ class JobListPreparationAndReleaseTaskStatusOptions(Model):
     """
 
     def __init__(self, filter=None, select=None, max_results=1000, timeout=30, client_request_id=None, return_client_request_id=False, ocp_date=None):
+        super(JobListPreparationAndReleaseTaskStatusOptions, self).__init__()
         self.filter = filter
         self.select = select
         self.max_results = max_results

@@ -26,10 +26,9 @@ class TaskInformation(Model):
     :type subtask_id: int
     :param task_state: The current state of the task. Possible values include:
      'active', 'preparing', 'running', 'completed'
-    :type task_state: str or :class:`TaskState <azure.batch.models.TaskState>`
+    :type task_state: str or ~azure.batch.models.TaskState
     :param execution_info: Information about the execution of the task.
-    :type execution_info: :class:`TaskExecutionInformation
-     <azure.batch.models.TaskExecutionInformation>`
+    :type execution_info: ~azure.batch.models.TaskExecutionInformation
     """
 
     _validation = {
@@ -46,6 +45,7 @@ class TaskInformation(Model):
     }
 
     def __init__(self, task_state, task_url=None, job_id=None, task_id=None, subtask_id=None, execution_info=None):
+        super(TaskInformation, self).__init__()
         self.task_url = task_url
         self.job_id = job_id
         self.task_id = task_id

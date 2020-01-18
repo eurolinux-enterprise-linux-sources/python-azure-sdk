@@ -15,7 +15,9 @@ from msrest.serialization import Model
 class StorageAccountCheckNameAvailabilityParameters(Model):
     """The parameters used to check the availabity of the storage account name.
 
-    :param name:
+    All required parameters must be populated in order to send to Azure.
+
+    :param name: Required.
     :type name: str
     :param type:  Default value: "Microsoft.Storage/storageAccounts" .
     :type type: str
@@ -30,6 +32,7 @@ class StorageAccountCheckNameAvailabilityParameters(Model):
         'type': {'key': 'type', 'type': 'str'},
     }
 
-    def __init__(self, name, type="Microsoft.Storage/storageAccounts"):
-        self.name = name
-        self.type = type
+    def __init__(self, **kwargs):
+        super(StorageAccountCheckNameAvailabilityParameters, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.type = kwargs.get('type', "Microsoft.Storage/storageAccounts")

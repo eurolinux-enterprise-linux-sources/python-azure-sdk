@@ -13,10 +13,12 @@ from .tracked_resource import TrackedResource
 
 
 class Server(TrackedResource):
-    """Represents a server.
+    """An Azure SQL Database server.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
+
+    All required parameters must be populated in order to send to Azure.
 
     :ivar id: Resource ID.
     :vartype id: str
@@ -24,41 +26,28 @@ class Server(TrackedResource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
-    :param tags: Resource tags.
-    :type tags: dict
-    :param location: Resource location.
+    :param location: Required. Resource location.
     :type location: str
-    :ivar kind: Kind of sql server.  This is metadata used for the Azure
-     portal experience.
+    :param tags: Resource tags.
+    :type tags: dict[str, str]
+    :param identity: The Azure Active Directory identity of the server.
+    :type identity: ~azure.mgmt.sql.models.ResourceIdentity
+    :ivar kind: Kind of sql server. This is metadata used for the Azure portal
+     experience.
     :vartype kind: str
-    :ivar fully_qualified_domain_name: The fully qualified domain name of the
-     server.
-    :vartype fully_qualified_domain_name: str
-    :param version: The version of the server. Possible values include: '2.0',
-     '12.0'
-    :type version: str or :class:`ServerVersion
-     <azure.mgmt.sql.models.ServerVersion>`
-    :param administrator_login: Administrator username for the server. Can
-     only be specified when the server is being created (and is required for
-     creation).
+    :param administrator_login: Administrator username for the server. Once
+     created it cannot be changed.
     :type administrator_login: str
     :param administrator_login_password: The administrator login password
      (required for server creation).
     :type administrator_login_password: str
-    :ivar external_administrator_sid: The ID of the Active Azure Directory
-     object with admin permissions on this server. Legacy parameter, always
-     null. To check for Active Directory admin, query
-     .../servers/{serverName}/administrators.
-    :vartype external_administrator_sid: str
-    :ivar external_administrator_login: The display name of the Azure Active
-     Directory object with admin permissions on this server. Legacy parameter,
-     always null. To check for Active Directory admin, query
-     .../servers/{serverName}/administrators
-    :vartype external_administrator_login: str
-    :ivar state: The state of the server. Possible values include: 'Ready',
-     'Disabled'
-    :vartype state: str or :class:`ServerState
-     <azure.mgmt.sql.models.ServerState>`
+    :param version: The version of the server.
+    :type version: str
+    :ivar state: The state of the server.
+    :vartype state: str
+    :ivar fully_qualified_domain_name: The fully qualified domain name of the
+     server.
+    :vartype fully_qualified_domain_name: str
     """
 
     _validation = {
@@ -67,35 +56,31 @@ class Server(TrackedResource):
         'type': {'readonly': True},
         'location': {'required': True},
         'kind': {'readonly': True},
-        'fully_qualified_domain_name': {'readonly': True},
-        'external_administrator_sid': {'readonly': True},
-        'external_administrator_login': {'readonly': True},
         'state': {'readonly': True},
+        'fully_qualified_domain_name': {'readonly': True},
     }
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
         'location': {'key': 'location', 'type': 'str'},
+        'tags': {'key': 'tags', 'type': '{str}'},
+        'identity': {'key': 'identity', 'type': 'ResourceIdentity'},
         'kind': {'key': 'kind', 'type': 'str'},
-        'fully_qualified_domain_name': {'key': 'properties.fullyQualifiedDomainName', 'type': 'str'},
-        'version': {'key': 'properties.version', 'type': 'str'},
         'administrator_login': {'key': 'properties.administratorLogin', 'type': 'str'},
         'administrator_login_password': {'key': 'properties.administratorLoginPassword', 'type': 'str'},
-        'external_administrator_sid': {'key': 'properties.externalAdministratorSid', 'type': 'str'},
-        'external_administrator_login': {'key': 'properties.externalAdministratorLogin', 'type': 'str'},
-        'state': {'key': 'properties.state', 'type': 'ServerState'},
+        'version': {'key': 'properties.version', 'type': 'str'},
+        'state': {'key': 'properties.state', 'type': 'str'},
+        'fully_qualified_domain_name': {'key': 'properties.fullyQualifiedDomainName', 'type': 'str'},
     }
 
-    def __init__(self, location, tags=None, version=None, administrator_login=None, administrator_login_password=None):
-        super(Server, self).__init__(tags=tags, location=location)
+    def __init__(self, **kwargs):
+        super(Server, self).__init__(**kwargs)
+        self.identity = kwargs.get('identity', None)
         self.kind = None
-        self.fully_qualified_domain_name = None
-        self.version = version
-        self.administrator_login = administrator_login
-        self.administrator_login_password = administrator_login_password
-        self.external_administrator_sid = None
-        self.external_administrator_login = None
+        self.administrator_login = kwargs.get('administrator_login', None)
+        self.administrator_login_password = kwargs.get('administrator_login_password', None)
+        self.version = kwargs.get('version', None)
         self.state = None
+        self.fully_qualified_domain_name = None

@@ -6,6 +6,9 @@
 # license information.
 #--------------------------------------------------------------------------
 
+import re
+import os.path
+from io import open
 from setuptools import find_packages, setup
 try:
     from azure_bdist_wheel import cmdclass
@@ -13,9 +16,6 @@ except ImportError:
     from distutils import log as logger
     logger.warn("Wheel is not available, disabling bdist_wheel hook")
     cmdclass = {}
-from io import open
-import re
-import os.path
 
 # Change the PACKAGE_NAME only to change folder and different name
 PACKAGE_NAME = "azure-mgmt-trafficmanager"
@@ -61,7 +61,7 @@ setup(
     long_description=readme + '\n\n' + history,
     license='MIT License',
     author='Microsoft Corporation',
-    author_email='ptvshelp@microsoft.com',
+    author_email='azpysdkhelp@microsoft.com',
     url='https://github.com/Azure/azure-sdk-for-python',
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -69,17 +69,16 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'License :: OSI Approved :: MIT License',
     ],
     zip_safe=False,
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests"]),
     install_requires=[
-        'azure-common~=1.1.5',
-        'msrestazure~=0.4.7',
+        'msrestazure>=0.4.27,<2.0.0',
+        'azure-common~=1.1',
     ],
     cmdclass=cmdclass
 )
