@@ -1,0 +1,630 @@
+diff -up ./azure-batch/setup.py.orig ./azure-batch/setup.py
+--- ./azure-batch/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-batch/setup.py	2017-06-15 12:30:48.332503421 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-graphrbac/setup.py.orig ./azure-graphrbac/setup.py
+--- ./azure-graphrbac/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-graphrbac/setup.py	2017-06-15 12:30:48.333503423 +0200
+@@ -73,8 +73,8 @@ setup(
+         'azure.graphrbac.operations',
+     ],
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-keyvault/setup.py.orig ./azure-keyvault/setup.py
+--- ./azure-keyvault/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-keyvault/setup.py	2017-06-15 12:30:48.334503425 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-authorization/setup.py.orig ./azure-mgmt-authorization/setup.py
+--- ./azure-mgmt-authorization/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-authorization/setup.py	2017-06-15 12:30:48.335503426 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-batch/setup.py.orig ./azure-mgmt-batch/setup.py
+--- ./azure-mgmt-batch/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-batch/setup.py	2017-06-15 12:30:48.336503428 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-billing/setup.py.orig ./azure-mgmt-billing/setup.py
+--- ./azure-mgmt-billing/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-billing/setup.py	2017-06-15 12:30:48.337503429 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-cdn/setup.py.orig ./azure-mgmt-cdn/setup.py
+--- ./azure-mgmt-cdn/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-cdn/setup.py	2017-06-15 12:30:48.339503433 +0200
+@@ -74,8 +74,8 @@ setup(
+         'azure.mgmt.cdn.operations',
+     ],
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-cognitiveservices/setup.py.orig ./azure-mgmt-cognitiveservices/setup.py
+--- ./azure-mgmt-cognitiveservices/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-cognitiveservices/setup.py	2017-06-15 12:30:48.340503434 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-commerce/setup.py.orig ./azure-mgmt-commerce/setup.py
+--- ./azure-mgmt-commerce/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-commerce/setup.py	2017-06-15 12:30:48.341503436 +0200
+@@ -68,8 +68,8 @@ setup(
+         'azure.mgmt.commerce.operations',
+     ],
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-compute/setup.py.orig ./azure-mgmt-compute/setup.py
+--- ./azure-mgmt-compute/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-compute/setup.py	2017-06-15 12:30:48.342503437 +0200
+@@ -69,8 +69,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-consumption/setup.py.orig ./azure-mgmt-consumption/setup.py
+--- ./azure-mgmt-consumption/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-consumption/setup.py	2017-06-15 12:30:48.343503439 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-containerregistry/setup.py.orig ./azure-mgmt-containerregistry/setup.py
+--- ./azure-mgmt-containerregistry/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-containerregistry/setup.py	2017-06-15 12:30:48.344503441 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-datalake-analytics/setup.py.orig ./azure-mgmt-datalake-analytics/setup.py
+--- ./azure-mgmt-datalake-analytics/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-datalake-analytics/setup.py	2017-06-15 12:30:48.345503442 +0200
+@@ -65,8 +65,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-datalake-store/setup.py.orig ./azure-mgmt-datalake-store/setup.py
+--- ./azure-mgmt-datalake-store/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-datalake-store/setup.py	2017-06-15 12:30:48.346503444 +0200
+@@ -65,8 +65,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-devtestlabs/setup.py.orig ./azure-mgmt-devtestlabs/setup.py
+--- ./azure-mgmt-devtestlabs/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-devtestlabs/setup.py	2017-06-15 12:30:48.347503445 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-dns/setup.py.orig ./azure-mgmt-dns/setup.py
+--- ./azure-mgmt-dns/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-dns/setup.py	2017-06-15 12:30:48.348503447 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-documentdb/setup.py.orig ./azure-mgmt-documentdb/setup.py
+--- ./azure-mgmt-documentdb/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-documentdb/setup.py	2017-06-15 12:30:48.349503448 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-eventhub/setup.py.orig ./azure-mgmt-eventhub/setup.py
+--- ./azure-mgmt-eventhub/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-eventhub/setup.py	2017-06-15 12:30:48.351503452 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-iothub/setup.py.orig ./azure-mgmt-iothub/setup.py
+--- ./azure-mgmt-iothub/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-iothub/setup.py	2017-06-15 12:30:48.352503453 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-keyvault/setup.py.orig ./azure-mgmt-keyvault/setup.py
+--- ./azure-mgmt-keyvault/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-keyvault/setup.py	2017-06-15 12:30:48.353503455 +0200
+@@ -74,8 +74,8 @@ setup(
+         'azure.mgmt.keyvault.operations',
+     ],
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-logic/setup.py.orig ./azure-mgmt-logic/setup.py
+--- ./azure-mgmt-logic/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-logic/setup.py	2017-06-15 12:30:48.354503457 +0200
+@@ -74,8 +74,8 @@ setup(
+         'azure.mgmt.logic.operations',
+     ],
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-media/setup.py.orig ./azure-mgmt-media/setup.py
+--- ./azure-mgmt-media/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-media/setup.py	2017-06-15 12:30:48.355503458 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-monitor/setup.py.orig ./azure-mgmt-monitor/setup.py
+--- ./azure-mgmt-monitor/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-monitor/setup.py	2017-06-15 12:30:48.356503460 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-network/setup.py.orig ./azure-mgmt-network/setup.py
+--- ./azure-mgmt-network/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-network/setup.py	2017-06-15 12:30:48.357503461 +0200
+@@ -68,8 +68,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-notificationhubs/setup.py.orig ./azure-mgmt-notificationhubs/setup.py
+--- ./azure-mgmt-notificationhubs/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-notificationhubs/setup.py	2017-06-15 12:30:48.358503463 +0200
+@@ -74,8 +74,8 @@ setup(
+         'azure.mgmt.notificationhubs.operations',
+     ],
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-powerbiembedded/setup.py.orig ./azure-mgmt-powerbiembedded/setup.py
+--- ./azure-mgmt-powerbiembedded/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-powerbiembedded/setup.py	2017-06-15 12:30:48.359503465 +0200
+@@ -68,8 +68,8 @@ setup(
+         'azure.mgmt.powerbiembedded.operations',
+     ],
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-rdbms/setup.py.orig ./azure-mgmt-rdbms/setup.py
+--- ./azure-mgmt-rdbms/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-rdbms/setup.py	2017-06-15 12:30:48.360503466 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-redis/setup.py.orig ./azure-mgmt-redis/setup.py
+--- ./azure-mgmt-redis/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-redis/setup.py	2017-06-15 12:30:48.361503468 +0200
+@@ -74,8 +74,8 @@ setup(
+         'azure.mgmt.redis.operations',		
+     ],
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-resource/setup.py.orig ./azure-mgmt-resource/setup.py
+--- ./azure-mgmt-resource/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-resource/setup.py	2017-06-15 12:30:48.361503468 +0200
+@@ -70,8 +70,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-scheduler/setup.py.orig ./azure-mgmt-scheduler/setup.py
+--- ./azure-mgmt-scheduler/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-scheduler/setup.py	2017-06-15 12:30:48.362503469 +0200
+@@ -74,8 +74,8 @@ setup(
+         'azure.mgmt.scheduler.operations',
+     ],
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-search/setup.py.orig ./azure-mgmt-search/setup.py
+--- ./azure-mgmt-search/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-search/setup.py	2017-06-15 12:30:48.363503471 +0200
+@@ -68,8 +68,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-servermanager/setup.py.orig ./azure-mgmt-servermanager/setup.py
+--- ./azure-mgmt-servermanager/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-servermanager/setup.py	2017-06-15 12:30:48.364503473 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-servicebus/setup.py.orig ./azure-mgmt-servicebus/setup.py
+--- ./azure-mgmt-servicebus/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-servicebus/setup.py	2017-06-15 12:30:48.365503474 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt/setup.py.orig ./azure-mgmt/setup.py
+--- ./azure-mgmt/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt/setup.py	2017-06-15 12:30:48.366503476 +0200
+@@ -46,29 +46,29 @@ setup(
+     ],
+     zip_safe=False,
+     install_requires=[
+-        'azure-mgmt-authorization~=0.30.0',
+-        'azure-mgmt-batch~=4.0.0',
+-        'azure-mgmt-cdn~=0.30.3',
+-        'azure-mgmt-cognitiveservices~=1.0.0',
+-        'azure-mgmt-compute~=1.0.0',
+-        'azure-mgmt-containerregistry~=0.2.1',
+-        'azure-mgmt-datalake-analytics~=0.1.4',
+-        'azure-mgmt-datalake-store~=0.1.4',
+-        'azure-mgmt-devtestlabs~=2.0.0',
+-        'azure-mgmt-dns~=1.0.1',
+-        'azure-mgmt-documentdb~=0.1.3',
+-        'azure-mgmt-iothub~=0.2.2',
+-        'azure-mgmt-keyvault~=0.31.0',
+-        'azure-mgmt-logic~=2.1.0',
+-        'azure-mgmt-monitor~=0.2.1',
+-        'azure-mgmt-network~=1.0.0',
+-        'azure-mgmt-rdbms~=0.1.0',
+-        'azure-mgmt-redis~=4.1.0',
+-        'azure-mgmt-resource~=1.1.0',
+-        'azure-mgmt-scheduler~=1.1.2',
+-        'azure-mgmt-sql~=0.5.1',
+-        'azure-mgmt-storage~=1.0.0',
+-        'azure-mgmt-trafficmanager~=0.30.0',
+-        'azure-mgmt-web~=0.32.0',
++        'azure-mgmt-authorization>=0.30.0,<0.31',
++        'azure-mgmt-batch>=4.0.0,<4.1',
++        'azure-mgmt-cdn>=0.30.3,<0.31',
++        'azure-mgmt-cognitiveservices>=1.0.0,<1.1',
++        'azure-mgmt-compute>=1.0.0,<1.1',
++        'azure-mgmt-containerregistry>=0.2.1,<0.3',
++        'azure-mgmt-datalake-analytics>=0.1.4,<0.2',
++        'azure-mgmt-datalake-store>=0.1.4,<0.2',
++        'azure-mgmt-devtestlabs>=2.0.0,<2.1',
++        'azure-mgmt-dns>=1.0.1,<1.1',
++        'azure-mgmt-documentdb>=0.1.3,<0.2',
++        'azure-mgmt-iothub>=0.2.2,<0.3',
++        'azure-mgmt-keyvault>=0.31.0,<0.32',
++        'azure-mgmt-logic>=2.1.0,<2.2',
++        'azure-mgmt-monitor>=0.2.1,<0.3',
++        'azure-mgmt-network>=1.0.0,<1.1',
++        'azure-mgmt-rdbms>=0.1.0,<0.2',
++        'azure-mgmt-redis>=4.1.0,<4.2',
++        'azure-mgmt-resource>=1.1.0,<1.2',
++        'azure-mgmt-scheduler>=1.1.2,<1.2',
++        'azure-mgmt-sql>=0.5.1,<0.6',
++        'azure-mgmt-storage>=1.0.0,<1.1',
++        'azure-mgmt-trafficmanager>=0.30.0,<0.31',
++        'azure-mgmt-web>=0.32.0,<0.33',
+     ],
+ )
+diff -up ./azure-mgmt-sql/setup.py.orig ./azure-mgmt-sql/setup.py
+--- ./azure-mgmt-sql/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-sql/setup.py	2017-06-15 12:30:48.367503477 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-storage/setup.py.orig ./azure-mgmt-storage/setup.py
+--- ./azure-mgmt-storage/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-storage/setup.py	2017-06-15 12:30:48.369503481 +0200
+@@ -68,8 +68,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-trafficmanager/setup.py.orig ./azure-mgmt-trafficmanager/setup.py
+--- ./azure-mgmt-trafficmanager/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-trafficmanager/setup.py	2017-06-15 12:30:48.370503482 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'azure-common~=1.1.5',
+-        'msrestazure~=0.4.7',
++        'azure-common>=1.1.5,<1.2',
++        'msrestazure>=0.4.7,<0.5',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-mgmt-web/setup.py.orig ./azure-mgmt-web/setup.py
+--- ./azure-mgmt-web/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-mgmt-web/setup.py	2017-06-15 12:30:48.371503484 +0200
+@@ -69,8 +69,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-monitor/setup.py.orig ./azure-monitor/setup.py
+--- ./azure-monitor/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-monitor/setup.py	2017-06-15 12:30:48.372503485 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure-servicefabric/setup.py.orig ./azure-servicefabric/setup.py
+--- ./azure-servicefabric/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure-servicefabric/setup.py	2017-06-15 12:30:48.373503487 +0200
+@@ -78,8 +78,8 @@ setup(
+     zip_safe=False,
+     packages=find_packages(),
+     install_requires=[
+-        'msrestazure~=0.4.7',
+-        'azure-common~=1.1.5',
++        'msrestazure>=0.4.7,<0.5',
++        'azure-common>=1.1.5,<1.2',
+     ],
+     cmdclass=cmdclass
+ )
+diff -up ./azure/setup.py.orig ./azure/setup.py
+--- ./azure/setup.py.orig	2017-05-16 23:33:15.000000000 +0200
++++ ./azure/setup.py	2017-06-15 12:30:48.374503488 +0200
+@@ -47,14 +47,14 @@ setup(
+     ],
+     zip_safe=False,
+     install_requires=[
+-        'azure-mgmt~=1.0.0',
+-        'azure-batch~=3.0.0',
+-        'azure-datalake-store~=0.0.9',
+-        'azure-graphrbac~=0.30.0',
+-        'azure-keyvault~=0.3.3',
+-        'azure-servicebus~=0.21.1',
+-        'azure-servicefabric~=5.6.130',
+-        'azure-storage~=0.34.2',
+-        'azure-servicemanagement-legacy~=0.20.6',
++        'azure-mgmt>=1.0.0,<1.1',
++        'azure-batch>=3.0.0,<3.1',
++        'azure-datalake-store>=0.0.9,<0.1',
++        'azure-graphrbac>=0.30.0,<0.31',
++        'azure-keyvault>=0.3.3,<0.4',
++        'azure-servicebus>=0.21.1,<0.22',
++        'azure-servicefabric>=5.6.130,<5.7',
++        'azure-storage>=0.34.2,<0.35',
++        'azure-servicemanagement-legacy>=0.20.6,<0.21',
+     ],
+ )
