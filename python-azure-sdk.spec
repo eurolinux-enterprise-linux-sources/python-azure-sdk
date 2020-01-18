@@ -29,7 +29,7 @@ Name:           python-%{srcname}
 # Remember to delete examples-directory from Source file for new releases
 # due to possible licensing issues
 Version:        4.0.0
-Release:        %{?prerelease:0.}0%{?prerelease:.%{prerelease}}%{?dist}.1
+Release:        %{?prerelease:0.}1%{?prerelease:.%{prerelease}}%{?dist}
 Summary:        %{common_summary}
 
 Group:          System Environment/Libraries
@@ -198,10 +198,10 @@ rm doc/_build/html/.buildinfo
 
 
 %changelog
-* Thu May 16 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.0.0-0.1
+* Tue May 14 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.0.0-1
 - Update to 4.0.0 + azure-mgmt-compute 5.0.0 (for skip_shutdown feature)
 
-  Resolves: rhbz#1709473
+  Resolves: rhbz#1707857
 
 * Thu Jan 25 2018 Oyvind Albrigtsen <oalbrigt@redhat.com> - 2.0.0-3
 - Remove examples-directory from Source tarball due to possible
